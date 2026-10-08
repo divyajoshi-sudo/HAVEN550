@@ -5,9 +5,33 @@ import nextTs from "eslint-config-next/typescript";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
-  // Override default ignores of eslint-config-next.
+  {
+    files: ["src/app/**/*.{ts,tsx}", "src/components/**/*.{ts,tsx}"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: ["@/content", "@/content/*", "../content/*", "../../content/*", "*/content/*"],
+              message:
+                "UI layer must not import /content directly. Use the service layer (lib/services/content.service.ts) instead.",
+            },
+            {
+              group: [
+                "@/lib/repositories/*",
+                "../lib/repositories/*",
+                "../../lib/repositories/*",
+              ],
+              message:
+                "UI layer must not import repositories directly. Use the service layer instead.",
+            },
+          ],
+        },
+      ],
+    },
+  },
   globalIgnores([
-    // Default ignores of eslint-config-next:
     ".next/**",
     "out/**",
     "build/**",
