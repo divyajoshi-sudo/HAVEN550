@@ -5,28 +5,28 @@
    ────────────────────────────────────────────── */
 
 @theme inline {
-  /* Brand Luxury Palette (IYC Inspired: 55% Ivory/White, 30% Deep Navy, 10% Photo, 5% Champagne) */
-  --color-haven-navy:        #071b2a;
-  --color-haven-navy-light:  #0d2235;
-  --color-haven-deep:        #040d16;
-  --color-haven-gold:        #c9a86c;
-  --color-haven-champagne:   #b79b6a;
-  --color-haven-ivory:       #f5f3ee;
-  --color-haven-soft-white:  #faf9f6;
-  --color-haven-charcoal:    #1c252b;
-  --color-haven-soft-grey:   #8a8a84;
-  --color-haven-cream:       #f5f0e8;
-  --color-haven-slate:       #8a95a5;
+  /* Brand Luxury Palette from Specification */
+  --color-haven-navy:        #101C29;
+  --color-haven-navy-light:  #162738;
+  --color-haven-deep:        #0B141D;
+  --color-haven-gold:        #B9A078;
+  --color-haven-champagne:   #B9A078;
+  --color-haven-ivory:       #F7F5F0;
+  --color-haven-soft-white:  #F8F8F6;
+  --color-haven-charcoal:    #262B30;
+  --color-haven-soft-grey:   #8A8A84;
+  --color-haven-cream:       #F7F5F0;
+  --color-haven-slate:       #8A95A5;
 
   /* Semantic */
   --color-background:  var(--color-haven-navy);
-  --color-foreground:  var(--color-haven-cream);
+  --color-foreground:  var(--color-haven-soft-white);
 
-  /* Fonts */
-  --font-heading:    var(--font-playfair), "Playfair Display", Georgia, serif;
-  --font-serif:      var(--font-playfair), "Playfair Display", Georgia, serif;
-  --font-body:       "Graphik", var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-subcontent: "Graphik", var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* Fonts from Specification */
+  --font-heading:    var(--font-cormorant), var(--font-playfair), "Cormorant Garamond", Georgia, serif;
+  --font-serif:      var(--font-cormorant), var(--font-playfair), "Cormorant Garamond", Georgia, serif;
+  --font-body:       var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-subcontent: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 /* ──────────────────────────────────────────────
@@ -54,7 +54,7 @@ body {
 }
 
 h1, h2, .font-serif, .main-heading {
-  font-family: var(--font-playfair), "Playfair Display", Georgia, serif;
+  font-family: var(--font-cormorant), var(--font-playfair), "Cormorant Garamond", Georgia, serif;
 }
 
 h3, h4, .subheading, .font-subheading {
