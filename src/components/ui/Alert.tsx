@@ -32,7 +32,7 @@ export function Alert({
       {...props}
     >
       {title && (
-        <h4 className="font-[family-name:var(--font-playfair)] font-serif text-xl font-medium mb-1 tracking-wide">
+        <h4 className="font-[family-name:var(--font-cormorant)] font-serif text-xl font-medium mb-1 tracking-wide">
           {title}
         </h4>
       )}

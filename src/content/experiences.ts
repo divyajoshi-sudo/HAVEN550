@@ -22,7 +22,7 @@ export const experiencesContent: ExperiencesPageContent = {
     description:
       "Every occasion feels different on the water. From relaxed afternoons to meaningful celebrations, HAVEN 550 provides an elegant setting for the moments that matter.",
     cta: {
-      label: "INQUIRE NOW",
+      label: "PLAN YOUR CHARTER",
       href: "/contact",
     },
     image: {
@@ -106,7 +106,7 @@ export const experiencesContent: ExperiencesPageContent = {
       "For those who prefer additional convenience, food and beverage arrangements can be coordinated in advance with Lily, the yacht's steward.",
       "Whether enjoying light refreshments or planning a special celebration, advance arrangements help make your time aboard effortless.",
     ],
-    note: "Alcohol is permitted. Smoking and illegal drugs are prohibited. Food and beverage selections are customized based on your preferences.",
+    note: "Alcohol is permitted. Smoking and illegal drugs are prohibited.",
     image: {
       src: "/images/haven-aft-deck.jpeg",
       alt: "Personalized dining and beverage arrangements aboard HAVEN 550",
@@ -114,10 +114,9 @@ export const experiencesContent: ExperiencesPageContent = {
     },
   },
   ctaBanner: {
-    eyebrow: "THE PERFECT EXPERIENCE AWAITS",
+    eyebrow: "HAVEN 550",
     headline: "Make Your Next Occasion Unforgettable.",
-    subtext:
-      "Discover what makes a private yacht charter a truly distinctive way to experience South Florida.",
+    subtext: "The water is waiting.",
     brandTagline: "Your Time. Your Waters. Your Haven.",
     cta: {
       label: "PLAN YOUR CHARTER",
@@ -126,4 +125,3 @@ export const experiencesContent: ExperiencesPageContent = {
     backgroundImage: "/images/haven-aerial-stern.jpeg",
   },
 };
-

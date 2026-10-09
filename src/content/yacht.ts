@@ -26,8 +26,8 @@ export const yachtContent: YachtPageContent = {
     },
   },
   introduction: {
-    eyebrow: "THE YACHT",
-    headline: "DESIGNED FOR THE JOURNEY.",
+    eyebrow: "DESIGNED FOR THE JOURNEY",
+    headline: "Elegance in Every Detail.",
     paragraphs: [
       "The Ferretti name is associated with Italian craftsmanship, thoughtful design, and an enduring passion for life at sea.",
       "HAVEN 550 brings that heritage to South Florida, offering a beautifully appointed private yacht for coastal cruising, relaxation, and intimate gatherings.",
@@ -56,6 +56,7 @@ export const yachtContent: YachtPageContent = {
       { label: "Crew", value: "Professional Captain & Steward" },
       { label: "Home Region", value: "Fort Lauderdale, Florida" },
       { label: "Charter Type", value: "Private Yacht Charter" },
+      { label: "Staterooms & Speed", value: "3 Cabins · 26 Knots" },
     ],
   },
   amenities: {
@@ -166,7 +167,7 @@ export const yachtContent: YachtPageContent = {
     ],
   },
   ctaBanner: {
-    eyebrow: "RESERVE YOUR VOYAGE",
+    eyebrow: "HAVEN 550",
     headline: "Experience HAVEN 550 for Yourself.",
     subtext:
       "Discover what makes a private yacht charter a truly distinctive way to experience South Florida.",

@@ -15,7 +15,7 @@ export interface YachtHeroProps {
 
 export function YachtHero({ content }: YachtHeroProps) {
   return (
-    <section className="relative min-h-[85vh] lg:min-h-[90vh] w-full flex items-center justify-center overflow-hidden bg-haven-deep">
+    <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-haven-deep">
       {/* Background Yacht Photo */}
       <div className="absolute inset-0">
         <Image
@@ -24,14 +24,13 @@ export function YachtHero({ content }: YachtHeroProps) {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center filter brightness-[0.75]"
+          className="object-cover object-center"
         />
-        {/* Layered dark luxury gradients */}
-        <div className="absolute inset-0 bg-gradient-to-b from-haven-navy/80 via-haven-navy/40 to-haven-navy/95" />
-        <div className="absolute inset-0 bg-radial from-transparent via-haven-navy/30 to-haven-navy/80" />
+        {/* Dynamic Scrim Gradient — Guarantees 7:1 contrast while preserving rich ocean imagery */}
+        <div className="absolute inset-0 dynamic-scrim pointer-events-none" />
       </div>
 
-      <Container size="narrow" className="relative z-10 text-center pt-32 pb-20">
+      <Container size="default" className="relative z-10 text-center pt-32 pb-20 md:pt-40 md:pb-24 flex flex-col items-center">
         {/* Eyebrow with gold horizontal lines */}
         <div className="mb-6 flex items-center justify-center gap-3">
           <span className="w-8 sm:w-12 h-[1px] bg-haven-gold/60" />
@@ -42,19 +41,19 @@ export function YachtHero({ content }: YachtHeroProps) {
         </div>
 
         {/* Main Headline */}
-        <Heading level={1} className="mb-6 uppercase tracking-[0.04em] text-haven-cream font-light">
+        <Heading level={1} className="mb-6 uppercase tracking-[0.04em] text-haven-cream font-light font-hero-fluid">
           {content.headline}
         </Heading>
 
         {/* Specs Badge */}
-        <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-haven-gold/40 bg-haven-deep/60 mb-8 backdrop-blur-sm">
-          <span className="text-xs sm:text-sm tracking-[0.3em] uppercase text-haven-gold font-medium">
+        <div className="inline-flex items-center gap-3 px-6 py-2.5 border border-haven-gold/30 bg-haven-void/60 mb-8 rounded-[2px] backdrop-blur-sm">
+          <span className="text-xs sm:text-[13px] tracking-[0.22em] uppercase text-haven-gold font-medium">
             {content.badge}
           </span>
         </div>
 
         {/* Subtitle / Description */}
-        <p className="text-sm sm:text-base md:text-lg text-haven-cream/80 font-light leading-relaxed max-w-2xl mx-auto">
+        <p className="text-sm sm:text-base md:text-lg text-haven-cream/80 font-light leading-relaxed max-w-2xl mx-auto text-center">
           {content.description}
         </p>
       </Container>

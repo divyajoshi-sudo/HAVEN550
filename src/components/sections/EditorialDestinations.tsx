@@ -1,88 +1,126 @@
+"use client";
+
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "../layout/Container";
-import { Section } from "../layout/Section";
+import { ScrollReveal } from "../ui/ScrollReveal";
 
 export interface EditorialDestinationsProps {
   eyebrow?: string;
   headline?: string;
-  description?: string;
+  paragraphs?: string[];
   image?: { src: string; alt: string };
   ctaHref?: string;
+  ctaLabel?: string;
+  background?: "ivory" | "navy";
 }
 
+const DESTINATION_TAGS = [
+  { name: "FORT LAUDERDALE", desc: "Intracoastal & River" },
+  { name: "HAULOVER SANDBAR", desc: "Social Anchorage" },
+  { name: "POMPANO BEACH", desc: "Coastal Cruising" },
+  { name: "SOUTH FLORIDA", desc: "Secluded Coves" },
+];
+
 export function EditorialDestinations({
-  eyebrow = "DESTINATIONS",
+  eyebrow = "EXPLORE SOUTH FLORIDA",
   headline = "The Coast Is Calling.",
-  description = "From the vibrant shores of Fort Lauderdale to the hidden gems of the Florida coast, each destination offers a new perspective, a new adventure, and a deeper connection to the water.",
+  paragraphs = [
+    "From the historic waterways of Fort Lauderdale to the pristine coastline between Haulover and Pompano Beach, HAVEN 550 offers an unrivaled perspective on South Florida.",
+    "Cruise past magnificent waterfront architecture, anchor at secluded sandbars, or spend an unhurried afternoon discovering the vibrant blue waters of the Atlantic.",
+  ],
   image = {
     src: "/images/haven-aerial-stern.jpeg",
-    alt: "Aerial perspective of HAVEN 550 cruising coastal waters",
+    alt: "Aerial tracking shot of HAVEN 550 cruising along the South Florida coast",
   },
   ctaHref = "/destinations",
+  ctaLabel = "DISCOVER ALL DESTINATIONS",
+  background = "ivory",
 }: EditorialDestinationsProps) {
+  const isLight = background === "ivory";
+
   return (
-    <Section background="softWhite" className="py-16 md:py-20 min-h-screen flex flex-col justify-center">
-      <Container size="wide">
-        {/* Header with locations */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 gap-8">
-          <div className="max-w-2xl">
-            <p className="text-xs sm:text-sm tracking-[0.35em] text-[#B79B6A] uppercase font-medium mb-3">
-              {eyebrow}
-            </p>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-[#1C252B] font-light leading-[1.1] mb-6">
-              {headline}
-            </h2>
-            <p className="text-base text-[#5A626A] font-normal leading-relaxed">
-              {description}
-            </p>
-          </div>
+    <section
+      className={`relative min-h-screen w-full flex flex-col justify-center overflow-hidden transition-colors duration-300 ${
+        isLight
+          ? "bg-[#EFECE5] text-[#08182B] border-t border-b border-[#D8D2C6]"
+          : "bg-[#07111A] text-[#F7F5F0] border-t border-b border-white/10"
+      }`}
+    >
+      {/* 01 — Full-Bleed Ocean Photography with Crisp Contrast (NO washed-out white fog) */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <Image
+          src={image.src}
+          alt={image.alt}
+          fill
+          sizes="100vw"
+          priority={false}
+          className="object-cover object-[70%_center] lg:object-[80%_center] contrast-[1.02] transition-transform duration-1000 ease-out hover:scale-105"
+        />
 
-          <div className="flex flex-col items-start lg:items-end">
-            <div className="flex flex-wrap gap-2 sm:gap-3 mb-6">
-              {["FORT LAUDERDALE", "HAULOVER", "POMPANO BEACH", "SOUTH FLORIDA"].map(
-                (loc) => (
-                  <span
-                    key={loc}
-                    className="px-3.5 py-1.5 text-[0.65rem] tracking-[0.25em] uppercase text-[#1C252B] bg-[#EFECE5] rounded-none font-medium"
-                  >
-                    {loc}
+        {/* Soft edge gradient to ensure crisp contrast without any card box */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/20 to-transparent pointer-events-none" />
+      </div>
+
+      {/* 02 — Open Content Composition (No card box) */}
+      <Container size="default" className="relative z-10 py-16 lg:py-24">
+        <div className="max-w-xl lg:max-w-[620px]">
+          <ScrollReveal direction="up" duration={0.85}>
+            <div className="relative text-[#F7F5F0] py-4">
+              {/* Eyebrow Header with Gold Accent Line */}
+              <div className="flex items-center gap-3 mb-4">
+                <span className="w-8 h-[1.5px] bg-[#B9A078]" />
+                <p className="text-xs sm:text-[13px] tracking-[0.28em] uppercase font-sans font-medium text-[#B9A078]">
+                  {eyebrow}
+                </p>
+              </div>
+
+              {/* Headline */}
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-normal tracking-tight leading-[1.14] mb-5 text-[#F7F5F0] drop-shadow-md">
+                {headline}
+              </h2>
+
+              {/* Body Paragraphs */}
+              <div className="space-y-4 text-sm sm:text-base leading-[1.72] font-light text-[#EFECE5]/95 mb-7 text-left drop-shadow-sm">
+                {paragraphs.map((p, idx) => (
+                  <p key={idx}>{p}</p>
+                ))}
+              </div>
+
+              {/* Location Badges with Divider */}
+              <div className="pt-5 border-t border-white/15 mb-7">
+                <span className="text-[10px] tracking-[0.22em] uppercase font-medium text-white/60 block mb-3">
+                  FEATURED CRUISING GROUNDS:
+                </span>
+                <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+                  {DESTINATION_TAGS.map((tag) => (
+                    <span
+                      key={tag.name}
+                      className="px-3.5 py-1.5 text-[11px] tracking-[0.16em] uppercase font-medium rounded-[4px] border border-white/20 bg-black/25 text-white backdrop-blur-sm hover:border-[#B9A078] hover:text-white transition-colors"
+                    >
+                      {tag.name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Pill-Style Transparent Outline CTA Button */}
+              <div>
+                <Link
+                  href={ctaHref}
+                  className="inline-flex items-center justify-center gap-3 px-8 py-3.5 rounded-full border border-white/50 hover:border-white bg-black/30 hover:bg-white hover:text-[#070D14] text-white text-[11px] sm:text-xs tracking-[0.2em] uppercase font-semibold transition-all duration-300 backdrop-blur-sm shadow-lg group cursor-pointer"
+                >
+                  <span>{ctaLabel}</span>
+                  <span className="transition-transform duration-300 group-hover:translate-x-1.5">
+                    →
                   </span>
-                )
-              )}
+                </Link>
+              </div>
             </div>
-
-            <Link
-              href={ctaHref}
-              className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase font-medium text-[#1C252B] hover:text-[#B79B6A] transition-colors border-b border-[#1C252B]/40 pb-1"
-            >
-              <span>EXPLORE ALL DESTINATIONS</span>
-              <span>→</span>
-            </Link>
-          </div>
-        </div>
-
-        {/* Large Editorial Full-Width Image */}
-        <div className="relative aspect-[21/9] min-h-[360px] md:min-h-[500px] w-full overflow-hidden shadow-2xl group">
-          <Image
-            src={image.src}
-            alt={image.alt}
-            fill
-            sizes="100vw"
-            className="object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
-
-          <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 text-white">
-            <span className="text-xs tracking-[0.3em] uppercase text-[#B79B6A] font-medium block mb-2">
-              CRUISING GROUNDS
-            </span>
-            <span className="font-serif text-2xl md:text-4xl font-light">
-              South Florida Waterways & Ocean Escapes
-            </span>
-          </div>
+          </ScrollReveal>
         </div>
       </Container>
-    </Section>
+    </section>
   );
 }

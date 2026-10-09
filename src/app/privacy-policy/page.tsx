@@ -18,6 +18,9 @@ export default async function PrivacyPolicyPage() {
       <PolicySection
         sections={page.sections}
         lastUpdated={page.lastUpdated}
+        highlights={page.highlights}
+        disclaimer={page.disclaimer}
+        cta={page.cta}
       />
     </>
   );

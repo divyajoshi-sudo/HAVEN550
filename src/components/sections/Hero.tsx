@@ -1,60 +1,93 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { HeroContent } from "@/types/content";
+import { Container } from "../layout/Container";
 
 export interface HeroProps {
   content: HeroContent;
 }
 
+import { TextReveal } from "../motion/TextReveal";
+
 export function Hero({ content }: HeroProps) {
   return (
-    <section id="hero" className="w-full bg-white flex flex-col">
-      {/* 01 — White Editorial Headline Block below Header (Exact 104px Height: 1905 x 104) */}
-      <div className="w-full px-4 sm:px-8 lg:px-12 h-[104px] min-h-[104px] max-h-[104px] flex flex-col justify-center bg-white border-b border-[#E5E0D8]/40">
-        <h1 className="font-serif text-3xl sm:text-4xl md:text-[2.65rem] lg:text-[2.85rem] font-normal text-[#1C252B] tracking-tight leading-[1.05] mb-1 animate-fade-in">
-          {content.headline === "THE ART OF BEING AWAY"
-            ? "The Art of Being Away."
-            : content.headline}
-        </h1>
-        <p className="text-[0.82rem] sm:text-[0.88rem] text-[#5A626A] font-normal tracking-wide leading-tight animate-fade-in-up delay-100">
-          A different kind of escape. We help you make the right one.
-        </p>
-      </div>
-
-      {/* 02 — Large Cinematic Image & Video Media Canvas */}
-      <div className="relative w-full aspect-[16/9] sm:aspect-[2/1] lg:aspect-[21/9] min-h-[480px] lg:min-h-[660px] overflow-hidden group">
+    <section
+      id="hero"
+      className="relative min-h-screen lg:h-screen w-full flex items-center justify-center overflow-hidden bg-[#0C141D]"
+    >
+      {/* 01 — Full-Screen Yacht Background Image with Cinematic 16:9 / 21:9 Framing */}
+      <div className="absolute inset-0 z-0" data-cursor="explore">
         <Image
           src={content.image.src}
           alt={content.image.alt}
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center transition-transform duration-[2.5s] ease-out group-hover:scale-105"
+          className="object-cover object-center animate-ken-burns"
         />
+        {/* Dynamic Scrim Gradient — Guarantees 7:1 contrast while preserving rich ocean imagery */}
+        <div className="absolute inset-0 dynamic-scrim pointer-events-none" />
+      </div>
 
-        {/* Subtle bottom shadow overlay to anchor CTAs */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+      {/* 02 — Minimal Editorial Text Composition */}
+      <Container size="default" className="relative z-10 pt-28 pb-16 md:pt-36 md:pb-24 text-center flex flex-col items-center">
+        {/* Small Editorial Label */}
+        <div className="flex items-center gap-3 mb-4 animate-fade-in">
+          <span className="w-6 sm:w-10 h-[1.5px] bg-[#D4AF37]/80" />
+          <p className="eyebrow-luxury">
+            {content.eyebrow}
+          </p>
+          <span className="w-6 sm:w-10 h-[1.5px] bg-[#D4AF37]/80" />
+        </div>
 
-        {/* Center-Bottom Navy Rectangular CTAs matching IYC */}
-        <div className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 flex flex-row items-center gap-4 sm:gap-6 z-20">
+        {/* Primary Headline — Fluid clamp scaling without layout shifts */}
+        <TextReveal
+          as="h1"
+          className="font-serif font-hero-fluid font-light text-[#F7F5F0] leading-tight mb-4 w-full max-w-6xl mx-auto drop-shadow-sm sm:whitespace-nowrap"
+        >
+          {content.headline}
+        </TextReveal>
+
+        {/* Welcome Aboard Line — Expanded */}
+        <p className="font-serif italic text-xl sm:text-2xl md:text-3xl text-[#F7F5F0] font-light mb-6 tracking-wide drop-shadow-sm animate-fade-in-up delay-100 max-w-5xl mx-auto w-full">
+          {content.subheadline}
+        </p>
+
+        {/* Descriptive Body Copy — Expanded Full Screen Justified Content */}
+        <div className="w-full max-w-5xl lg:max-w-6xl mx-auto space-y-4 mb-10 text-[#EFECE5] text-base sm:text-lg md:text-[19px] lg:text-[20px] font-light leading-[1.75] drop-shadow-sm animate-fade-in-up delay-200 text-justify">
+          {content.paragraphs.map((p, idx) => (
+            <p key={idx} className="text-justify">{p}</p>
+          ))}
+        </div>
+
+        {/* Action Buttons — Unified 50px Squared Luxury Buttons with WCAG Focus States */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full max-w-xl mx-auto animate-fade-in-up delay-300">
           <Link
-            href="/the-yacht"
-            className="min-w-[140px] text-center px-7 sm:px-9 py-3 sm:py-3.5 bg-[#071B2A] text-white text-[0.7rem] sm:text-xs tracking-[0.25em] uppercase font-medium hover:bg-[#0d283e] transition-all duration-300 shadow-xl inline-flex items-center justify-center gap-2"
+            href={content.primaryCta.href}
+            data-cursor="charter"
+            className="w-full sm:w-auto min-w-[210px] h-[50px] px-8 bg-[#B9A078] hover:bg-[#D4AF37] text-[#0C141D] text-[13px] tracking-[0.14em] uppercase font-semibold transition-all duration-300 rounded-[2px] inline-flex items-center justify-center gap-2 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
           >
-            <span>EXPLORE</span>
-            <span className="text-sm">›</span>
+            <span>{content.primaryCta.label}</span>
+            <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
           </Link>
           <Link
-            href="/contact"
-            className="min-w-[140px] text-center px-7 sm:px-9 py-3 sm:py-3.5 bg-[#071B2A] text-white text-[0.7rem] sm:text-xs tracking-[0.25em] uppercase font-medium hover:bg-[#0d283e] transition-all duration-300 shadow-xl inline-flex items-center justify-center gap-2"
+            href={content.secondaryCta.href}
+            data-cursor="view"
+            className="w-full sm:w-auto min-w-[210px] h-[50px] px-8 bg-transparent border border-white/40 text-white text-[13px] tracking-[0.14em] uppercase font-semibold hover:bg-white hover:text-[#0C141D] hover:border-white transition-all duration-300 rounded-[2px] backdrop-blur-sm inline-flex items-center justify-center gap-2 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
           >
-            <span>CHARTER</span>
-            <span className="text-sm">›</span>
+            <span>{content.secondaryCta.label}</span>
+            <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
           </Link>
         </div>
+      </Container>
+
+      {/* Subtle Editorial Scroll Indicator */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 hidden sm:flex flex-col items-center gap-2 pointer-events-none opacity-70 animate-float">
+        <span className="text-[10px] tracking-[0.24em] uppercase text-white/70 font-light">
+          SCROLL
+        </span>
+        <div className="w-[1px] h-6 bg-gradient-to-b from-[#B9A078] via-[#B9A078]/50 to-transparent" />
       </div>
     </section>
   );
 }
-
-

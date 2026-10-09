@@ -17,21 +17,17 @@ export function Heading({
 }: HeadingProps) {
   const Component = as || (`h${level}` as const);
 
-  const isSubheading = level >= 3;
-
   const levelStyles = {
-    1: "text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-light tracking-[0.03em] leading-[1.05] text-haven-cream",
-    2: "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light tracking-[0.02em] leading-[1.15] text-haven-cream",
-    3: "text-[28px] font-normal tracking-[0.01em] leading-snug text-haven-cream",
-    4: "text-[28px] font-normal leading-snug text-haven-cream",
+    1: "text-4xl sm:text-5xl md:text-6xl lg:text-[72px] font-light tracking-[-0.01em] leading-[1.02] text-white",
+    2: "text-3xl sm:text-4xl md:text-5xl font-light tracking-[-0.01em] leading-[1.12] text-white",
+    3: "text-2xl sm:text-[32px] font-light leading-[1.22] text-white",
+    4: "text-xl sm:text-2xl font-light leading-[1.25] text-white",
   };
 
   return (
     <Component
       className={cn(
-        isSubheading
-          ? "font-sans font-normal"
-          : "font-[family-name:var(--font-playfair)] font-serif",
+        "font-[family-name:var(--font-cormorant)] font-serif",
         levelStyles[level],
         italic && "italic",
         className

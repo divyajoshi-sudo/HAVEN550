@@ -34,7 +34,7 @@ export function ProseBlock({
         )}
 
         {paragraphs && paragraphs.length > 0 && (
-          <div className="space-y-4 text-haven-cream/75 text-sm sm:text-base leading-relaxed font-light mb-8">
+          <div className="space-y-4 text-haven-cream/75 text-sm sm:text-base leading-relaxed font-light mb-8 text-center max-w-2xl mx-auto">
             {paragraphs.map((p, i) => (
               <p key={i}>{p}</p>
             ))}

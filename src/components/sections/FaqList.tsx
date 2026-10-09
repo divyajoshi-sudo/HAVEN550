@@ -26,7 +26,7 @@ export function FaqList({ content, background = "navy" }: FaqListProps) {
         <div className="space-y-6">
           {content.items.map((item, index) => (
             <Card key={index} className="p-6 sm:p-8" hoverable={false}>
-              <h3 className="font-[family-name:var(--font-playfair)] font-serif text-xl sm:text-2xl font-medium text-haven-cream mb-3">
+              <h3 className="font-[family-name:var(--font-cormorant)] font-serif text-xl sm:text-2xl font-medium text-haven-cream mb-3">
                 {item.question}
               </h3>
               <p className="text-sm sm:text-base text-haven-cream/75 font-light leading-relaxed">

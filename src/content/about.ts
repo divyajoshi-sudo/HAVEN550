@@ -2,101 +2,77 @@ import type { AboutPageContent } from "@/types/content";
 
 export const aboutContent: AboutPageContent = {
   meta: {
-    title: "About HAVEN 550 | Douglas Muhlbauer | Private Yacht Charters",
+    title: "About HAVEN 550 LLC | Private Yacht Charters",
     description:
-      "Learn about HAVEN 550 and founder Douglas Muhlbauer. A boutique private yacht charter operation in Fort Lauderdale dedicated to understated luxury, privacy, and personal service.",
+      "Learn about HAVEN 550 LLC, a Fort Lauderdale-based private yacht charter company founded by Douglas Muhlbauer.",
     keywords: [
-      "About HAVEN 550",
+      "About HAVEN 550 LLC",
       "Douglas Muhlbauer",
-      "Haven 550 LLC",
-      "Fort Lauderdale yacht company",
-      "boutique yacht charter",
+      "Fort Lauderdale yacht charter company",
+      "Ferretti 57 private charter",
+      "HAVEN 550",
     ],
     canonical: "/about",
   },
   hero: {
-    eyebrow: "OUR STORY",
-    headline: "The Art of Being Away.",
+    eyebrow: "THE STORY BEHIND THE EXPERIENCE",
+    headline: "A PASSION FOR LIFE ON THE WATER.",
     description:
-      "Founded by Douglas Muhlbauer, HAVEN 550 was created to offer an intimate, private yachting experience that stands apart from conventional charters.",
+      "HAVEN 550 brings together the elegance of Italian yacht craftsmanship and the natural beauty of South Florida.",
     image: {
       src: "/images/haven-running-front.jpeg",
       alt: "HAVEN 550 cruising off Fort Lauderdale",
     },
   },
-  story: {
-    eyebrow: "FOUNDER'S VISION",
-    headline: "A Boutique Yachting Perspective.",
+  companyIntro: {
+    eyebrow: "WELCOME TO HAVEN 550",
+    headline: "Private Yachting, Personally Considered.",
     paragraphs: [
-      "HAVEN 550 was established by Douglas Muhlbauer with a straightforward vision: to create a boutique yacht-charter operation rooted in the standards of a private yacht club.",
-      "Rather than operating as a high-volume boat rental service, HAVEN 550 caters to discerning clients who value privacy, impeccable presentation, and genuine hospitality.",
-      "Every charter is approached as an individual, private experience where your time on the water is unhurried, comfortable, and completely under your control.",
-    ],
-    cta: {
-      label: "EXPLORE THE YACHT",
-      href: "/the-yacht",
-    },
-    image: {
-      src: "/images/haven-salon-helm.jpeg",
-      alt: "HAVEN 550 main salon reflecting understated luxury",
-      caption: "Italian Craftsmanship & Understated Luxury",
-    },
-    imagePosition: "right",
-  },
-  philosophy: {
-    eyebrow: "OUR PHILOSOPHY",
-    headline: "Privacy, Exclusivity, and Comfort.",
-    paragraphs: [
-      "We believe that true luxury lies in simplicity, seamless execution, and the space to unwind without distraction.",
-      "From the moment you step onto the teak deck of our 57-foot Ferretti, our licensed captain and dedicated steward attend to every detail — navigating South Florida's premier waters while ensuring your group enjoys total seclusion.",
-      "No crowds, no fixed tour itineraries, no compromises. Just your time, your waters, and your private haven.",
+      "HAVEN 550 LLC is a Fort Lauderdale-based private yacht-charter company offering experiences aboard a 2021 Ferretti 57.",
+      "Created for those who appreciate privacy, comfort, and memorable moments, HAVEN 550 provides an intimate setting for exploring South Florida's waterways.",
+      "With accommodations for up to eight charter guests and a professional captain and steward, the yacht offers a personalized alternative to larger group-charter experiences.",
     ],
     image: {
       src: "/images/haven-aft-deck.jpeg",
-      alt: "Aft cockpit dining and relaxation area",
-      caption: "Exclusive Private Setting",
+      alt: "HAVEN 550 spacious aft deck and teak dining area",
     },
-    imagePosition: "left",
   },
-  values: {
-    eyebrow: "THE HAVEN DIFFERENCE",
-    headline: "What Sets Us Apart",
-    items: [
-      {
-        number: "01",
-        title: "Boutique Scale",
-        description:
-          "We operate one meticulously maintained 57-foot Ferretti yacht, allowing us to dedicate 100% of our focus and standards to your voyage.",
-      },
-      {
-        number: "02",
-        title: "Dedicated Crew",
-        description:
-          "Every charter includes both a USCG licensed Master Captain and a private steward for seamless service throughout your time aboard.",
-      },
-      {
-        number: "03",
-        title: "Total Privacy",
-        description:
-          "Your charter is 100% private. We never combine parties or rush transitions between outings.",
-      },
-      {
-        number: "04",
-        title: "Professional Standards",
-        description:
-          "Haven 550 LLC operates with full maritime insurance, rigorous safety protocols, and transparent all-inclusive charter rates.",
-      },
+  founder: {
+    eyebrow: "THE PERSON BEHIND HAVEN 550",
+    name: "Douglas Muhlbauer",
+    title: "Founder | HAVEN 550 LLC",
+    paragraphs: [
+      "HAVEN 550 was established by Douglas Muhlbauer with a focus on offering a distinctive private-yachting experience in South Florida.",
+      "Centered around a 57-foot Ferretti yacht, the company combines the comfort of a private vessel with the convenience of professionally crewed charter services.",
+      "Douglas's vision for HAVEN 550 is reflected in the company's straightforward approach: a beautiful yacht, thoughtful hospitality, and the freedom to enjoy South Florida from the water.",
     ],
-    columns: 4,
+    image: {
+      src: "/images/haven-salon-helm.jpeg",
+      alt: "Main salon and helm reflecting Douglas Muhlbauer's vision",
+    },
+  },
+  approach: {
+    eyebrow: "THE HAVEN PHILOSOPHY",
+    headline: "Luxury Is Personal.",
+    paragraphs: [
+      "We believe the finest experiences are often the simplest.",
+      "A beautiful setting. Good company. Time to unwind.",
+      "HAVEN 550 is designed around those moments, offering a private environment where guests can enjoy the water without the distractions of everyday life.",
+      "Our approach emphasizes comfort, privacy, and attentive service throughout the charter experience.",
+    ],
+    image: {
+      src: "/images/haven-bow-sunpad.jpeg",
+      alt: "Bow sun lounge relaxation on HAVEN 550",
+    },
   },
   ctaBanner: {
-    eyebrow: "EXPERIENCE THE DIFFERENCE",
-    headline: "Your Private Escape Awaits.",
-    subtext: "Connect with founder Douglas Muhlbauer and our charter team.",
+    eyebrow: "HAVEN 550",
+    headline: "Discover Your Haven.",
+    subtext: "The water is waiting.",
     brandTagline: "Your Time. Your Waters. Your Haven.",
     cta: {
-      label: "REQUEST A CHARTER",
-      href: "/contact",
+      label: "EXPLORE THE YACHT",
+      href: "/the-yacht",
     },
     backgroundImage: "/images/haven-profile-speed.jpeg",
   },

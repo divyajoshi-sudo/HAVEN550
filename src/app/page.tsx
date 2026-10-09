@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import { contentService } from "@/lib/services/content.service";
 import { constructMetadata } from "@/lib/seo";
 import { Hero } from "@/components/sections/Hero";
-import { SpecsStrip } from "@/components/sections/SpecsStrip";
-import { DualEditorialCards } from "@/components/sections/DualEditorialCards";
-import { GalleryGrid } from "@/components/sections/GalleryGrid";
+import { SplitContent } from "@/components/sections/SplitContent";
+import { VesselSection } from "@/components/sections/VesselSection";
 import { EditorialExperiences } from "@/components/sections/EditorialExperiences";
 import { EditorialRates } from "@/components/sections/EditorialRates";
 import { EditorialDestinations } from "@/components/sections/EditorialDestinations";
@@ -20,89 +19,69 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* 01 — Cinematic Hero */}
+      {/* SECTION 1 — HERO (NAVY) */}
       <Hero content={page.hero} />
 
-      {/* 02 — IYC-Style Specification Strip */}
-      <SpecsStrip />
-
-      {/* 03 — Dual Editorial Feature Cards (Exact 816 x 459 Side-by-Side Cards) */}
-      <DualEditorialCards
-        background="softWhite"
-        cards={[
-          {
-            title: "A Different Kind of Escape.",
-            description: page.introduction.paragraphs[0],
-            cta: {
-              label: "EXPLORE THE YACHT",
-              href: "/the-yacht",
-            },
-            image: {
-              src: "/images/haven-aft-deck.jpeg",
-              alt: "Spacious aft deck and teak dining table of HAVEN 550",
-            },
-          },
-          {
-            title: "Looking for a Yacht to Charter?",
-            description:
-              "Discover the finest private yacht charters in Fort Lauderdale and South Florida. Our bespoke journeys include tailored itineraries, 5-star service, and unforgettable coastal views.",
-            cta: {
-              label: "SEARCH CHARTERS",
-              href: "/experiences",
-            },
-            image: {
-              src: "/images/haven-profile-speed.jpeg",
-              alt: "HAVEN 550 Ferretti yacht running at speed with South Florida skyline",
-            },
-          },
-        ]}
-      />
-
-      {/* 04 — The Vessel: Italian Craftsmanship (Asymmetric Large Photography) */}
-      <GalleryGrid
-        content={{
-          eyebrow: page.vessel.eyebrow,
-          headline: page.vessel.headline,
-          items: [
-            {
-              src: page.vessel.mainImage.src,
-              alt: page.vessel.mainImage.alt,
-              isMain: true,
-            },
-            ...page.vessel.detailImages.map((img) => ({
-              src: img.src,
-              alt: img.alt,
-            })),
-          ],
-        }}
-        background="deep"
-      />
-
-      {/* 05 — Experience Stories (Large Horizontal Numbered Blocks) */}
-      <EditorialExperiences
-        eyebrow="EXPERIENCES"
-        headline="Moments Worth Making."
-        background="softWhite"
-      />
-
-      {/* 06 — Charter Rates (Minimalist Pricing on Ivory) */}
-      <EditorialRates
-        eyebrow="CHARTER RATES"
-        headline="Simple, Transparent Pricing."
+      {/* SECTION 2 — INTRODUCTION (IVORY #EFECE5) */}
+      <SplitContent
+        content={page.introduction}
         background="ivory"
       />
 
-      {/* 07 — Destinations: Image-First Visual Discovery */}
-      <EditorialDestinations
-        eyebrow="DESTINATIONS"
-        headline="The Coast Is Calling."
-        description={page.destinations.paragraphs[0]}
-        image={page.destinations.image}
+      {/* SECTION 3 — THE YACHT (NAVY) */}
+      <VesselSection
+        eyebrow={page.vessel.eyebrow}
+        headline={page.vessel.headline}
+        specsBadge={page.vessel.specsBadge}
+        paragraphs={page.vessel.paragraphs}
+        cta={page.vessel.cta}
+        mainImage={page.vessel.mainImage}
+        detailImages={page.vessel.detailImages}
       />
 
-      {/* 08 — Final Editorial Closing Statement */}
-      <CtaBanner content={page.ctaBanner} />
+      {/* SECTION 4 — THE EXPERIENCE (IVORY #EFECE5) */}
+      <EditorialExperiences
+        eyebrow={page.experiences.eyebrow}
+        headline={page.experiences.headline}
+        items={page.experiences.items.map((item, idx) => ({
+          number: `0${idx + 1}`,
+          eyebrow: item.badge || ["COASTAL ESCAPE", "GOLDEN HOUR", "CELEBRATIONS", "OCEAN PLAY"][idx] || "EXPERIENCE",
+          headline: item.title,
+          title: item.title,
+          description: item.description,
+          image: item.image!,
+          href: item.cta?.href || "/experiences",
+          ctaText: "TAKE ME THERE",
+        }))}
+        ctaButton={page.experiences.cta}
+        background="ivory"
+      />
+
+      {/* SECTION 5 — CHARTER RATES (NAVY) */}
+      <EditorialRates
+        eyebrow={page.rates.eyebrow}
+        headline={page.rates.headline}
+        subheadline={page.rates.subheadline}
+        rates={page.rates.rates}
+        inclusionNote={page.rates.inclusionNote}
+        gratuityNote={page.rates.gratuityNote}
+        ctaButton={page.rates.cta}
+        background="navy"
+      />
+
+      {/* SECTION 6 — DESTINATIONS (IVORY #EFECE5) */}
+      <EditorialDestinations
+        eyebrow={page.destinations.eyebrow}
+        headline={page.destinations.headline}
+        paragraphs={page.destinations.paragraphs}
+        image={page.destinations.image}
+        ctaHref={page.destinations.cta?.href || "/destinations"}
+        ctaLabel={page.destinations.cta?.label || "DISCOVER DESTINATIONS"}
+        background="ivory"
+      />
+
+      {/* SECTION 7 — FINAL CTA (NAVY) */}
+      <CtaBanner content={page.ctaBanner} background="navy" />
     </>
   );
 }
-

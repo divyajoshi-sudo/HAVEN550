@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { StickyMobileCta } from "@/components/layout/StickyMobileCta";
 import { contentService } from "@/lib/services/content.service";
 import { constructMetadata, getOrganizationJsonLd } from "@/lib/seo";
 
@@ -32,6 +33,10 @@ export async function generateMetadata(): Promise<Metadata> {
   return constructMetadata(homeData.meta);
 }
 
+import { SmoothScroll } from "@/components/motion/SmoothScroll";
+import { CustomCursor } from "@/components/motion/CustomCursor";
+import { AccessibilityPanel } from "@/components/ui/AccessibilityPanel";
+
 export default async function RootLayout({
   children,
 }: {
@@ -55,10 +60,15 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-full w-full flex flex-col bg-haven-navy text-haven-cream">
-        <Header navigation={navigation} site={site} />
-        <main className="w-full flex-1">{children}</main>
-        <Footer navigation={navigation} site={site} />
+      <body className="min-h-full w-full flex flex-col bg-haven-navy text-haven-cream selection:bg-[#B9A078]/30 selection:text-white">
+        <SmoothScroll>
+          <CustomCursor />
+          <AccessibilityPanel />
+          <Header navigation={navigation} site={site} />
+          <main id="main-content" className="w-full flex-1 pb-16 lg:pb-0">{children}</main>
+          <Footer navigation={navigation} site={site} />
+          <StickyMobileCta phone={site.phone} />
+        </SmoothScroll>
       </body>
     </html>
   );

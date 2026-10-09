@@ -106,54 +106,81 @@ function AmenityIcon({ icon }: { icon: string }) {
 
 export interface AmenityGridProps {
   content: AmenitySectionContent;
-  background?: "navy" | "navyLight" | "deep";
+  background?: "navy" | "navyLight" | "deep" | "ivory" | "softWhite";
 }
 
 export function AmenityGrid({
   content,
-  background = "navyLight",
+  background = "ivory",
 }: AmenityGridProps) {
+  const isLight = background === "ivory" || background === "softWhite";
+
   return (
     <Section background={background} border="bottom">
-      <Container>
+      <Container size="default">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <Eyebrow className="mb-3 text-haven-gold tracking-[0.35em]">
+          <Eyebrow className="mb-3 text-[#9E8357] tracking-[0.35em]">
             {content.eyebrow}
           </Eyebrow>
 
-          <Heading level={2} className="mb-4">
+          <Heading
+            level={2}
+            className={`mb-4 ${isLight ? "text-[#08182B]" : "text-[#F7F5F0]"}`}
+          >
             {content.headline}
           </Heading>
 
-          <div className="w-16 h-[2px] bg-haven-gold/70 mx-auto my-6" />
+          <div className="w-16 h-[2px] bg-[#B9A078]/80 mx-auto my-6" />
 
           {content.subheadline && (
-            <p className="text-haven-cream/70 text-sm sm:text-base font-light leading-relaxed">
+            <p
+              className={`text-sm sm:text-base font-light leading-relaxed ${
+                isLight ? "text-[#0F243A]" : "text-[#EFECE5]/80"
+              }`}
+            >
               {content.subheadline}
             </p>
           )}
         </div>
 
-        {/* 5-Column Amenity Grid matching screenshot */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-6 divide-y sm:divide-y-0 lg:divide-x divide-white/10">
+        {/* 5-Column Amenity Editorial Grid */}
+        <div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-8 pt-4 items-stretch"
+        >
           {content.items.map((item, index) => (
             <div
               key={index}
-              className={`flex flex-col items-center text-center pt-6 sm:pt-0 ${
-                index > 0 ? "lg:pl-6" : ""
+              className={`flex flex-col items-center text-center p-6 sm:p-7 rounded-[2px] transition-all duration-300 border ${
+                isLight
+                  ? "bg-[#FAF8F5] border-[#D8D2C6] hover:border-[#B9A078]/70 shadow-sm"
+                  : "bg-white/[0.02] border-white/10 hover:border-[#B9A078]/50 shadow-sm"
               }`}
             >
-              {/* Icon Container */}
-              <div className="w-14 h-14 rounded-full bg-haven-deep border border-haven-gold/30 flex items-center justify-center mb-6 shadow-lg shadow-black/30">
+              {/* Refined Minimalist Icon Framing */}
+              <div
+                className={`w-12 h-12 flex items-center justify-center mb-6 text-[#9E8357] border ${
+                  isLight
+                    ? "border-[#B9A078]/40 bg-[#FAF8F5]"
+                    : "border-haven-gold/25 bg-white/[0.02]"
+                }`}
+              >
                 <AmenityIcon icon={item.icon} />
               </div>
 
-              <h3 className="font-[family-name:var(--font-playfair)] font-serif text-xl font-medium text-haven-cream mb-3">
+              <h3
+                className={`font-[family-name:var(--font-cormorant)] text-xl lg:text-2xl font-light mb-3 tracking-wide ${
+                  isLight ? "text-[#08182B]" : "text-[#F7F5F0]"
+                }`}
+              >
                 {item.title}
               </h3>
 
-              <p className="text-haven-cream/70 text-xs sm:text-sm leading-relaxed font-light">
+              <p
+                className={`text-xs sm:text-sm leading-relaxed font-light ${
+                  isLight ? "text-[#0F243A]" : "text-[#EFECE5]/80"
+                }`}
+              >
                 {item.description}
               </p>
             </div>

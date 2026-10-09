@@ -19,7 +19,7 @@ export default async function ExperiencesPage() {
       <ExperienceHero content={page.hero} />
       <PossibilitiesGrid content={page.possibilities} />
       <PersonalizeDiningSection content={page.dining} />
-      <CtaBanner content={page.ctaBanner} />
+      <CtaBanner content={page.ctaBanner} background="navy" />
     </>
   );
 }

@@ -143,6 +143,19 @@ export interface CtaBannerContent {
   brandTagline?: string;
   cta: { label: string; href: string };
   backgroundImage?: string;
+  backgroundVideo?: string;
+}
+
+export interface PolicyHighlight {
+  label: string;
+  value: string;
+  detail: string;
+}
+
+export interface PolicyDisclaimer {
+  title: string;
+  badge?: string;
+  body: string;
 }
 
 export interface PolicyClause {
@@ -155,7 +168,16 @@ export interface PolicyContent {
   meta: MetaContent;
   hero: PageHeroContent;
   lastUpdated: string;
+  highlights?: PolicyHighlight[];
   sections: PolicyClause[];
+  disclaimer?: PolicyDisclaimer;
+  cta?: {
+    eyebrow: string;
+    headline: string;
+    description: string;
+    primaryCta: { label: string; href: string };
+    secondaryCta: { label: string; href: string };
+  };
 }
 
 export interface HomePageContent {
@@ -256,55 +278,179 @@ export interface ExperiencesPageContent {
   ctaBanner: CtaBannerContent;
 }
 
+export interface BoardingLocation {
+  name: string;
+  city: string;
+}
+
 export interface DestinationsPageContent {
   meta: MetaContent;
-  hero: PageHeroContent;
-  destinations: FeatureGridContent;
-  routeHighlight: SplitSectionContent;
-  ctaBanner: CtaBannerContent;
+  hero: {
+    eyebrow: string;
+    headline: string;
+    paragraphs: string[];
+    image: { src: string; alt: string };
+  };
+  cruisingArea: {
+    eyebrow: string;
+    headline: string;
+    lead: string[];
+    destinations: Array<{
+      title: string;
+      description: string;
+      image?: { src: string; alt: string };
+    }>;
+    disclaimer: string;
+  };
+  boardingLocations: {
+    eyebrow: string;
+    headline: string;
+    lead: string;
+    locations: BoardingLocation[];
+    notice: string;
+    pickupPolicy: string;
+  };
+  extendedCruising: {
+    eyebrow: string;
+    headline: string;
+    paragraphs: string[];
+    cta: { label: string; href: string };
+    image?: { src: string; alt: string };
+  };
+  destinations?: FeatureGridContent;
+  routeHighlight?: SplitSectionContent;
+  ctaBanner?: CtaBannerContent;
+}
+
+export interface ReservationStep {
+  number: string;
+  title: string;
+  description: string;
+}
+
+export interface CharterPolicyItem {
+  title: string;
+  body: string | string[];
 }
 
 export interface RatesPageContent {
   meta: MetaContent;
-  hero: PageHeroContent;
-  rates: RatesContent;
-  inclusions: {
+  hero: {
+    eyebrow: string;
+    headline: string;
+    paragraphs: string[];
+    image?: { src: string; alt: string };
+  };
+  packages: {
+    eyebrow: string;
+    headline: string;
+    items: Array<{
+      name: string;
+      duration: string;
+      price: string;
+      description: string;
+      cta: { label: string; href: string };
+      popular?: boolean;
+    }>;
+  };
+  includedWithCharter: {
+    eyebrow: string;
+    headline: string;
+    description: string;
+    optionalAddons: Array<{ label: string; price: string }>;
+    gratuityNote: string;
+  };
+  reservationInfo: {
+    eyebrow: string;
+    headline: string;
+    subheadline: string;
+    steps: ReservationStep[];
+    paymentNote: string;
+  };
+  policies: {
+    headline: string;
+    items: CharterPolicyItem[];
+    closingNote: string;
+  };
+  ctaBanner: CtaBannerContent;
+  rates?: RatesContent;
+  inclusions?: {
     headline: string;
     items: string[];
   };
-  policiesNote: {
+  policiesNote?: {
     headline: string;
     paragraphs: string[];
   };
-  faq: FaqContent;
-  ctaBanner: CtaBannerContent;
+  faq?: FaqContent;
 }
 
 export interface AboutPageContent {
   meta: MetaContent;
-  hero: PageHeroContent;
-  story: SplitSectionContent;
-  philosophy: SplitSectionContent;
-  values: FeatureGridContent;
+  hero: {
+    eyebrow: string;
+    headline: string;
+    description: string;
+    image?: { src: string; alt: string };
+  };
+  companyIntro: {
+    eyebrow: string;
+    headline: string;
+    paragraphs: string[];
+    image?: { src: string; alt: string };
+  };
+  founder: {
+    eyebrow: string;
+    name: string;
+    title: string;
+    paragraphs: string[];
+    image?: { src: string; alt: string };
+  };
+  approach: {
+    eyebrow: string;
+    headline: string;
+    paragraphs: string[];
+    image?: { src: string; alt: string };
+  };
   ctaBanner: CtaBannerContent;
+  story?: SplitSectionContent;
+  philosophy?: SplitSectionContent;
+  values?: FeatureGridContent;
 }
 
 export interface ContactPageContent {
   meta: MetaContent;
-  hero: PageHeroContent;
-  directContact: {
+  hero: {
     eyebrow: string;
     headline: string;
     paragraphs: string[];
+    image?: { src: string; alt: string };
+  };
+  directContact: {
+    eyebrow: string;
+    headline: string;
+    companyName: string;
     email: string;
     phone: string;
-    location: string;
-    responsePromise: string;
+    businessAddress: {
+      street: string;
+      cityStateZip: string;
+      country: string;
+    };
+    boardingLocations: Array<{
+      name: string;
+      city: string;
+    }>;
+    boardingNote: string;
+    paragraphs?: string[];
+    location?: string;
+    responsePromise?: string;
   };
   form: {
     headline: string;
     description: string;
-    interests: string[];
+    occasions?: string[];
+    interests?: string[];
     guestOptions: number[];
     successMessage: {
       title: string;

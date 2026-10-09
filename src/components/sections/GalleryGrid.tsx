@@ -55,7 +55,7 @@ export function GalleryGrid({
       </div>
 
       {/* 02 — Floating Section Header at Top */}
-      <div className="absolute top-10 md:top-14 left-0 right-0 z-30 w-full px-6 sm:px-10 lg:px-16 text-center pointer-events-none">
+      <div className="absolute top-10 md:top-14 left-0 right-0 z-30 w-full site-padding-x text-center pointer-events-none">
         {content.eyebrow && (
           <p className="text-[0.7rem] sm:text-xs md:text-sm tracking-[0.35em] text-[#B79B6A] font-light uppercase mb-2">
             {content.eyebrow}

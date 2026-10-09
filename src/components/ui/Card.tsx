@@ -8,24 +8,24 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function Card({
   variant = "default",
-  hoverable = true,
+  hoverable = false,
   className,
   children,
   ...props
 }: CardProps) {
   const variantStyles = {
-    default: "bg-haven-navy-light/60 border border-white/5",
-    elevated: "bg-haven-deep/90 border border-white/10 shadow-xl shadow-black/40",
+    default: "bg-[#101C29]/70 border border-white/10",
+    elevated: "bg-[#0B141D]/90 border border-white/10",
     bordered: "bg-transparent border border-white/10",
-    gold: "bg-haven-deep/90 border-2 border-haven-gold shadow-2xl shadow-haven-gold/10",
+    gold: "bg-[#0B141D] border border-[#B9A078]/50",
   };
 
   return (
     <div
       className={cn(
-        "relative rounded-sm overflow-hidden transition-all duration-500",
+        "relative rounded-[2px] overflow-hidden transition-all duration-300",
         variantStyles[variant],
-        hoverable && "hover:border-haven-gold/40 hover:-translate-y-1",
+        hoverable && "hover:border-[#B9A078]/40 hover:-translate-y-0.5",
         className
       )}
       {...props}

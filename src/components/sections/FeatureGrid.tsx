@@ -38,7 +38,7 @@ export function FeatureGrid({
               </Heading>
             )}
             {content.description && (
-              <p className="text-haven-cream/70 text-sm sm:text-base font-light leading-relaxed mt-2">
+              <p className="text-haven-cream/70 text-sm sm:text-base font-light leading-relaxed mt-2 text-left max-w-2xl">
                 {content.description}
               </p>
             )}

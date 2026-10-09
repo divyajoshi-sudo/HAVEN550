@@ -16,18 +16,19 @@ export const homeContent: HomePageContent = {
     canonical: "/",
   },
   hero: {
-    eyebrow: "PRIVATE YACHT CHARTERS",
-    headline: "THE ART OF BEING AWAY",
-    subheadline: "FORT LAUDERDALE, FLORIDA",
+    eyebrow: "FORT LAUDERDALE · SOUTH FLORIDA",
+    headline: "THE ART OF BEING AWAY.",
+    subheadline: "Welcome Aboard HAVEN 550.",
     paragraphs: [
-      "A different kind of escape. Aboard Haven 550, every detail is designed for those who value privacy, freedom, and the extraordinary.",
+      "Experience South Florida from an entirely different perspective aboard HAVEN 550, a privately chartered 57-foot Ferretti yacht.",
+      "Where the coastline becomes your backdrop, the ocean sets the pace, and every moment belongs to you.",
     ],
     primaryCta: {
       label: "EXPLORE THE YACHT",
       href: "/the-yacht",
     },
     secondaryCta: {
-      label: "INQUIRE NOW",
+      label: "REQUEST A CHARTER",
       href: "/contact",
     },
     image: {
@@ -36,11 +37,18 @@ export const homeContent: HomePageContent = {
     },
   },
   introduction: {
-    eyebrow: "THE YACHT",
+    eyebrow: "AN INVITATION TO UNWIND",
     headline: "A Different Kind of Escape.",
     paragraphs: [
-      "Step aboard Haven 550, where luxury meets freedom. Designed for those who seek more than a destination, this private yacht charter offers an elevated experience on the open water. With spacious comfort, refined details, and a crew dedicated to your every need, Haven 550 is the perfect setting for unforgettable moments in Fort Lauderdale and beyond.",
+      "Some of life's finest moments happen when you leave the ordinary behind.",
+      "HAVEN 550 offers an intimate luxury-yachting experience designed around privacy, relaxation, and the freedom of the open water.",
+      "Whether celebrating a special occasion, entertaining friends, or simply escaping the everyday, your time aboard is yours to enjoy.",
+      "With a professional captain and dedicated steward attending to the experience, all that's left is to settle in and enjoy the journey.",
     ],
+    cta: {
+      label: "DISCOVER HAVEN 550",
+      href: "/the-yacht",
+    },
     image: {
       src: "/images/haven-aft-deck.jpeg",
       alt: "Spacious aft deck and teak dining table of HAVEN 550",
@@ -84,102 +92,134 @@ export const homeContent: HomePageContent = {
     ],
   },
   experiences: {
-    eyebrow: "MOMENTS WORTH MAKING",
-    headline: "",
+    eyebrow: "YOUR DAY. YOUR WAY.",
+    headline: "Moments Worth Making.",
     items: [
       {
-        title: "Private Charter Getaways",
+        badge: "COASTAL ESCAPE",
+        title: "COASTAL ESCAPE & BEYOND",
         description:
-          "Escape to a world of luxury and privacy with our exclusive yacht charters.",
+          "Islands, hidden sandbars, and overwater bliss. Whether you crave ocean speed or secluded anchorages, HAVEN 550 delivers your kind of escape.",
         image: {
           src: "/images/haven-profile-speed.jpeg",
-          alt: "Private Charter Getaways aboard HAVEN 550",
+          alt: "Private Coastal Cruising aboard HAVEN 550",
+        },
+        cta: {
+          label: "TAKE ME THERE",
+          href: "/experiences",
         },
       },
       {
-        title: "Dining & Entertainment",
+        badge: "GOLDEN HOUR",
+        title: "SUNSET STATE OF MIND",
         description:
-          "Enjoy world-class dining, premium amenities, and bespoke experiences on board.",
-        image: {
-          src: "/images/haven-aft-deck.jpeg",
-          alt: "Dining & Entertainment aboard HAVEN 550",
-        },
-      },
-      {
-        title: "Tailored Experiences",
-        description:
-          "From sunset cruises to island hopping, every journey is crafted to your vision.",
+          "Chic cocktails, golden-hour rosé, and ocean breezes. Watch the South Florida skyline glow from the privacy of your own teak deck.",
         image: {
           src: "/images/haven-aerial-stern.jpeg",
-          alt: "Tailored Experiences with HAVEN 550",
+          alt: "Sunset Experiences with HAVEN 550",
+        },
+        cta: {
+          label: "TAKE ME THERE",
+          href: "/experiences",
         },
       },
       {
-        title: "Your Adventure",
+        badge: "CELEBRATIONS",
+        title: "MOMENTS WORTH CELEBRATING",
         description:
-          "Discover the freedom to explore, relax, and create unforgettable memories.",
+          "Milestone birthdays, intimate anniversaries, and bespoke gatherings. Celebrate in timeless style with personalized steward service and alfresco dining.",
+        image: {
+          src: "/images/haven-aft-deck.jpeg",
+          alt: "Celebrations & Special Occasions aboard HAVEN 550",
+        },
+        cta: {
+          label: "TAKE ME THERE",
+          href: "/experiences",
+        },
+      },
+      {
+        badge: "OCEAN PLAY",
+        title: "WATER ADVENTURES & TOYS",
+        description:
+          "Seabob underwater scooters, snorkeling coves, and teak swim platform relaxation. Discover the turquoise waters with every luxury toy provided.",
         image: {
           src: "/images/haven-bow-sunpad.jpeg",
-          alt: "Your Adventure on HAVEN 550",
+          alt: "Water Adventures on HAVEN 550",
+        },
+        cta: {
+          label: "TAKE ME THERE",
+          href: "/experiences",
         },
       },
     ],
     columns: 4,
+    cta: {
+      label: "EXPLORE EXPERIENCES",
+      href: "/experiences",
+    },
   },
   rates: {
-    eyebrow: "YOUR PRIVATE CHARTER AWAITS.",
+    eyebrow: "THE PRIVILEGE OF PRIVACY",
     headline: "Your Private Charter Awaits.",
+    subheadline: "Choose the experience that suits your day.",
     rates: [
       {
-        name: "HALF DAY",
-        duration: "4 hours",
+        name: "The Escape",
+        duration: "4 Hours",
         price: "$3,000",
-        description: "Perfect for a quick escape on the water.",
+        description: "Perfect for a leisurely morning or afternoon coastal escape.",
         popular: false,
       },
       {
-        name: "FULL DAY",
-        duration: "8 hours",
+        name: "The Experience",
+        duration: "6 Hours",
         price: "$4,000",
-        description: "The ultimate experience for a full day of luxury.",
+        description: "The ideal blend of relaxation, swimming, and scenic cruising.",
         popular: true,
       },
       {
-        name: "SUNSET",
-        duration: "4 hours",
-        price: "$3,000",
-        description: "Golden hour. Unforgettable views.",
+        name: "The Full Day",
+        duration: "8 Hours",
+        price: "$5,000",
+        description: "An unhurried complete immersion into luxury South Florida yachting.",
         popular: false,
       },
     ],
-    inclusionNote: "",
-    gratuityNote: "",
+    inclusionNote:
+      "Every charter includes a professional captain, steward, local cruising fuel, and selected onboard amenities.",
+    gratuityNote: "Customary crew gratuity of 20% is not included.",
+    cta: {
+      label: "VIEW CHARTER RATES",
+      href: "/charter-rates",
+    },
   },
   destinations: {
-    eyebrow: "DESTINATIONS",
+    eyebrow: "EXPLORE SOUTH FLORIDA",
     headline: "The Coast Is Calling.",
     paragraphs: [
-      "From the vibrant shores of Fort Lauderdale to the hidden gems of the Florida coast, each destination offers a new perspective, a new adventure, and a deeper connection to the water.",
+      "From the waterways of Fort Lauderdale to the beautiful coastline between Haulover and Pompano Beach, HAVEN 550 offers an exceptional perspective on South Florida.",
+      "Cruise past waterfront estates, enjoy scenic coastal views, or spend an afternoon discovering the beauty of the region from the water.",
     ],
     cta: {
-      label: "EXPLORE SOUTH FLORIDA",
+      label: "DISCOVER DESTINATIONS",
       href: "/destinations",
     },
     image: {
       src: "/images/haven-aerial-stern.jpeg",
-      alt: "Aerial tracking shot of HAVEN 550 cruising along the Florida coast",
+      alt: "Aerial tracking shot of HAVEN 550 cruising along the South Florida coast",
     },
     imagePosition: "left",
   },
   ctaBanner: {
-    eyebrow: "PRIVATE YACHT CHARTERS",
+    eyebrow: "YOUR PRIVATE ESCAPE BEGINS HERE",
     headline: "Some Days Deserve Something Extraordinary.",
-    subtext: "FORT LAUDERDALE, FLORIDA",
-    brandTagline: "PRIVATE YACHT CHARTERS",
+    subtext: "The water is waiting.",
+    brandTagline: "Your Time. Your Waters. Your Haven.",
     cta: {
-      label: "RESERVE YOUR CHARTER",
+      label: "REQUEST YOUR CHARTER",
       href: "/contact",
     },
     backgroundImage: "/images/haven-profile-speed.jpeg",
+    backgroundVideo: "/videos/aerial-view-of-open-ocean-under-blue-sky-2026-10-07-22-17-31-utc.mp4",
   },
 };

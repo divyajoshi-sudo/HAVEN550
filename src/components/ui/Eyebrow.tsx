@@ -11,32 +11,22 @@ export function Eyebrow({
   children,
   ...props
 }: EyebrowProps) {
+  const textStyles = "text-[11px] sm:text-[12px] tracking-[0.16em] uppercase text-[#B9A078] font-medium";
+
   if (withLines) {
     return (
       <div className="inline-flex items-center gap-3">
-        <span className="w-6 sm:w-8 h-[1px] bg-haven-gold/60" />
-        <p
-          className={cn(
-            "text-[0.68rem] sm:text-xs tracking-[0.35em] uppercase text-haven-gold font-light",
-            className
-          )}
-          {...props}
-        >
+        <span className="w-5 sm:w-8 h-[1px] bg-[#B9A078]/60" />
+        <p className={cn(textStyles, className)} {...props}>
           {children}
         </p>
-        <span className="w-6 sm:w-8 h-[1px] bg-haven-gold/60" />
+        <span className="w-5 sm:w-8 h-[1px] bg-[#B9A078]/60" />
       </div>
     );
   }
 
   return (
-    <p
-      className={cn(
-        "text-[0.68rem] sm:text-xs tracking-[0.35em] uppercase text-haven-gold font-light",
-        className
-      )}
-      {...props}
-    >
+    <p className={cn(textStyles, className)} {...props}>
       {children}
     </p>
   );

@@ -18,13 +18,13 @@ export default async function TheYachtPage() {
 
   return (
     <>
-      {/* Section 1: Hero */}
+      {/* Section 1: Hero (Navy) */}
       <YachtHero content={page.hero} />
 
-      {/* Section 2: Introduction */}
-      <SplitContent content={page.introduction} background="navy" />
+      {/* Section 2: Introduction (Ivory #EFECE5) */}
+      <SplitContent content={page.introduction} background="ivory" />
 
-      {/* Section 3: Yacht Specifications */}
+      {/* Section 3: Yacht Specifications (Navy) */}
       <SpecsTable
         eyebrow={page.specs.eyebrow}
         headline={page.specs.headline}
@@ -33,14 +33,14 @@ export default async function TheYachtPage() {
         background="deep"
       />
 
-      {/* Section 4: Onboard Amenities */}
-      <AmenityGrid content={page.amenities} background="navy" />
+      {/* Section 4: Onboard Amenities (Ivory #EFECE5) */}
+      <AmenityGrid content={page.amenities} background="ivory" />
 
-      {/* Section 5: Photo Gallery */}
+      {/* Section 5: Photo Gallery (Navy) */}
       <InteractiveGallery content={page.gallery} background="deep" />
 
-      {/* Section 6: CTA Banner */}
-      <CtaBanner content={page.ctaBanner} />
+      {/* Section 6: CTA Banner (Navy) */}
+      <CtaBanner content={page.ctaBanner} background="navy" />
     </>
   );
 }

@@ -1,14 +1,13 @@
 import { z } from "zod";
 
 /**
- * Single shared validation schema for charter inquiries.
- * Reused on the frontend in Phase 1 and on the backend in Phase 2.
+ * Single shared validation schema for charter inquiries on Page 7.
  */
 export const inquirySchema = z.object({
   fullName: z
     .string()
     .trim()
-    .min(2, "Full name must be at least 2 characters.")
+    .min(2, "Please enter your full name.")
     .max(100, "Full name cannot exceed 100 characters."),
 
   email: z
@@ -23,11 +22,29 @@ export const inquirySchema = z.object({
     .min(7, "Please enter a valid phone number.")
     .max(25, "Phone number cannot exceed 25 characters."),
 
+  charterDate: z
+    .string()
+    .trim()
+    .optional()
+    .default(""),
+
   preferredDates: z
     .string()
     .trim()
-    .min(2, "Please indicate your preferred date or timeframe.")
-    .max(100, "Preferred dates cannot exceed 100 characters."),
+    .optional()
+    .default(""),
+
+  startTime: z
+    .string()
+    .trim()
+    .optional()
+    .default("11:00"),
+
+  duration: z
+    .string()
+    .trim()
+    .optional()
+    .default("4 Hours"),
 
   guestCount: z.coerce
     .number()
@@ -35,15 +52,35 @@ export const inquirySchema = z.object({
     .min(1, "Guest count must be at least 1.")
     .max(8, "HAVEN 550 accommodates up to 8 guests."),
 
+  boardingLocation: z
+    .string()
+    .trim()
+    .optional()
+    .default("Swimming Hall of Fame Marina"),
+
+  jetSkiRental: z
+    .string()
+    .trim()
+    .optional()
+    .default("No"),
+
+  occasion: z
+    .string()
+    .trim()
+    .optional()
+    .default("Birthday Celebration"),
+
   interest: z
     .string()
     .trim()
-    .min(1, "Please select an experience of interest."),
+    .optional()
+    .default("Private Coastal Cruising"),
 
   message: z
     .string()
     .trim()
-    .max(1000, "Message cannot exceed 1000 characters.")
+    .max(1000, "Additional information cannot exceed 1000 characters.")
+    .optional()
     .default(""),
 
   consent: z

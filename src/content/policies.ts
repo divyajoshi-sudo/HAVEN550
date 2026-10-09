@@ -2,62 +2,157 @@ import type { PolicyContent } from "@/types/content";
 
 export const policiesContent: PolicyContent = {
   meta: {
-    title: "Charter Policies | HAVEN 550 | Haven 550 LLC",
+    title: "Charter Terms & Policies | HAVEN 550 Fort Lauderdale Yacht Charters",
     description:
-      "Review the charter policies for HAVEN 550, including weather protocols, cancellation guidelines, guest capacities, and safety requirements.",
-    keywords: ["charter policies", "yacht rules", "weather policy", "cancellation policy", "HAVEN 550"],
+      "Review the operational terms, reservation deposits, payment terms, cancellation policies, and cruising guidelines for HAVEN 550 luxury yacht charters in Fort Lauderdale.",
+    keywords: [
+      "charter terms",
+      "charter policies",
+      "yacht reservation deposit",
+      "cancellation policy",
+      "HAVEN 550",
+      "Fort Lauderdale yacht charter rules",
+      "Douglas Muhlbauer",
+    ],
     canonical: "/charter-policies",
   },
   hero: {
-    eyebrow: "OPERATIONAL STANDARDS",
-    headline: "Charter Policies.",
+    eyebrow: "OPERATIONAL STANDARDS & GUIDELINES",
+    headline: "Charter Terms & Policies.",
     description:
-      "To ensure a safe, comfortable, and transparent experience for all guests aboard HAVEN 550, please review our standard operating policies.",
+      "This page contains the complete operational terms for HAVEN 550 private charters. All charters are subject to clear operating standards designed to ensure passenger safety, transparent expectations, and an exceptional time on the water.",
+    image: {
+      src: "/images/haven-exterior-profile.jpeg",
+      alt: "HAVEN 550 luxury yacht cruising off Fort Lauderdale",
+    },
   },
   lastUpdated: "January 2026",
+  highlights: [
+    {
+      label: "Reservation Deposit",
+      value: "20% Deposit",
+      detail: "Required to confirm and secure your charter date.",
+    },
+    {
+      label: "Payment Balance",
+      value: "48 Hours Prior",
+      detail: "Final balance payable via Zelle or Venmo.",
+    },
+    {
+      label: "Guest Limit",
+      value: "Up to 8 Guests",
+      detail: "Intimate private group setting; children age 5+.",
+    },
+    {
+      label: "Weather Policy",
+      value: "Full Refund / Reschedule",
+      detail: "If HAVEN 550 cancels due to unsafe marine conditions.",
+    },
+  ],
   sections: [
     {
       number: "01",
-      title: "Guest Capacity & Safety",
+      title: "Charter Reservations",
       body: [
-        "HAVEN 550 is certified and equipped for a maximum of 8 day guests. This capacity limit is strictly enforced in accordance with United States Coast Guard (USCG) regulations and vessel safety specifications.",
-        "A safety briefing will be conducted by the Captain prior to departure covering the location of life jackets, emergency exits, and vessel protocols.",
+        "All charter reservations are subject to availability, confirmation by HAVEN 550 LLC, and acceptance of the applicable charter agreement.",
       ],
     },
     {
       number: "02",
-      title: "Weather & Sea Conditions",
+      title: "Reservation Deposit",
       body: [
-        "The safety of our guests and crew is our paramount priority. The licensed Master Captain holds sole authority regarding whether weather and marine conditions are safe for departure.",
-        "In the event that severe weather, high seas, or official small craft advisories prevent a safe charter, Haven 550 LLC will offer the client the option to reschedule to another available date or receive a full refund of any deposit paid.",
-        "Passing Florida showers or overcast skies that do not compromise safety do not constitute grounds for cancellation.",
+        "A 20% non-refundable deposit is required to confirm a charter reservation.",
       ],
     },
     {
       number: "03",
-      title: "Cancellations & Rescheduling",
+      title: "Payment Terms",
       body: [
-        "Client cancellations made 14 days or more prior to the scheduled departure date will receive a full refund or complimentary date transfer.",
-        "Cancellations made between 7 and 13 days prior to departure may transfer their charter to an alternate available date within 90 days.",
-        "Cancellations made less than 7 days prior to departure are non-refundable, as the vessel and crew have been exclusively reserved for your private booking.",
+        "The remaining charter balance is due no later than 48 hours before scheduled departure.",
+        "Accepted payment methods are Zelle and Venmo.",
       ],
     },
     {
       number: "04",
-      title: "Crew Gratuity & Service",
+      title: "Cancellation Policy",
       body: [
-        "A customary crew gratuity of 20% of the total charter fee is not included in the base rate. Gratuity reflects the dedication, preparation, and hospitality provided by your Captain and steward.",
-        "Gratuity may be paid directly to the Captain at the conclusion of your charter via cash, credit card, or electronic transfer.",
+        "The reservation deposit is non-refundable.",
+        "For cancellations made at least 24 hours before scheduled departure, payments received beyond the deposit are refundable.",
+        "Cancellations within 24 hours of departure are non-refundable.",
       ],
     },
     {
       number: "05",
-      title: "Onboard Conduct & Prohibited Items",
+      title: "Weather Cancellations",
       body: [
-        "Smoking of any kind (including vaping and e-cigarettes) is strictly prohibited in all interior spaces and is only permitted in designated exterior deck areas at the Captain's discretion.",
-        "Illegal substances, firearms, and hazardous materials are strictly prohibited aboard HAVEN 550 at all times.",
-        "Guests are requested to wear soft-soled boat shoes or bare feet while on teak deck surfaces to protect the vessel's craftsmanship.",
+        "The captain and operator retain authority to determine whether weather and operating conditions permit a safe departure.",
+        "If HAVEN 550 cancels a charter because of unsafe weather, the customer may receive a full refund or reschedule.",
+      ],
+    },
+    {
+      number: "06",
+      title: "Guest Capacity",
+      body: [
+        "The maximum number of charter guests is eight.",
+        "Children must be older than five years of age.",
+      ],
+    },
+    {
+      number: "07",
+      title: "Prohibited Activities",
+      body: [
+        "Smoking, illegal drugs, and unlawful activities are strictly prohibited aboard the yacht.",
+        "Pets are not permitted.",
+      ],
+    },
+    {
+      number: "08",
+      title: "Water Activities",
+      body: [
+        "Use of Jet Skis and other water equipment is subject to applicable safety requirements, operating conditions, and crew instructions.",
+        "Jet Ski rentals require a signed waiver and applicable boating-safety documentation.",
+      ],
+    },
+    {
+      number: "09",
+      title: "Additional Charter Time",
+      body: [
+        "Additional charter hours are charged at $650 per hour, subject to availability and approval.",
+      ],
+    },
+    {
+      number: "10",
+      title: "Cruising Area",
+      body: [
+        "Standard charter rates include local fuel for cruising between Haulover and Pompano Beach.",
+        "Additional fuel charges may apply to approved routes outside the standard cruising area.",
+      ],
+    },
+    {
+      number: "11",
+      title: "Gratuities",
+      body: [
+        "Crew gratuities are not included in advertised charter rates. A gratuity of 20% is customary.",
       ],
     },
   ],
+  disclaimer: {
+    badge: "OPERATOR & REGULATORY NOTICE",
+    title: "Charter Agreement & Passenger Capacity",
+    body: "These are proposed customer-facing terms based on Douglas's answers. They should be reviewed against the actual charter agreement and applicable Florida and maritime requirements before publication. In particular, the operator should verify the charter structure and legal passenger capacity.",
+  },
+  cta: {
+    eyebrow: "LET'S PLAN YOUR TIME ON THE WATER",
+    headline: "Ready to Discuss Your Charter?",
+    description:
+      "Whether you are planning a relaxed coastal escape, celebrating a milestone, or inquiring about custom cruising routes, we are pleased to assist.",
+    primaryCta: {
+      label: "REQUEST A CHARTER",
+      href: "/contact",
+    },
+    secondaryCta: {
+      label: "CALL +1 (516) 375-1093",
+      href: "tel:+15163751093",
+    },
+  },
 };

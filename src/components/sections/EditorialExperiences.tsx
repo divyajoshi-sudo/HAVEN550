@@ -1,144 +1,342 @@
+"use client";
+
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Container } from "../layout/Container";
-import { Section } from "../layout/Section";
+import { ScrollReveal } from "../ui/ScrollReveal";
 
 export interface ExperienceStoryItem {
-  number: string;
+  number?: string;
+  eyebrow?: string;
   title: string;
+  headline?: string;
   description: string;
   image: { src: string; alt: string };
   href?: string;
+  ctaText?: string;
 }
 
 export interface EditorialExperiencesProps {
   eyebrow?: string;
   headline?: string;
   items?: ExperienceStoryItem[];
+  ctaButton?: { label: string; href: string };
   background?: "softWhite" | "ivory" | "navy" | "deep";
 }
 
+const DEFAULT_EXPERIENCES: ExperienceStoryItem[] = [
+  {
+    number: "01",
+    eyebrow: "COASTAL ESCAPE",
+    title: "Private Coastal Cruising",
+    headline: "COASTAL ESCAPE & BEYOND",
+    description:
+      "Islands, hidden sandbars, and overwater bliss. Whether you crave ocean breeze or secluded anchorages, HAVEN 550 delivers your kind of escape.",
+    image: {
+      src: "/images/haven-profile-speed.jpeg",
+      alt: "Private Coastal Cruising aboard HAVEN 550 in South Florida",
+    },
+    href: "/experiences",
+    ctaText: "EXPLORE EXPERIENCE",
+  },
+  {
+    number: "02",
+    eyebrow: "ST. BARTHS VIBE",
+    title: "Sunset Experiences",
+    headline: "SUNSET STATE OF MIND",
+    description:
+      "Chic cocktails, rooftop rosé, and golden-hour cool. This is the charter where luxury meets the sunset and every evening is unforgettable.",
+    image: {
+      src: "/images/haven-aerial-stern.jpeg",
+      alt: "Sunset Experiences aboard HAVEN 550",
+    },
+    href: "/experiences",
+    ctaText: "EXPLORE EXPERIENCE",
+  },
+  {
+    number: "03",
+    eyebrow: "CELEBRATIONS",
+    title: "Celebrations & Special Occasions",
+    headline: "MOMENTS WORTH CELEBRATING",
+    description:
+      "Milestone birthdays, intimate anniversaries, and bespoke gatherings. Celebrate life on the water with full crew service and alfresco dining.",
+    image: {
+      src: "/images/haven-aft-deck.jpeg",
+      alt: "Celebrations & Special Occasions aboard HAVEN 550",
+    },
+    href: "/experiences",
+    ctaText: "EXPLORE EXPERIENCE",
+  },
+  {
+    number: "04",
+    eyebrow: "OCEAN PLAY",
+    title: "Water Adventures",
+    headline: "WATER ADVENTURES & BEYOND",
+    description:
+      "Underwater scooters, snorkeling coves, and teak swim platform adventures. Discover the crystal-clear South Florida water at your own pace.",
+    image: {
+      src: "/images/haven-bow-sunpad.jpeg",
+      alt: "Water Adventures on HAVEN 550",
+    },
+    href: "/experiences",
+    ctaText: "EXPLORE EXPERIENCE",
+  },
+];
+
 export function EditorialExperiences({
-  eyebrow = "EXPERIENCES",
+  eyebrow = "YOUR DAY. YOUR WAY.",
   headline = "Moments Worth Making.",
-  items = [
-    {
-      number: "01",
-      title: "Private Charter Getaways",
-      description:
-        "Escape to a world of luxury and privacy with our exclusive yacht charters across South Florida's premier waters.",
-      image: {
-        src: "/images/haven-profile-speed.jpeg",
-        alt: "Private Charter Getaways aboard HAVEN 550",
-      },
-      href: "/experiences",
-    },
-    {
-      number: "02",
-      title: "Dining & Entertainment",
-      description:
-        "Enjoy world-class dining, premium amenities, and bespoke steward provisioning tailored precisely to your taste.",
-      image: {
-        src: "/images/haven-aft-deck.jpeg",
-        alt: "Dining & Entertainment aboard HAVEN 550",
-      },
-      href: "/experiences",
-    },
-    {
-      number: "03",
-      title: "Tailored Experiences",
-      description:
-        "From sunset cruises to sandbar anchoring and secluded coves, every journey is crafted around your personal vision.",
-      image: {
-        src: "/images/haven-aerial-stern.jpeg",
-        alt: "Tailored Experiences with HAVEN 550",
-      },
-      href: "/experiences",
-    },
-    {
-      number: "04",
-      title: "Your Adventure",
-      description:
-        "Discover the freedom to explore, relax, and create unforgettable memories with water toys and snorkeling gear.",
-      image: {
-        src: "/images/haven-bow-sunpad.jpeg",
-        alt: "Your Adventure on HAVEN 550",
-      },
-      href: "/experiences",
-    },
-  ],
-  background = "softWhite",
+  items = DEFAULT_EXPERIENCES,
+  ctaButton = {
+    label: "EXPLORE ALL EXPERIENCES",
+    href: "/experiences",
+  },
+  background = "ivory",
 }: EditorialExperiencesProps) {
-  const isLight = background === "softWhite" || background === "ivory";
+  const trackRef = useRef<HTMLDivElement>(null);
+  const scrollPosRef = useRef<number>(0);
+  const isPausedRef = useRef<boolean>(false);
+  const [isPaused, setIsPaused] = useState<boolean>(false);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+
+  // Touch & Drag state
+  const isDraggingRef = useRef<boolean>(false);
+  const startXRef = useRef<number>(0);
+  const startScrollLeftRef = useRef<number>(0);
+
+  const normalizedItems = (items && items.length > 0 ? items : DEFAULT_EXPERIENCES).map(
+    (item, idx) => {
+      const defaultItem = DEFAULT_EXPERIENCES[idx % DEFAULT_EXPERIENCES.length];
+      return {
+        ...item,
+        eyebrow: item.eyebrow || defaultItem.eyebrow || "EXPERIENCE",
+        headline: item.headline || item.title || defaultItem.headline || "LUXURY EXPERIENCE",
+        ctaText: item.ctaText || "EXPLORE EXPERIENCE",
+      };
+    }
+  );
+
+  // Triple items array for seamless continuous infinite motion
+  const displayItems = [...normalizedItems, ...normalizedItems, ...normalizedItems];
+
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+
+    const initTimeout = setTimeout(() => {
+      if (el) {
+        const oneSetWidth = el.scrollWidth / 3;
+        if (oneSetWidth > 0) {
+          el.scrollLeft = oneSetWidth;
+          scrollPosRef.current = oneSetWidth;
+        }
+      }
+    }, 150);
+
+    let animationFrameId: number;
+
+    const step = () => {
+      const target = trackRef.current;
+      if (target) {
+        if (!isPausedRef.current && !isDraggingRef.current) {
+          scrollPosRef.current += 0.7;
+          const oneSetWidth = target.scrollWidth / 3;
+
+          if (oneSetWidth > 0) {
+            if (scrollPosRef.current >= oneSetWidth * 2) {
+              scrollPosRef.current -= oneSetWidth;
+            } else if (scrollPosRef.current <= 0) {
+              scrollPosRef.current += oneSetWidth;
+            }
+            target.scrollLeft = scrollPosRef.current;
+          }
+        } else {
+          scrollPosRef.current = target.scrollLeft;
+        }
+
+        const oneSetWidth = target.scrollWidth / 3;
+        if (oneSetWidth > 0 && normalizedItems.length > 0) {
+          const card = target.children[0] as HTMLElement | undefined;
+          const cardWidth = card ? card.offsetWidth + 24 : 520;
+          const offsetWithinSet = scrollPosRef.current % oneSetWidth;
+          const active = Math.floor(offsetWithinSet / cardWidth) % normalizedItems.length;
+          setActiveIndex(Math.max(0, Math.min(active, normalizedItems.length - 1)));
+        }
+      }
+      animationFrameId = requestAnimationFrame(step);
+    };
+
+    animationFrameId = requestAnimationFrame(step);
+
+    return () => {
+      clearTimeout(initTimeout);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [normalizedItems.length]);
+
+  const scroll = useCallback((direction: "left" | "right") => {
+    if (!trackRef.current) return;
+    const card = trackRef.current.children[0] as HTMLElement | undefined;
+    const scrollAmount = card ? card.offsetWidth + 24 : 520;
+    const newPos =
+      direction === "left"
+        ? trackRef.current.scrollLeft - scrollAmount
+        : trackRef.current.scrollLeft + scrollAmount;
+
+    trackRef.current.scrollTo({
+      left: newPos,
+      behavior: "smooth",
+    });
+    scrollPosRef.current = newPos;
+  }, []);
+
+  const goToSlide = (idx: number) => {
+    if (!trackRef.current) return;
+    const el = trackRef.current;
+    const card = el.children[0] as HTMLElement | undefined;
+    const cardWidth = card ? card.offsetWidth + 24 : 520;
+    const oneSetWidth = el.scrollWidth / 3;
+    const newPos = oneSetWidth + idx * cardWidth;
+
+    el.scrollTo({
+      left: newPos,
+      behavior: "smooth",
+    });
+    scrollPosRef.current = newPos;
+    setActiveIndex(idx);
+  };
+
+  // Touch and pointer interaction handlers
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    isDraggingRef.current = true;
+    isPausedRef.current = true;
+    setIsPaused(true);
+    startXRef.current = e.pageX;
+    if (trackRef.current) {
+      startScrollLeftRef.current = trackRef.current.scrollLeft;
+    }
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDraggingRef.current || !trackRef.current) return;
+    const x = e.pageX;
+    const walk = (x - startXRef.current) * 1.5;
+    trackRef.current.scrollLeft = startScrollLeftRef.current - walk;
+    scrollPosRef.current = trackRef.current.scrollLeft;
+  };
+
+  const handlePointerUp = () => {
+    isDraggingRef.current = false;
+  };
+
+  const isLight = background === "ivory" || background === "softWhite";
 
   return (
-    <Section background={background} className="py-16 md:py-20 min-h-screen flex flex-col justify-center">
-      <Container size="wide">
-        {/* Editorial Section Header */}
-        <div className="max-w-3xl mb-16 md:mb-24 text-left">
-          <p className="text-xs sm:text-sm tracking-[0.35em] text-[#B79B6A] uppercase font-medium mb-3">
-            {eyebrow}
-          </p>
+    <section
+      className={`w-full min-h-screen flex flex-col justify-center py-20 md:py-28 relative overflow-hidden transition-colors duration-300 ${
+        isLight
+          ? "bg-[#EFECE5] text-[#08182B] border-t border-b border-[#D8D2C6]"
+          : "bg-[#070D14] text-[#F7F5F0] border-t border-b border-white/10"
+      }`}
+    >
+      {!isLight && (
+        <div className="absolute inset-0 ambient-glow-gold pointer-events-none opacity-30" />
+      )}
+
+      {/* Top Header - Truly Centered in Section */}
+      <div className="w-full site-padding-x flex flex-col items-center justify-center text-center mb-12 sm:mb-16 relative z-10">
+        <ScrollReveal direction="up" duration={0.85} className="w-full max-w-4xl mx-auto flex flex-col items-center justify-center text-center">
+          <div className="flex items-center justify-center gap-3 mb-3 mx-auto text-center">
+            <span className="w-8 h-[1.5px] bg-[#B9A078]" />
+            <p
+              className={`text-xs sm:text-[13px] tracking-[0.26em] uppercase font-medium text-center ${
+                isLight ? "text-[#9E8357]" : "text-[#B9A078]"
+              }`}
+            >
+              {eyebrow}
+            </p>
+            <span className="w-8 h-[1.5px] bg-[#B9A078]" />
+          </div>
           <h2
-            className={`font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light tracking-tight ${
-              isLight ? "text-[#1C252B]" : "text-haven-cream"
+            className={`font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-normal tracking-tight leading-[1.12] text-center mx-auto w-full ${
+              isLight ? "text-[#08182B]" : "text-[#F7F5F0]"
             }`}
           >
             {headline}
           </h2>
-          <div className="w-16 h-[2px] bg-[#B79B6A]/70 mt-6" />
-        </div>
+        </ScrollReveal>
+      </div>
 
-        {/* 4 Large Editorial Story Blocks */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
-          {items.map((item, index) => (
-            <Link
-              key={index}
-              href={item.href || "/experiences"}
-              className="group flex flex-col justify-between"
+      {/* Horizontal Continuous Moving Slider Track with Touch/Swipe */}
+      <div className="w-full">
+        <div
+          ref={trackRef}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerLeave={handlePointerUp}
+          className="flex gap-5 sm:gap-6 overflow-x-auto scrollbar-none site-padding-x pb-4 select-none cursor-grab active:cursor-grabbing"
+          style={{
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          }}
+        >
+          {displayItems.map((item, idx) => (
+            <div
+              key={idx}
+              className="w-[88vw] sm:w-[460px] md:w-[500px] lg:w-[540px] flex-shrink-0"
             >
-              {/* Image Frame: Exact 516 x 290.25 (16:9) */}
-              <div className="relative aspect-[516/290.25] w-full overflow-hidden mb-6 bg-haven-deep/10 shadow-md group-hover:shadow-xl transition-shadow duration-500">
+              <div
+                className={`relative h-[500px] sm:h-[540px] md:h-[580px] rounded-[3px] overflow-hidden group shadow-2xl bg-black border ${isLight ? "border-black/15" : "border-white/15"
+                  }`}
+              >
+                {/* 100% Full-bleed Image */}
                 <Image
                   src={item.image.src}
                   alt={item.image.alt}
                   fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                  sizes="(max-width: 768px) 90vw, 540px"
+                  className="object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
 
-              {/* Number + Content */}
-              <div>
-                <span className="text-xs tracking-[0.25em] text-[#B79B6A] font-medium block mb-2">
-                  {item.number}
-                </span>
-                <h3
-                  className={`font-sans text-[28px] font-normal leading-snug mb-3 transition-colors ${
-                    isLight
-                      ? "text-[#1C252B] group-hover:text-[#B79B6A]"
-                      : "text-haven-cream group-hover:text-haven-gold"
-                  }`}
-                >
-                  {item.title}
-                </h3>
-                <p
-                  className={`text-base font-normal leading-relaxed mb-4 ${
-                    isLight ? "text-[#5A626A]" : "text-haven-cream/80"
-                  }`}
-                >
-                  {item.description}
-                </p>
-                <div className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase font-medium text-[#B79B6A] group-hover:translate-x-1 transition-transform">
-                  <span>DISCOVER</span>
-                  <span>→</span>
+                {/* Subtle Gradient Overlay — shows vibrant image colors */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent pointer-events-none" />
+
+                {/* Editorial Content Overlay Aligned to Bottom (No collision, No orange clash) */}
+                <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8 md:p-10 z-10 text-left">
+                  {/* Micro Eyebrow */}
+                  <span className="text-[11px] sm:text-xs font-semibold tracking-[0.28em] text-[#B9A078] uppercase font-sans mb-2">
+                    {item.eyebrow}
+                  </span>
+
+                  {/* Elegant White/Gold Serif Headline */}
+                  <h3 className="font-serif text-2xl sm:text-3xl md:text-[34px] tracking-normal text-[#F7F5F0] font-normal leading-tight mb-3">
+                    {item.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-xs sm:text-sm md:text-[15px] text-[#EFECE5]/90 font-light leading-relaxed mb-6 max-w-lg line-clamp-3">
+                    {item.description}
+                  </p>
+
+                  {/* Action Link / Button */}
+                  <div>
+                    <Link
+                      href={item.href || "/experiences"}
+                      className="inline-flex items-center justify-center gap-2 h-[46px] px-7 bg-[#B9A078] hover:bg-[#A88D60] text-[#0C141D] text-[11px] sm:text-xs tracking-[0.16em] uppercase font-medium transition-all duration-300 rounded-[2px] shadow-lg group-hover:shadow-xl"
+                    >
+                      <span>{item.ctaText}</span>
+                      <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
-      </Container>
-    </Section>
+
+
+      </div>
+    </section>
   );
 }

@@ -3,11 +3,10 @@ import { contentService } from "@/lib/services/content.service";
 import { constructMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/sections/PageHero";
 import { CharterInquiryForm } from "@/components/forms/CharterInquiryForm";
+import { DirectContactSection } from "@/components/sections/DirectContactSection";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
-import { Eyebrow } from "@/components/ui/Eyebrow";
-import { Divider } from "@/components/ui/Divider";
-import { Heading } from "@/components/ui/Heading";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await contentService.getContactPage();
@@ -15,98 +14,72 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ContactPage() {
-  const [page, site] = await Promise.all([
-    contentService.getContactPage(),
-    contentService.getSiteInfo(),
-  ]);
+  const page = await contentService.getContactPage();
 
   return (
     <>
-      <PageHero content={page.hero} />
+      {/* SECTION 1 — HERO */}
+      <PageHero content={page.hero as any} />
 
-      <Section background="navy">
-        <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            {/* Direct Communication Column */}
-            <div className="lg:col-span-5 space-y-8">
-              <div>
-                <Eyebrow className="mb-3">{page.directContact.eyebrow}</Eyebrow>
-                <Divider variant="short" />
-                <Heading level={2} className="mb-6">
-                  {page.directContact.headline}
-                </Heading>
+      {/* SECTIONS 2 & 3 — CHARTER INQUIRY FORM & DIRECT CONTACT */}
+      <Section
+        background="navy"
+        className="relative overflow-hidden bg-[#0B141D]"
+      >
+        {/* Ambient background texture */}
+        <div className="absolute inset-0 ambient-glow-gold pointer-events-none opacity-20" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#B9A078]/30 to-transparent" />
 
-                <div className="space-y-4 text-haven-cream/75 text-sm sm:text-base leading-relaxed font-light mb-8">
-                  {page.directContact.paragraphs.map((p, i) => (
-                    <p key={i}>{p}</p>
-                  ))}
-                </div>
-              </div>
+        <Container size="default">
+          <div className="py-20 md:py-28 lg:py-32 grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20 items-start">
 
-              {/* Direct Details Card */}
-              <div className="bg-haven-deep/70 border border-white/10 p-6 sm:p-8 space-y-6">
-                <div>
-                  <span className="text-[0.68rem] tracking-[0.25em] uppercase text-haven-gold font-light block mb-1">
-                    Home Port & Base
-                  </span>
-                  <p className="text-haven-cream font-light text-base">
-                    {site.location}
-                  </p>
-                </div>
-
-                <div className="w-12 h-[1px] bg-white/10" />
-
-                <div>
-                  <span className="text-[0.68rem] tracking-[0.25em] uppercase text-haven-gold font-light block mb-1">
-                    Direct Email
-                  </span>
-                  <a
-                    href={`mailto:${site.email}`}
-                    className="text-haven-cream font-light text-base hover:text-haven-gold transition-colors"
-                  >
-                    {site.email}
-                  </a>
-                </div>
-
-                <div className="w-12 h-[1px] bg-white/10" />
-
-                <div>
-                  <span className="text-[0.68rem] tracking-[0.25em] uppercase text-haven-gold font-light block mb-1">
-                    Telephone Inquiry
-                  </span>
-                  <a
-                    href={`tel:${site.phone.replace(/[^0-9+]/g, "")}`}
-                    className="text-haven-cream font-light text-base hover:text-haven-gold transition-colors"
-                  >
-                    {site.phone}
-                  </a>
-                </div>
-
-                <div className="w-12 h-[1px] bg-white/10" />
-
-                <p className="text-xs text-haven-slate font-light leading-relaxed">
-                  {page.directContact.responsePromise}
-                </p>
-              </div>
+            {/* Left: DIRECT CONTACT — sticky sidebar */}
+            <div className="lg:col-span-4 xl:col-span-4 lg:sticky lg:top-28">
+              <ScrollReveal direction="left" duration={0.9}>
+                <DirectContactSection content={page.directContact} />
+              </ScrollReveal>
             </div>
 
-            {/* Inquiry Form Column */}
-            <div className="lg:col-span-7">
-              <div className="mb-6">
-                <h3 className="font-[family-name:var(--font-playfair)] font-serif text-2xl sm:text-3xl font-light text-haven-cream mb-2">
-                  {page.form.headline}
-                </h3>
-                <p className="text-sm text-haven-cream/70 font-light">
-                  {page.form.description}
-                </p>
-              </div>
-
-              <CharterInquiryForm
-                interests={page.form.interests}
-                guestOptions={page.form.guestOptions}
-                successMessage={page.form.successMessage}
-              />
+            {/* Vertical divider */}
+            <div className="hidden lg:block lg:col-span-1 self-stretch">
+              <div className="h-full w-px bg-gradient-to-b from-transparent via-white/10 to-transparent mx-auto" />
             </div>
+
+            {/* Right: CHARTER INQUIRY FORM */}
+            <div className="lg:col-span-7 xl:col-span-7">
+              <ScrollReveal direction="right" duration={0.9} delay={100} className="w-full">
+                <div className="relative rounded-[2px] bg-[#09121B]/85 backdrop-blur-md border border-white/[0.08] p-6 sm:p-10 lg:p-12 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] overflow-hidden">
+                  {/* Subtle top champagne accent hairline */}
+                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#B9A078] to-transparent" />
+                  <div className="pointer-events-none absolute -top-32 -right-32 w-80 h-80 bg-[#B9A078]/5 rounded-full blur-3xl" />
+
+                  {/* Form header */}
+                  <div className="mb-10 relative z-10">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="w-8 h-[1.5px] bg-[#B9A078]" />
+                      <p className="text-xs tracking-[0.28em] text-[#B9A078] uppercase font-sans font-medium">
+                        CHARTER INQUIRY
+                      </p>
+                    </div>
+                    <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-white tracking-tight leading-[1.15] mb-4">
+                      {page.form.headline}
+                    </h2>
+                    <p className="text-white/65 text-sm sm:text-base font-light leading-relaxed">
+                      {page.form.description}
+                    </p>
+                  </div>
+
+                  <div className="relative z-10">
+                    <CharterInquiryForm
+                      occasions={page.form.occasions}
+                      guestOptions={page.form.guestOptions}
+                      successMessage={page.form.successMessage}
+                    />
+                  </div>
+                </div>
+              </ScrollReveal>
+            </div>
+
           </div>
         </Container>
       </Section>
