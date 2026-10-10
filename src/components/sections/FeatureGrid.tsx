@@ -38,7 +38,7 @@ export function FeatureGrid({
               </Heading>
             )}
             {content.description && (
-              <p className="text-haven-cream/70 text-sm sm:text-base font-light leading-relaxed mt-2 text-left max-w-2xl">
+              <p className="text-[#4A5568] text-sm sm:text-base font-light leading-relaxed mt-2 text-left max-w-2xl">
                 {content.description}
               </p>
             )}
@@ -50,11 +50,11 @@ export function FeatureGrid({
           {content.items.map((item, index) => (
             <div
               key={item.title || index}
-              className="group flex flex-col bg-haven-deep/70 backdrop-blur-sm border border-white/10 rounded-sm overflow-hidden transition-all duration-500 hover:border-haven-gold/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-haven-gold/5"
+              className="group flex flex-col bg-white border border-[#EAE6DF] rounded-sm overflow-hidden transition-all duration-500 hover:border-[#00204E]/40 hover:-translate-y-1.5 hover:shadow-xl"
             >
               {/* Image Frame */}
               {item.image && (
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-haven-deep">
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-white">
                   <Image
                     src={item.image.src}
                     alt={item.image.alt}
@@ -62,16 +62,15 @@ export function FeatureGrid({
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-haven-deep/50 via-transparent to-transparent pointer-events-none group-hover:opacity-40 transition-opacity duration-300" />
                 </div>
               )}
 
               {/* Card Text Content */}
               <div className="p-6 flex-1 flex flex-col justify-start">
-                <h3 className="font-serif text-xl sm:text-2xl text-haven-cream font-normal mb-3 leading-snug group-hover:text-haven-gold transition-colors duration-300">
+                <h3 className="font-serif text-xl sm:text-2xl text-[#08182B] font-normal mb-3 leading-snug group-hover:text-haven-gold transition-colors duration-300">
                   {item.title}
                 </h3>
-                <p className="text-haven-cream/70 text-xs sm:text-sm leading-relaxed font-light">
+                <p className="text-[#4A5568] text-xs sm:text-sm leading-relaxed font-light">
                   {item.description}
                 </p>
               </div>

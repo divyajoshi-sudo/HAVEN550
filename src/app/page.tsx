@@ -57,7 +57,7 @@ export default async function HomePage() {
         background="ivory"
       />
 
-      {/* SECTION 5 — CHARTER RATES (NAVY) */}
+      {/* SECTION 5 — CHARTER RATES (WHITE EDITORIAL) */}
       <EditorialRates
         eyebrow={page.rates.eyebrow}
         headline={page.rates.headline}
@@ -66,21 +66,28 @@ export default async function HomePage() {
         inclusionNote={page.rates.inclusionNote}
         gratuityNote={page.rates.gratuityNote}
         ctaButton={page.rates.cta}
-        background="navy"
+        background="ivory"
       />
 
-      {/* SECTION 6 — DESTINATIONS (IVORY #EFECE5) */}
+      {/* SECTION 6 — DESTINATIONS (DEEP NAVY #101C29) */}
       <EditorialDestinations
         eyebrow={page.destinations.eyebrow}
         headline={page.destinations.headline}
         paragraphs={page.destinations.paragraphs}
-        image={page.destinations.image}
+        image={{
+          src: "/images/haven-aerial-topdown.jpeg",
+          alt: "Top-down aerial tracking shot of HAVEN 550 cruising along the South Florida coast",
+        }}
+        secondaryImage={{
+          src: "/images/haven-aerial-stern.jpeg",
+          alt: "HAVEN 550 cruising coastal waterways in Fort Lauderdale",
+        }}
         ctaHref={page.destinations.cta?.href || "/destinations"}
         ctaLabel={page.destinations.cta?.label || "DISCOVER DESTINATIONS"}
-        background="ivory"
+        background="navy"
       />
 
-      {/* SECTION 7 — FINAL CTA (NAVY) */}
+      {/* SECTION 8 — FINAL CTA (DEEP NAVY #101C29) */}
       <CtaBanner content={page.ctaBanner} background="navy" />
     </>
   );

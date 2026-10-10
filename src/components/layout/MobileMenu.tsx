@@ -25,7 +25,7 @@ export function MobileMenu({ isOpen, onClose, links, location }: MobileMenuProps
 
   return (
     <div
-      className={`fixed inset-0 z-50 bg-[#071B2A]/98 backdrop-blur-2xl flex flex-col items-center justify-center px-6 transition-all duration-300 lg:hidden ${
+      className={`fixed inset-0 z-50 bg-[#081018]/98 backdrop-blur-2xl flex flex-col items-center justify-center px-6 transition-all duration-300 lg:hidden text-[#F8F8F6] ${
         isOpen
           ? "opacity-100 pointer-events-auto"
           : "opacity-0 pointer-events-none"
@@ -34,7 +34,7 @@ export function MobileMenu({ isOpen, onClose, links, location }: MobileMenuProps
       {/* Close button */}
       <button
         onClick={onClose}
-        className="absolute top-6 right-6 p-2 text-white/80 hover:text-white focus:outline-none"
+        className="absolute top-6 right-6 p-2 text-[#F8F8F6] hover:text-[#B9A078] focus:outline-none transition-colors"
         aria-label="Close menu"
       >
         <svg
@@ -54,10 +54,10 @@ export function MobileMenu({ isOpen, onClose, links, location }: MobileMenuProps
 
       {/* Brand in drawer */}
       <div className="mb-8 text-center">
-        <span className="font-serif text-2xl tracking-[0.25em] text-white block">
+        <span className="font-serif text-2xl tracking-[0.25em] text-[#F8F8F6] block">
           HAVEN 550
         </span>
-        <span className="text-[0.55rem] tracking-[0.35em] uppercase text-[#B79B6A] font-light">
+        <span className="text-[10px] tracking-[0.32em] uppercase text-[#B9A078] font-medium font-sans mt-1 block">
           FORT LAUDERDALE
         </span>
       </div>
@@ -68,7 +68,7 @@ export function MobileMenu({ isOpen, onClose, links, location }: MobileMenuProps
             key={link.href}
             href={link.href}
             onClick={onClose}
-            className="font-[family-name:var(--font-cormorant)] text-2xl tracking-[0.16em] uppercase text-white hover:text-haven-gold transition-colors duration-200"
+            className="font-[family-name:var(--font-cormorant)] text-2xl tracking-[0.16em] uppercase text-[#D6D2CA] hover:text-[#B9A078] transition-colors duration-200"
           >
             {link.label}
           </Link>
@@ -76,18 +76,18 @@ export function MobileMenu({ isOpen, onClose, links, location }: MobileMenuProps
       </nav>
 
       {/* Primary CTA Button */}
-      <div className="mt-8 w-full max-w-xs">
+      <div className="mt-8 flex justify-center w-full">
         <Link
           href="/contact"
           onClick={onClose}
-          className="w-full h-[50px] inline-flex items-center justify-center bg-haven-gold hover:bg-[#A88D60] text-[#0C141D] text-[13px] tracking-[0.14em] uppercase font-medium rounded-[2px] transition-colors duration-300"
+          className="px-8 h-[44px] inline-flex items-center justify-center bg-[#CBB188] hover:bg-[#D8C29D] text-[#101C29] text-[11px] sm:text-[12px] tracking-[0.16em] uppercase font-semibold rounded-[2px] transition-colors duration-300 shadow-md font-sans"
         >
-          REQUEST A CHARTER
+          <span>REQUEST A CHARTER</span>
         </Link>
       </div>
 
       <div className="w-16 h-[1px] bg-white/10 mt-8 mb-4" />
-      <p className="text-white/50 text-[0.65rem] tracking-[0.2em] uppercase text-center">
+      <p className="text-[#8E9CAE] text-[10px] tracking-[0.24em] uppercase text-center font-sans">
         {location}
       </p>
     </div>

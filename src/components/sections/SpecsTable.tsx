@@ -130,9 +130,8 @@ export function SpecsTable({
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  const [progress, setProgress] = useState<number>(0);
   const [activeSlide, setActiveSlide] = useState<number>(0);
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
-  const [isMuted, setIsMuted] = useState<boolean>(true);
 
   // Map incoming items if provided into the 2-2-2-2 combinations
   const specPairs: SpecPair[] = React.useMemo(() => {
@@ -169,7 +168,7 @@ export function SpecsTable({
     ];
   }, [items]);
 
-  // Handle scroll-based slide progression
+  // Handle scroll-based slide progression and horizontal translation
   const handleScroll = useCallback(() => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
@@ -179,76 +178,45 @@ export function SpecsTable({
 
     // Calculate how far into the container we have scrolled (0 to 1)
     const scrolled = -rect.top;
-    const progress = Math.max(0, Math.min(1, scrolled / containerHeight));
+    const currentProgress = Math.max(0, Math.min(1, scrolled / containerHeight));
 
-    // Determine target slide based on progress
+    setProgress(currentProgress);
+
     const slideCount = SLIDES.length;
-    const targetIndex = Math.min(slideCount - 1, Math.floor(progress * slideCount));
-
+    const targetIndex = Math.min(slideCount - 1, Math.round(currentProgress * (slideCount - 1)));
     setActiveSlide(targetIndex);
   }, []);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
   }, [handleScroll]);
-
-  // Video play/pause toggle
-  const togglePlay = useCallback(() => {
-    if (!videoRef.current) return;
-    if (videoRef.current.paused) {
-      videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
-    } else {
-      videoRef.current.pause();
-      setIsPlaying(false);
-    }
-  }, []);
-
-  // Video mute/unmute toggle
-  const toggleMute = useCallback(() => {
-    if (!videoRef.current) return;
-    videoRef.current.muted = !videoRef.current.muted;
-    setIsMuted(videoRef.current.muted);
-  }, []);
-
-  // Navigate to slide by index and smooth scroll container
-  const goToSlide = useCallback((index: number) => {
-    setActiveSlide(index);
-
-    if (containerRef.current) {
-      const containerTop = containerRef.current.offsetTop;
-      const containerHeight = containerRef.current.offsetHeight - window.innerHeight;
-      const targetScroll = containerTop + (index / (SLIDES.length - 1)) * containerHeight;
-      window.scrollTo({ top: targetScroll, behavior: "smooth" });
-    }
-  }, []);
-
-  const nextSlide = useCallback(() => {
-    goToSlide((activeSlide + 1) % SLIDES.length);
-  }, [activeSlide, goToSlide]);
-
-  const prevSlide = useCallback(() => {
-    goToSlide((activeSlide - 1 + SLIDES.length) % SLIDES.length);
-  }, [activeSlide, goToSlide]);
 
   return (
     <section
       ref={containerRef}
-      className="relative bg-[#070D14] text-white selection:bg-[#B9A078] selection:text-black"
-      style={{ height: "340vh" }}
+      className="relative bg-[#081018] text-[#F8F8F6] selection:bg-[#B9A078] selection:text-[#101C29]"
+      style={{ height: "380vh", backgroundColor: "#081018", color: "#F8F8F6" }}
       aria-label="Yacht Specifications Showcase"
     >
       {/* Sticky Fullscreen Viewport Window */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between">
+      <div
+        style={{ backgroundColor: "#081018", color: "#F8F8F6" }}
+        className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between bg-[#081018]"
+      >
         
-        {/* Background Ambient Luxury Lighting */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#132233]/40 via-[#070D14] to-[#050A0F] pointer-events-none z-0" />
+        {/* Background Layer */}
+        <div className="absolute inset-0 bg-[#081018] pointer-events-none z-0" />
 
         {/* =========================================================================
             TOP HUD: Camper & Nicholsons Inspired Editorial Header
         ========================================================================= */}
-        <div className="relative z-30 pt-6 md:pt-8 site-padding-x flex items-center justify-between border-b border-white/10 bg-gradient-to-b from-[#070D14]/90 via-[#070D14]/50 to-transparent backdrop-blur-sm">
+        <div className="relative z-30 pt-6 md:pt-8 pb-3 site-padding-x flex items-center justify-between border-b border-white/10 bg-gradient-to-b from-black/80 via-black/40 to-transparent backdrop-blur-sm">
           {/* Left: Vessel Brand & Category */}
           <div className="flex items-center gap-4">
             <span className="w-2 h-2 rounded-full bg-[#B9A078] animate-pulse" />
@@ -256,368 +224,382 @@ export function SpecsTable({
               <p className="text-[10px] sm:text-xs tracking-[0.25em] text-[#B9A078] uppercase font-sans">
                 {eyebrow} // FERRETTI 57
               </p>
-              <h2 className="text-sm sm:text-base font-serif tracking-wider text-white">
+              <h2
+                style={{ color: "#F8F8F6" }}
+                className="text-sm sm:text-base font-serif tracking-wider text-[#F8F8F6]"
+              >
                 HAVEN 550 SPECIFICATIONS
               </h2>
             </div>
           </div>
 
+          {/* Right: Slide Counter */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            <span className="text-xs sm:text-sm font-mono text-[#B9A078] tracking-widest font-medium">
+              0{activeSlide + 1}
+            </span>
+            <span className="text-xs text-white/30">/</span>
+            <span className="text-xs sm:text-sm font-mono text-white/50 tracking-widest">04</span>
+          </div>
 
+          {/* Subtle gold progress line across the header */}
+          <div
+            className="absolute bottom-0 left-0 h-[1.5px] bg-gradient-to-r from-[#B9A078] via-[#D4AF37] to-[#B9A078] transition-all duration-150"
+            style={{ width: `${Math.max(5, progress * 100)}%` }}
+          />
         </div>
 
         {/* =========================================================================
-            CENTER MEDIA STAGE: Fullscreen Yacht Images with Scroll-Driven Transitions
+            CENTER MEDIA STAGE: Continuous Horizontal Scrolling Filmstrip
         ========================================================================= */}
         <div className="relative flex-1 w-full h-full overflow-hidden">
-          {/* SLIDE 0: HAVEN 550 Running Profile */}
+          {/* Horizontal Track: Smoothly translates to the left as user scrolls down */}
           <div
-            className={`absolute inset-0 w-full h-full transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] ${
-              activeSlide === 0
-                ? "opacity-100 scale-100 pointer-events-auto z-10"
-                : "opacity-0 scale-105 pointer-events-none z-0"
-            }`}
+            className="flex h-full w-[400vw] will-change-transform"
+            style={{
+              transform: `translate3d(-${progress * 300}vw, 0, 0)`,
+              transition: "transform 0.08s ease-out",
+            }}
           >
-            <Image
-              src={SLIDES[0].src}
-              alt={SLIDES[0].alt}
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover object-center"
-            />
-            {/* Dynamic Scrim & Ambient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-black/30 pointer-events-none" />
-            <div className="absolute inset-0 dynamic-scrim pointer-events-none opacity-40" />
+            {/* SLIDE 0: HAVEN 550 Running Profile */}
+            <div className="relative w-screen h-full flex-shrink-0 overflow-hidden">
+              <Image
+                src={SLIDES[0].src}
+                alt={SLIDES[0].alt}
+                fill
+                priority
+                sizes="100vw"
+                className="object-cover object-center"
+              />
+              {/* Scrim Gradient for text contrast */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/30 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent pointer-events-none" />
 
-            {/* In-Image Floating Specs Overlay Card */}
-            <div
-              className={`absolute bottom-24 sm:bottom-28 left-[var(--site-px)] right-6 sm:right-auto z-20 max-w-xl lg:max-w-2xl pointer-events-auto transition-all duration-700 delay-100 ${
-                activeSlide === 0 ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
-              }`}
-            >
-              <div className="bg-[#070D14]/85 backdrop-blur-xl border border-[#B9A078]/35 p-5 sm:p-7 md:p-8 shadow-2xl relative">
-                <div className="absolute top-0 left-0 w-8 h-[2px] bg-[#B9A078]" />
-                <div className="absolute top-0 left-0 w-[2px] h-8 bg-[#B9A078]" />
-
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="w-8 h-[1px] bg-[#B9A078]" />
-                  <span className="text-[10px] sm:text-xs tracking-[0.3em] uppercase text-[#B9A078] font-sans">
-                    {SLIDES[0].tag}
-                  </span>
-                </div>
-
-                <h1 className="text-2xl sm:text-4xl md:text-5xl font-serif font-light text-white tracking-wide mb-2">
-                  {headline}
-                </h1>
-                <p className="text-xs sm:text-sm text-white/80 font-light mb-6 max-w-lg">
-                  {SLIDES[0].subtitle}
-                </p>
-
-                {/* 4 Core Quick Spec Badges */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 pt-4 border-t border-white/10">
-                  <div className="bg-white/[0.04] border border-white/10 p-2.5">
-                    <span className="text-[9px] sm:text-[10px] tracking-[0.2em] uppercase text-[#8A95A5] block">
-                      LENGTH
+              {/* In-Image Floating Specs Overlay */}
+              <div className="absolute bottom-20 sm:bottom-28 left-[var(--site-px)] right-6 sm:right-auto z-20 max-w-xl lg:max-w-2xl pointer-events-auto">
+                <div className="relative py-2">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="w-8 h-[1.5px] bg-[#D4AF37]" />
+                    <span className="text-[10px] sm:text-xs tracking-[0.3em] uppercase text-[#D4AF37] font-sans drop-shadow-sm">
+                      {SLIDES[0].tag}
                     </span>
-                    <span className="text-sm sm:text-base font-serif text-white">57 Feet</span>
                   </div>
-                  <div className="bg-white/[0.04] border border-white/10 p-2.5">
-                    <span className="text-[9px] sm:text-[10px] tracking-[0.2em] uppercase text-[#8A95A5] block">
-                      GUESTS
-                    </span>
-                    <span className="text-sm sm:text-base font-serif text-white">8 Max</span>
-                  </div>
-                  <div className="bg-white/[0.04] border border-white/10 p-2.5">
-                    <span className="text-[9px] sm:text-[10px] tracking-[0.2em] uppercase text-[#8A95A5] block">
-                      SPEED
-                    </span>
-                    <span className="text-sm sm:text-base font-serif text-white">26 Knots</span>
-                  </div>
-                  <div className="bg-white/[0.04] border border-white/10 p-2.5">
-                    <span className="text-[9px] sm:text-[10px] tracking-[0.2em] uppercase text-[#8A95A5] block">
-                      BUILDER
-                    </span>
-                    <span className="text-sm sm:text-base font-serif text-[#B9A078]">Ferretti</span>
+
+                  <h1
+                    style={{
+                      color: "#F8F8F6",
+                      textShadow: "0 2px 10px rgba(0,0,0,0.85)",
+                    }}
+                    className="text-2xl sm:text-4xl md:text-5xl font-serif font-light text-[#F8F8F6] tracking-wide mb-2 drop-shadow-[0_2px_10px_rgba(0,0,0,0.85)]"
+                  >
+                    {headline}
+                  </h1>
+                  <p
+                    style={{
+                      color: "#F8F8F6",
+                      textShadow: "0 1px 4px rgba(0,0,0,0.8)",
+                    }}
+                    className="text-xs sm:text-sm text-[#F8F8F6] font-light mb-6 max-w-lg drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]"
+                  >
+                    {SLIDES[0].subtitle}
+                  </p>
+
+                  {/* 4 Core Quick Specs */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 pt-5 border-t border-white/20">
+                    <div>
+                      <span className="text-[9px] sm:text-[10px] tracking-[0.22em] uppercase text-[#B9A078] block mb-1 drop-shadow-sm">
+                        LENGTH
+                      </span>
+                      <span style={{ color: "#F8F8F6" }} className="text-base sm:text-lg font-serif text-[#F8F8F6] font-light drop-shadow-sm">57 Feet</span>
+                    </div>
+                    <div>
+                      <span className="text-[9px] sm:text-[10px] tracking-[0.22em] uppercase text-[#B9A078] block mb-1 drop-shadow-sm">
+                        GUESTS
+                      </span>
+                      <span style={{ color: "#F8F8F6" }} className="text-base sm:text-lg font-serif text-[#F8F8F6] font-light drop-shadow-sm">8 Max</span>
+                    </div>
+                    <div>
+                      <span className="text-[9px] sm:text-[10px] tracking-[0.22em] uppercase text-[#B9A078] block mb-1 drop-shadow-sm">
+                        SPEED
+                      </span>
+                      <span style={{ color: "#F8F8F6" }} className="text-base sm:text-lg font-serif text-[#F8F8F6] font-light drop-shadow-sm">26 Knots</span>
+                    </div>
+                    <div>
+                      <span className="text-[9px] sm:text-[10px] tracking-[0.22em] uppercase text-[#B9A078] block mb-1 drop-shadow-sm">
+                        BUILDER
+                      </span>
+                      <span style={{ color: "#B9A078" }} className="text-base sm:text-lg font-serif text-[#B9A078] font-light drop-shadow-sm">Ferretti</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* SLIDE 1: Aerial Topdown (Scale & Capacity) */}
-          <div
-            className={`absolute inset-0 w-full h-full transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] ${
-              activeSlide === 1
-                ? "opacity-100 scale-100 pointer-events-auto z-10"
-                : "opacity-0 scale-105 pointer-events-none z-0"
-            }`}
-          >
-            <Image
-              src={SLIDES[1].src}
-              alt={SLIDES[1].alt}
-              fill
-              sizes="100vw"
-              className="object-cover object-center"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-black/30 pointer-events-none" />
-            <div className="absolute inset-0 dynamic-scrim pointer-events-none opacity-40" />
+            {/* SLIDE 1: Aerial Topdown (Scale & Capacity) */}
+            <div className="relative w-screen h-full flex-shrink-0 overflow-hidden">
+              <Image
+                src={SLIDES[1].src}
+                alt={SLIDES[1].alt}
+                fill
+                sizes="100vw"
+                className="object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/30 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent pointer-events-none" />
 
-            {/* In-Image Floating Specs Overlay Card */}
-            <div
-              className={`absolute bottom-24 sm:bottom-28 left-[var(--site-px)] right-6 sm:right-auto z-20 max-w-xl pointer-events-auto transition-all duration-700 delay-100 ${
-                activeSlide === 1 ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
-              }`}
-            >
-              <div className="bg-[#070D14]/85 backdrop-blur-xl border border-[#B9A078]/35 p-6 sm:p-8 shadow-2xl relative">
-                <div className="absolute top-0 left-0 w-8 h-[2px] bg-[#B9A078]" />
-                <div className="absolute top-0 left-0 w-[2px] h-8 bg-[#B9A078]" />
-
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="w-8 h-[1px] bg-[#B9A078]" />
-                  <span className="text-[10px] sm:text-xs tracking-[0.3em] uppercase text-[#B9A078] font-sans">
-                    02 // SCALE &amp; CAPACITY
-                  </span>
-                </div>
-
-                <h2 className="text-2xl sm:text-4xl font-serif font-light text-white tracking-wide mb-1">
-                  {SLIDES[1].title}
-                </h2>
-                <p className="text-xs sm:text-sm text-white/75 font-light mb-6">
-                  {SLIDES[1].subtitle}
-                </p>
-
-                {/* Paired Specifications */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/10 mb-6">
-                  <div className="bg-white/[0.03] border border-white/10 p-3.5">
-                    <span className="text-[10px] tracking-[0.2em] uppercase text-[#8A95A5] block mb-1">
-                      {specPairs[1].itemA.label}
+              <div className="absolute bottom-20 sm:bottom-28 left-[var(--site-px)] right-6 sm:right-auto z-20 max-w-xl pointer-events-auto">
+                <div className="relative py-2">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="w-8 h-[1.5px] bg-[#B9A078]" />
+                    <span className="text-[10px] sm:text-xs tracking-[0.3em] uppercase text-[#B9A078] font-sans drop-shadow-sm">
+                      02 // SCALE &amp; CAPACITY
                     </span>
-                    <p className="text-xl sm:text-2xl font-serif text-white font-light">
-                      {specPairs[1].itemA.value}
-                    </p>
-                    <p className="text-xs text-white/50 mt-1">
-                      {specPairs[1].itemA.detail}
-                    </p>
                   </div>
 
-                  <div className="bg-white/[0.03] border border-white/10 p-3.5">
-                    <span className="text-[10px] tracking-[0.2em] uppercase text-[#8A95A5] block mb-1">
-                      {specPairs[1].itemB.label}
-                    </span>
-                    <p className="text-xl sm:text-2xl font-serif text-[#B9A078] font-light">
-                      {specPairs[1].itemB.value}
-                    </p>
-                    <p className="text-xs text-white/50 mt-1">
-                      {specPairs[1].itemB.detail}
-                    </p>
-                  </div>
-                </div>
+                  <h2
+                    style={{
+                      color: "#F8F8F6",
+                      textShadow: "0 2px 10px rgba(0,0,0,0.85)",
+                    }}
+                    className="text-2xl sm:text-4xl font-serif font-light text-[#F8F8F6] tracking-wide mb-1 drop-shadow-[0_2px_10px_rgba(0,0,0,0.85)]"
+                  >
+                    {SLIDES[1].title}
+                  </h2>
+                  <p
+                    style={{
+                      color: "#F8F8F6",
+                      textShadow: "0 1px 4px rgba(0,0,0,0.8)",
+                    }}
+                    className="text-xs sm:text-sm text-[#F8F8F6] font-light mb-6 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]"
+                  >
+                    {SLIDES[1].subtitle}
+                  </p>
 
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 text-xs tracking-[0.22em] uppercase font-sans text-[#B9A078] hover:text-white transition-colors"
-                >
-                  <span>Request Private Charter</span>
-                  <span>→</span>
-                </Link>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-8 pt-5 border-t border-white/20 mb-6">
+                    <div>
+                      <span className="text-[10px] tracking-[0.22em] uppercase text-[#B9A078] block mb-1 drop-shadow-sm">
+                        {specPairs[1].itemA.label}
+                      </span>
+                      <p
+                        style={{ color: "#F8F8F6" }}
+                        className="text-xl sm:text-2xl font-serif text-[#F8F8F6] font-light drop-shadow-sm"
+                      >
+                        {specPairs[1].itemA.value}
+                      </p>
+                      <p
+                        style={{ color: "#F8F8F6" }}
+                        className="text-xs text-[#F8F8F6]/80 mt-1 font-light drop-shadow-sm"
+                      >
+                        {specPairs[1].itemA.detail}
+                      </p>
+                    </div>
+
+                    <div>
+                      <span className="text-[10px] tracking-[0.22em] uppercase text-[#B9A078] block mb-1 drop-shadow-sm">
+                        {specPairs[1].itemB.label}
+                      </span>
+                      <p
+                        style={{ color: "#F8F8F6" }}
+                        className="text-xl sm:text-2xl font-serif text-[#F8F8F6] font-light drop-shadow-sm"
+                      >
+                        {specPairs[1].itemB.value}
+                      </p>
+                      <p
+                        style={{ color: "#F8F8F6" }}
+                        className="text-xs text-[#F8F8F6]/80 mt-1 font-light drop-shadow-sm"
+                      >
+                        {specPairs[1].itemB.detail}
+                      </p>
+                    </div>
+                  </div>
+
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center gap-2 text-xs tracking-[0.22em] uppercase font-sans text-[#D4AF37] hover:text-white transition-colors group cursor-pointer drop-shadow-sm"
+                  >
+                    <span>Request Private Charter</span>
+                    <span className="transition-transform group-hover:translate-x-1.5">→</span>
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* SLIDE 2: Running Profile at Speed (Performance & Speed) */}
-          <div
-            className={`absolute inset-0 w-full h-full transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] ${
-              activeSlide === 2
-                ? "opacity-100 scale-100 pointer-events-auto z-10"
-                : "opacity-0 scale-105 pointer-events-none z-0"
-            }`}
-          >
-            <Image
-              src={SLIDES[2].src}
-              alt={SLIDES[2].alt}
-              fill
-              sizes="100vw"
-              className="object-cover object-center"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-black/30 pointer-events-none" />
-            <div className="absolute inset-0 dynamic-scrim pointer-events-none opacity-40" />
+            {/* SLIDE 2: Running Profile at Speed (Performance & Speed) */}
+            <div className="relative w-screen h-full flex-shrink-0 overflow-hidden">
+              <Image
+                src={SLIDES[2].src}
+                alt={SLIDES[2].alt}
+                fill
+                sizes="100vw"
+                className="object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/30 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent pointer-events-none" />
 
-            {/* In-Image Floating Specs Overlay Card */}
-            <div
-              className={`absolute bottom-24 sm:bottom-28 left-[var(--site-px)] right-6 sm:right-auto z-20 max-w-xl pointer-events-auto transition-all duration-700 delay-100 ${
-                activeSlide === 2 ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
-              }`}
-            >
-              <div className="bg-[#070D14]/85 backdrop-blur-xl border border-[#B9A078]/35 p-6 sm:p-8 shadow-2xl relative">
-                <div className="absolute top-0 left-0 w-8 h-[2px] bg-[#B9A078]" />
-                <div className="absolute top-0 left-0 w-[2px] h-8 bg-[#B9A078]" />
-
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="w-8 h-[1px] bg-[#B9A078]" />
-                  <span className="text-[10px] sm:text-xs tracking-[0.3em] uppercase text-[#B9A078] font-sans">
-                    03 // PERFORMANCE &amp; SPEED
-                  </span>
-                </div>
-
-                <h2 className="text-2xl sm:text-4xl font-serif font-light text-white tracking-wide mb-1">
-                  {SLIDES[2].title}
-                </h2>
-                <p className="text-xs sm:text-sm text-white/75 font-light mb-6">
-                  {SLIDES[2].subtitle}
-                </p>
-
-                {/* Paired Specifications */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/10 mb-6">
-                  <div className="bg-white/[0.03] border border-white/10 p-3.5">
-                    <span className="text-[10px] tracking-[0.2em] uppercase text-[#8A95A5] block mb-1">
-                      {specPairs[0].itemA.label} &amp; {specPairs[0].itemB.label}
+              <div className="absolute bottom-20 sm:bottom-28 left-[var(--site-px)] right-6 sm:right-auto z-20 max-w-xl pointer-events-auto">
+                <div className="relative py-2">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="w-8 h-[1.5px] bg-[#D4AF37]" />
+                    <span className="text-[10px] sm:text-xs tracking-[0.3em] uppercase text-[#D4AF37] font-sans drop-shadow-sm">
+                      03 // PERFORMANCE &amp; SPEED
                     </span>
-                    <p className="text-xl sm:text-2xl font-serif text-white font-light">
-                      {specPairs[0].itemA.value} · {specPairs[0].itemB.value}
-                    </p>
-                    <p className="text-xs text-white/50 mt-1">
-                      {specPairs[0].itemA.detail}
-                    </p>
                   </div>
 
-                  <div className="bg-white/[0.03] border border-white/10 p-3.5">
-                    <span className="text-[10px] tracking-[0.2em] uppercase text-[#8A95A5] block mb-1">
-                      {specPairs[3].itemB.label}
-                    </span>
-                    <p className="text-xl sm:text-2xl font-serif text-[#B9A078] font-light">
-                      {specPairs[3].itemB.value}
-                    </p>
-                    <p className="text-xs text-white/50 mt-1">
-                      {specPairs[3].itemB.detail}
-                    </p>
-                  </div>
-                </div>
+                  <h2
+                    style={{
+                      color: "#F8F8F6",
+                      textShadow: "0 2px 10px rgba(0,0,0,0.85)",
+                    }}
+                    className="text-2xl sm:text-4xl font-serif font-light text-[#F8F8F6] tracking-wide mb-1 drop-shadow-[0_2px_10px_rgba(0,0,0,0.85)]"
+                  >
+                    {SLIDES[2].title}
+                  </h2>
+                  <p
+                    style={{
+                      color: "#F8F8F6",
+                      textShadow: "0 1px 4px rgba(0,0,0,0.8)",
+                    }}
+                    className="text-xs sm:text-sm text-[#F8F8F6] font-light mb-6 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]"
+                  >
+                    {SLIDES[2].subtitle}
+                  </p>
 
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 text-xs tracking-[0.22em] uppercase font-sans text-[#B9A078] hover:text-white transition-colors"
-                >
-                  <span>Request Private Charter</span>
-                  <span>→</span>
-                </Link>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-8 pt-5 border-t border-white/20 mb-6">
+                    <div>
+                      <span className="text-[10px] tracking-[0.22em] uppercase text-[#B9A078] block mb-1 drop-shadow-sm">
+                        {specPairs[0].itemA.label} &amp; {specPairs[0].itemB.label}
+                      </span>
+                      <p
+                        style={{ color: "#F8F8F6" }}
+                        className="text-xl sm:text-2xl font-serif text-[#F8F8F6] font-light drop-shadow-sm"
+                      >
+                        {specPairs[0].itemA.value} · {specPairs[0].itemB.value}
+                      </p>
+                      <p
+                        style={{ color: "#F8F8F6" }}
+                        className="text-xs text-[#F8F8F6]/80 mt-1 font-light drop-shadow-sm"
+                      >
+                        {specPairs[0].itemA.detail}
+                      </p>
+                    </div>
+
+                    <div>
+                      <span className="text-[10px] tracking-[0.22em] uppercase text-[#B9A078] block mb-1 drop-shadow-sm">
+                        {specPairs[3].itemB.label}
+                      </span>
+                      <p
+                        style={{ color: "#F8F8F6" }}
+                        className="text-xl sm:text-2xl font-serif text-[#F8F8F6] font-light drop-shadow-sm"
+                      >
+                        {specPairs[3].itemB.value}
+                      </p>
+                      <p
+                        style={{ color: "#F8F8F6" }}
+                        className="text-xs text-[#F8F8F6]/80 mt-1 font-light drop-shadow-sm"
+                      >
+                        {specPairs[3].itemB.detail}
+                      </p>
+                    </div>
+                  </div>
+
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center gap-2 text-xs tracking-[0.22em] uppercase font-sans text-[#B9A078] hover:text-[#F8F8F6] transition-colors group cursor-pointer drop-shadow-sm"
+                  >
+                    <span>Request Private Charter</span>
+                    <span className="transition-transform group-hover:translate-x-1.5">→</span>
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* SLIDE 3: Aft Deck & Salon Living (Service & Sanctuary) */}
-          <div
-            className={`absolute inset-0 w-full h-full transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] ${
-              activeSlide === 3
-                ? "opacity-100 scale-100 pointer-events-auto z-10"
-                : "opacity-0 scale-105 pointer-events-none z-0"
-            }`}
-          >
-            <Image
-              src={SLIDES[3].src}
-              alt={SLIDES[3].alt}
-              fill
-              sizes="100vw"
-              className="object-cover object-center"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-black/30 pointer-events-none" />
-            <div className="absolute inset-0 dynamic-scrim pointer-events-none opacity-40" />
+            {/* SLIDE 3: Aft Deck & Salon Living (Service & Sanctuary) */}
+            <div className="relative w-screen h-full flex-shrink-0 overflow-hidden">
+              <Image
+                src={SLIDES[3].src}
+                alt={SLIDES[3].alt}
+                fill
+                sizes="100vw"
+                className="object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/30 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent pointer-events-none" />
 
-            {/* In-Image Floating Specs Overlay Card */}
-            <div
-              className={`absolute bottom-24 sm:bottom-28 left-[var(--site-px)] right-6 sm:right-auto z-20 max-w-xl pointer-events-auto transition-all duration-700 delay-100 ${
-                activeSlide === 3 ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
-              }`}
-            >
-              <div className="bg-[#070D14]/85 backdrop-blur-xl border border-[#B9A078]/35 p-6 sm:p-8 shadow-2xl relative">
-                <div className="absolute top-0 left-0 w-8 h-[2px] bg-[#B9A078]" />
-                <div className="absolute top-0 left-0 w-[2px] h-8 bg-[#B9A078]" />
-
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="w-8 h-[1px] bg-[#B9A078]" />
-                  <span className="text-[10px] sm:text-xs tracking-[0.3em] uppercase text-[#B9A078] font-sans">
-                    04 // SERVICE &amp; SANCTUARY
-                  </span>
-                </div>
-
-                <h2 className="text-2xl sm:text-4xl font-serif font-light text-white tracking-wide mb-1">
-                  {SLIDES[3].title}
-                </h2>
-                <p className="text-xs sm:text-sm text-white/75 font-light mb-6">
-                  {SLIDES[3].subtitle}
-                </p>
-
-                {/* Paired Specifications */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/10 mb-6">
-                  <div className="bg-white/[0.03] border border-white/10 p-3.5">
-                    <span className="text-[10px] tracking-[0.2em] uppercase text-[#8A95A5] block mb-1">
-                      {specPairs[2].itemA.label}
+              <div className="absolute bottom-20 sm:bottom-28 left-[var(--site-px)] right-6 sm:right-auto z-20 max-w-xl pointer-events-auto">
+                <div className="relative py-2">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="w-8 h-[1.5px] bg-[#B9A078]" />
+                    <span className="text-[10px] sm:text-xs tracking-[0.3em] uppercase text-[#B9A078] font-sans drop-shadow-sm">
+                      04 // SERVICE &amp; SANCTUARY
                     </span>
-                    <p className="text-xl sm:text-2xl font-serif text-white font-light">
-                      {specPairs[2].itemA.value}
-                    </p>
-                    <p className="text-xs text-white/50 mt-1">
-                      {specPairs[2].itemA.detail}
-                    </p>
                   </div>
 
-                  <div className="bg-white/[0.03] border border-white/10 p-3.5">
-                    <span className="text-[10px] tracking-[0.2em] uppercase text-[#8A95A5] block mb-1">
-                      {specPairs[3].itemA.label}
-                    </span>
-                    <p className="text-xl sm:text-2xl font-serif text-[#B9A078] font-light">
-                      {specPairs[3].itemA.value}
-                    </p>
-                    <p className="text-xs text-white/50 mt-1">
-                      {specPairs[2].itemB.detail}
-                    </p>
-                  </div>
-                </div>
+                  <h2
+                    style={{
+                      color: "#F8F8F6",
+                      textShadow: "0 2px 10px rgba(0,0,0,0.85)",
+                    }}
+                    className="text-2xl sm:text-4xl font-serif font-light text-[#F8F8F6] tracking-wide mb-1 drop-shadow-[0_2px_10px_rgba(0,0,0,0.85)]"
+                  >
+                    {SLIDES[3].title}
+                  </h2>
+                  <p
+                    style={{
+                      color: "#F8F8F6",
+                      textShadow: "0 1px 4px rgba(0,0,0,0.8)",
+                    }}
+                    className="text-xs sm:text-sm text-[#F8F8F6] font-light mb-6 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]"
+                  >
+                    {SLIDES[3].subtitle}
+                  </p>
 
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 text-xs tracking-[0.22em] uppercase font-sans text-[#B9A078] hover:text-white transition-colors"
-                >
-                  <span>Request Private Charter</span>
-                  <span>→</span>
-                </Link>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-8 pt-5 border-t border-white/20 mb-6">
+                    <div>
+                      <span className="text-[10px] tracking-[0.22em] uppercase text-[#B9A078] block mb-1 drop-shadow-sm">
+                        {specPairs[2].itemA.label}
+                      </span>
+                      <p
+                        style={{ color: "#F8F8F6" }}
+                        className="text-xl sm:text-2xl font-serif text-[#F8F8F6] font-light drop-shadow-sm"
+                      >
+                        {specPairs[2].itemA.value}
+                      </p>
+                      <p
+                        style={{ color: "#F8F8F6" }}
+                        className="text-xs text-[#F8F8F6]/80 mt-1 font-light drop-shadow-sm"
+                      >
+                        {specPairs[2].itemA.detail}
+                      </p>
+                    </div>
+
+                    <div>
+                      <span className="text-[10px] tracking-[0.22em] uppercase text-[#B9A078] block mb-1 drop-shadow-sm">
+                        {specPairs[3].itemA.label}
+                      </span>
+                      <p
+                        style={{ color: "#F8F8F6" }}
+                        className="text-xl sm:text-2xl font-serif text-[#F8F8F6] font-light drop-shadow-sm"
+                      >
+                        {specPairs[3].itemA.value}
+                      </p>
+                      <p
+                        style={{ color: "#F8F8F6" }}
+                        className="text-xs text-[#F8F8F6]/80 mt-1 font-light drop-shadow-sm"
+                      >
+                        {specPairs[2].itemB.detail}
+                      </p>
+                    </div>
+                  </div>
+
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center gap-2 text-xs tracking-[0.22em] uppercase font-sans text-[#D4AF37] hover:text-white transition-colors group cursor-pointer drop-shadow-sm"
+                  >
+                    <span>Request Private Charter</span>
+                    <span className="transition-transform group-hover:translate-x-1.5">→</span>
+                  </Link>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* =========================================================================
-            FLOATING BOTTOM HUD: Translucent Specs Indicator Overlay (Over Media)
-            NO separate table below images — full-bleed photography remains visible
-        ========================================================================= */}
-        <div className="absolute bottom-5 sm:bottom-7 left-[var(--site-px)] right-[var(--site-px)] z-30 pointer-events-auto">
-          <div className="bg-[#070D14]/80 backdrop-blur-xl border border-white/15 px-4 sm:px-6 py-2.5 sm:py-3 shadow-2xl flex items-center justify-between gap-3">
-            {/* Quick interactive tabs */}
-            <div className="flex items-center gap-2 sm:gap-4 overflow-x-auto no-scrollbar">
-              {specPairs.map((pair, idx) => (
-                <button
-                  key={pair.pairId}
-                  onClick={() => goToSlide(idx)}
-                  className={`flex items-center gap-2 px-3 py-1.5 text-[10px] sm:text-xs tracking-[0.2em] uppercase transition-all duration-300 font-sans whitespace-nowrap ${
-                    activeSlide === idx
-                      ? "text-white bg-white/10 border-b-2 border-[#B9A078] font-medium"
-                      : "text-white/50 hover:text-white hover:bg-white/5"
-                  }`}
-                >
-                  <span className="text-[#B9A078] font-mono">// 0{idx + 1}</span>
-                  <span>{pair.category.split(" ")[0]}</span>
-                </button>
-              ))}
-            </div>
-
-            {/* Quick Charter CTA */}
-            <div className="hidden md:flex items-center gap-3 flex-shrink-0">
-              <span className="text-xs font-serif text-white/70">Ferretti 57 · 8 Guests</span>
-              <Link
-                href="/contact"
-                className="px-4 py-1.5 bg-[#B9A078] text-[#070D14] text-[10px] tracking-[0.2em] uppercase font-medium hover:bg-[#D4AF37] transition-all"
-              >
-                Inquire
-              </Link>
             </div>
           </div>
         </div>

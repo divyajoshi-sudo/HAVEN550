@@ -133,63 +133,64 @@ export function VesselSection({
   const currentPanels = panels || (activeMode === "pillars" ? DEFAULT_PILLAR_PANELS : VESSEL_SPACES_PANELS);
 
   return (
-    <Section background="deep" className="pt-16 pb-0 md:pt-24 md:pb-0 text-[#F7F5F0] relative overflow-hidden bg-[#070D14]">
-      {/* Background Subtle Ambient Glow */}
-      <div className="absolute inset-0 ambient-glow-gold pointer-events-none opacity-40" />
-
-      {/* Screen-filling Header Stage */}
-      <Container size="wide" className="relative z-10 min-h-[85vh] lg:min-h-screen flex flex-col justify-center items-center py-12 md:py-20">
+    <Section
+      background="deep"
+      fullHeight={true}
+      spacing="none"
+      className="min-h-screen lg:h-screen flex flex-col justify-between pt-10 sm:pt-12 md:pt-14 lg:pt-8 pb-0 text-[#F8F8F6] relative overflow-hidden bg-[#101C29]"
+    >
+      <Container size="wide" className="relative z-10 flex flex-col items-center mb-6 sm:mb-8 lg:mb-6">
+        {/* Header Section */}
         <ScrollReveal direction="up" duration={0.85} className="w-full flex justify-center">
-          <div className="w-full max-w-6xl mx-auto flex flex-col items-center text-center">
+          <div className="w-full mx-auto flex flex-col items-center text-center pt-2 sm:pt-4">
             {/* Eyebrow with flanking gold lines */}
-            <div className="flex items-center justify-center gap-3 mb-5">
-              <span className="w-10 sm:w-16 h-[1.5px] bg-[#B9A078]" />
-              <p className="text-xs sm:text-sm tracking-[0.32em] text-[#B9A078] uppercase font-sans font-medium">
+            <div className="flex items-center justify-center gap-3.5 mb-3 mx-auto">
+              <span className="w-8 sm:w-12 h-[1px] bg-[#B9A078]" />
+              <p className="text-xs sm:text-[13px] tracking-[0.32em] text-[#B9A078] uppercase font-sans font-semibold">
                 {eyebrow}
               </p>
-              <span className="w-10 sm:w-16 h-[1.5px] bg-[#B9A078]" />
+              <span className="w-8 sm:w-12 h-[1px] bg-[#B9A078]" />
             </div>
 
-            {/* Headline — Strictly one single line */}
-            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-[46px] xl:text-[52px] text-[#F7F5F0] font-normal tracking-tight leading-tight mb-6 text-center mx-auto w-full max-w-none sm:whitespace-nowrap">
+            {/* Headline */}
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[48px] text-[#F8F8F6] font-normal tracking-tight leading-[1.12] mb-3 text-center mx-auto w-full max-w-5xl">
               {headline}
             </h2>
 
-            {/* Specs Badge */}
-            <div className="flex justify-center items-center mx-auto mb-8">
-              <div className="inline-flex items-center px-6 py-2.5 bg-[#101C29]/80 backdrop-blur-md border border-[#B9A078]/40 text-xs sm:text-sm tracking-[0.28em] text-[#B9A078] uppercase font-medium">
-                {specsBadge}
-              </div>
+            {/* Specs Subtitle */}
+            <p className="text-[11px] sm:text-xs tracking-[0.24em] text-[#B9A078] uppercase font-sans font-medium mb-5 text-center">
+              {specsBadge}
+            </p>
+
+            {/* Paragraphs */}
+            <div className="w-full mx-auto text-center mb-8 px-2 sm:px-6 lg:px-8">
+              <p className="text-[#F8F8F6] text-sm sm:text-[15px] lg:text-base leading-relaxed font-sans font-normal text-center w-full">
+                {paragraphs.join(" ")}
+              </p>
             </div>
 
-            {/* Paragraphs — Expanded Across Entire Screen */}
-            <div className="space-y-6 text-[#EFECE5]/90 text-base sm:text-lg md:text-[19px] leading-[1.8] font-light max-w-5xl mx-auto text-justify mb-12 w-full">
-              {paragraphs.map((para, index) => (
-                <p key={index} className="text-justify">{para}</p>
-              ))}
-            </div>
-
-            {/* CTA & Mode Switcher */}
-            <div className="flex flex-wrap items-center justify-center gap-5 sm:gap-8 mx-auto">
+            {/* Action Row: CTA Button + Clean Text Tabs */}
+            <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 mx-auto mb-12 sm:mb-14 lg:mb-16">
               <Link
                 href={cta.href}
-                className="inline-flex items-center gap-2 px-9 py-4 bg-[#B9A078] text-[#070D14] text-xs tracking-[0.25em] uppercase font-semibold hover:bg-[#D4AF37] transition-all duration-300 shadow-xl group cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 w-full sm:w-[190px] h-[50px] px-4 bg-[#B9A078] hover:bg-[#C8B08A] text-[#101C29] text-[11px] sm:text-[12px] tracking-[0.16em] uppercase font-semibold transition-all duration-300 rounded-[1px] shadow-lg group cursor-pointer whitespace-nowrap"
               >
                 <span>{cta.label}</span>
-                <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
+                <span className="text-[13px] font-bold leading-none group-hover:translate-x-0.5 transition-transform">›</span>
               </Link>
 
-              {/* Mode Switcher */}
-              <div className="inline-flex items-center p-1.5 border border-white/10 bg-white/[0.03]">
+              {/* Mode Switcher: Clean text tabs */}
+              <div className="flex items-center gap-6 text-[11px] sm:text-xs tracking-[0.22em] uppercase font-sans">
                 <button
                   onClick={() => {
                     setActiveMode("pillars");
                     setHoveredIndex(null);
                   }}
-                  className={`px-4 py-2 text-[11px] sm:text-xs tracking-[0.2em] uppercase font-sans transition-all ${activeMode === "pillars"
-                      ? "bg-[#B9A078] text-[#070D14] font-medium"
-                      : "text-white/60 hover:text-white"
-                    }`}
+                  className={`transition-colors cursor-pointer py-1 ${
+                    activeMode === "pillars"
+                      ? "text-[#F8F8F6] font-semibold border-b-2 border-[#B9A078]"
+                      : "text-[#F8F8F6]/70 hover:text-[#F8F8F6]"
+                  }`}
                 >
                   Charter Pillars
                 </button>
@@ -198,10 +199,11 @@ export function VesselSection({
                     setActiveMode("spaces");
                     setHoveredIndex(null);
                   }}
-                  className={`px-4 py-2 text-[11px] sm:text-xs tracking-[0.2em] uppercase font-sans transition-all ${activeMode === "spaces"
-                      ? "bg-[#B9A078] text-[#070D14] font-medium"
-                      : "text-white/60 hover:text-white"
-                    }`}
+                  className={`transition-colors cursor-pointer py-1 ${
+                    activeMode === "spaces"
+                      ? "text-[#F8F8F6] font-semibold border-b-2 border-[#B9A078]"
+                      : "text-[#F8F8F6]/70 hover:text-[#F8F8F6]"
+                  }`}
                 >
                   Vessel Spaces
                 </button>
@@ -212,23 +214,22 @@ export function VesselSection({
       </Container>
 
       {/* =========================================================================
-          EXPANDING HORIZONTAL ACCORDION (Full bleed edge-to-edge)
-          Takes complete space from left and right
+          FULL-BLEED HORIZONTAL ACCORDION (0px Gap, Edge-to-Edge from Left to Right)
+          Occupies complete section space matching reference
       ========================================================================= */}
-      <div className="w-full relative z-10 mt-10 md:mt-16">
-        <ScrollReveal direction="up" duration={0.9} delay={120} className="w-full">
+      <div className="w-full relative z-10">
+        <ScrollReveal direction="up" duration={0.9} delay={100} className="w-full">
           <div
-            className="relative w-full min-h-[560px] sm:h-[620px] md:h-[680px] lg:h-[720px] overflow-hidden border-y border-white/15 bg-black shadow-2xl flex flex-col md:flex-row select-none"
+            className="w-full min-h-[460px] sm:h-[500px] md:h-[540px] lg:h-[580px] xl:h-[620px] overflow-hidden border-t border-b border-[#EAE6DF] bg-black flex flex-col md:flex-row select-none"
             onMouseLeave={() => setHoveredIndex(null)}
           >
             {currentPanels.map((panel, idx) => {
-              // Determine if this panel is currently active/expanded
               const isHovered = hoveredIndex === idx;
               const hasAnyHover = hoveredIndex !== null;
 
-              // Flex ratios:
-              // When none hovered: equal (flex: 1)
-              // When one is hovered: hovered has flex: 3.2, non-hovered have flex: 0.85
+              // Flex ratios for expanding accordion:
+              // Idle state: equal flex-1
+              // Hovered state: expanded card gets flex: 3.2, compressed cards get flex: 0.85
               const flexGrowStyle = hasAnyHover
                 ? isHovered
                   ? "md:flex-[3.2] flex-[2.5]"
@@ -241,85 +242,86 @@ export function VesselSection({
                   data-cursor="view"
                   onMouseEnter={() => setHoveredIndex(idx)}
                   onClick={() => setHoveredIndex(idx)}
+                  style={{
+                    flex: hasAnyHover ? (isHovered ? 3.2 : 0.85) : 1,
+                  }}
                   className={`relative overflow-hidden cursor-pointer border-b md:border-b-0 md:border-r border-white/20 last:border-r-0 last:border-b-0 transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] ${flexGrowStyle} group`}
                 >
                   {/* Full-bleed Background Image */}
-                  <div className="absolute inset-0 w-full h-full">
-                    <Image
-                      src={panel.image.src}
-                      alt={panel.image.alt}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 70vw"
-                      className={`object-cover object-center transition-transform duration-1000 ease-out ${isHovered ? "scale-105" : "scale-100"
-                        }`}
-                    />
+                  <Image
+                    src={panel.image.src}
+                    alt={panel.image.alt}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 70vw"
+                    className={`object-cover object-center transition-transform duration-1000 ease-out ${
+                      isHovered ? "scale-105" : "scale-100"
+                    }`}
+                  />
 
-                    {/* Subtle light overlay — shows exact image color and vibrance */}
-                    <div
-                      className={`absolute inset-0 transition-opacity duration-700 ${hasAnyHover
-                          ? isHovered
-                            ? "bg-gradient-to-t from-black/55 via-transparent to-black/20 opacity-90"
-                            : "bg-black/40 backdrop-blur-[0.5px]"
-                          : "bg-gradient-to-t from-black/50 via-transparent to-black/20"
-                        }`}
-                    />
-                  </div>
+                  {/* Gradient Overlay for high readability */}
+                  <div
+                    className={`absolute inset-0 pointer-events-none transition-opacity duration-700 ${
+                      hasAnyHover
+                        ? isHovered
+                          ? "bg-gradient-to-t from-black/90 via-black/40 to-black/25 opacity-100"
+                          : "bg-black/55 backdrop-blur-[0.5px]"
+                        : "bg-gradient-to-t from-black/85 via-black/35 to-black/20"
+                    }`}
+                  />
 
-                  {/* Panel Content Overlay */}
-                  <div className="relative w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 z-10">
-                    {/* Top Tag / Pill (Shown on expanded or idle state) */}
-                    <div
-                      className={`transition-opacity duration-500 ${hasAnyHover && !isHovered ? "opacity-0" : "opacity-100"
-                        }`}
+                  {/* Center / Lower Content */}
+                  <div className="relative w-full h-full flex flex-col justify-end items-center text-center p-6 sm:p-8 md:p-10 pb-12 z-10 text-[#F8F8F6]">
+                    {/* Title in Cormorant Garamond and Soft White */}
+                    <h3
+                      style={{ color: "#F8F8F6", textShadow: "0 2px 14px rgba(0,0,0,0.95), 0 1px 3px rgba(0,0,0,0.9)" }}
+                      className={`font-serif font-normal uppercase text-[#F8F8F6] transition-all duration-500 leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] ${
+                        hasAnyHover && !isHovered
+                          ? "text-lg sm:text-xl lg:text-2xl tracking-[0.14em] opacity-90 mb-2"
+                          : "text-2xl sm:text-3xl md:text-4xl lg:text-[42px] tracking-[0.16em] mb-4"
+                      }`}
                     >
-                      {panel.tag && (
-                        <span className="inline-block text-[10px] sm:text-xs tracking-[0.25em] uppercase font-sans text-[#B9A078] bg-[#070D14]/70 px-2.5 py-1 border border-white/10 backdrop-blur-sm">
-                          {panel.tag}
-                        </span>
-                      )}
-                    </div>
+                      {panel.title}
+                    </h3>
 
-                    {/* Center / Bottom Content Area */}
-                    <div className="w-full flex flex-col items-center justify-center text-center my-auto">
-                      {/* Big Bold Headline (Matching reference style) */}
-                      <h3
-                        className={`font-sans font-extrabold uppercase text-[#F7F5F0] transition-all duration-500 ${
-                          hasAnyHover && !isHovered
-                            ? "text-sm sm:text-base md:text-lg tracking-[0.18em] opacity-80"
-                            : "text-2xl sm:text-3xl md:text-4xl lg:text-[40px] tracking-[0.16em] mb-3 leading-tight"
-                        }`}
+                    {/* Subtitle in Soft White (reveals smoothly on expanded panel) */}
+                    {panel.subtitle && isHovered && (
+                      <p
+                        style={{ color: "#F8F8F6", textShadow: "0 2px 10px rgba(0,0,0,0.9)" }}
+                        className="text-xs sm:text-sm md:text-base text-[#F8F8F6] font-sans font-light max-w-lg mx-auto mb-6 leading-relaxed hidden sm:block animate-fadeIn"
                       >
-                        {panel.title}
-                      </h3>
+                        {panel.subtitle}
+                      </p>
+                    )}
 
-                      {/* Subtitle (Shown on expanded panel) */}
-                      {panel.subtitle && isHovered && (
-                        <p className="text-xs sm:text-sm text-[#EFECE5]/85 font-light max-w-md mx-auto mb-6 leading-relaxed hidden sm:block animate-fadeIn">
-                          {panel.subtitle}
-                        </p>
-                      )}
-
-                      {/* Rectangular Bordered Button (Reference accurate) */}
-                      {/* Visible in idle state (Image 2) and on active expanded panel (Image 3 & 4) */}
-                      <div
-                        className={`transition-all duration-500 ${hasAnyHover && !isHovered
-                            ? "opacity-0 scale-95 pointer-events-none h-0 overflow-hidden"
-                            : "opacity-100 scale-100 mt-2 sm:mt-4"
-                          }`}
-                      >
-                        <Link
-                          href={panel.href}
-                          className="inline-block border border-white/90 bg-black/20 hover:bg-white hover:text-[#070D14] text-white text-xs sm:text-sm font-sans font-bold tracking-[0.22em] uppercase px-7 sm:px-9 py-3 sm:py-3.5 backdrop-blur-sm transition-all duration-300 shadow-lg"
-                        >
-                          {panel.buttonLabel}
-                        </Link>
-                      </div>
-                    </div>
-
-                    {/* Bottom Collapsed Title Anchor (For collapsed columns in Images 3 & 4) */}
+                    {/* Button (visible when idle or expanded) */}
                     <div
-                      className={`text-center pb-2 transition-opacity duration-300 ${hasAnyHover && !isHovered ? "opacity-100" : "opacity-0 h-0 overflow-hidden"
-                        }`}
+                      className={`transition-all duration-500 ${
+                        hasAnyHover && !isHovered
+                          ? "opacity-0 scale-95 pointer-events-none h-0 overflow-hidden"
+                          : "opacity-100 scale-100 mt-2"
+                      }`}
+                    >
+                      <Link
+                        href={panel.href}
+                        className="inline-flex items-center justify-center gap-2 w-full sm:w-[210px] h-[50px] px-4 bg-[#101C29] hover:bg-[#182A3E] text-[#F8F8F6] text-[11px] sm:text-[12px] font-sans font-medium tracking-[0.16em] uppercase rounded-[1px] transition-all duration-300 shadow-xl whitespace-nowrap group/btn cursor-pointer border border-[#B9A078]/40"
+                      >
+                        <span style={{ color: "#F8F8F6" }} className="text-[#F8F8F6]">
+                          {panel.buttonLabel}
+                        </span>
+                        <span
+                          style={{ color: "#F8F8F6" }}
+                          className="text-[13px] font-light leading-none group-hover/btn:translate-x-0.5 transition-transform text-[#F8F8F6]"
+                        >
+                          ›
+                        </span>
+                      </Link>
+                    </div>
+
+                    {/* Collapsed indicator when other panel is hovered */}
+                    <div
+                      className={`transition-opacity duration-300 mt-2 ${
+                        hasAnyHover && !isHovered ? "opacity-100" : "opacity-0 h-0 overflow-hidden"
+                      }`}
                     >
                       <span className="text-[10px] tracking-[0.2em] uppercase text-[#B9A078] font-mono">
                         EXPAND +

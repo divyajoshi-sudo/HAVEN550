@@ -34,7 +34,7 @@ export function ProseBlock({
         )}
 
         {paragraphs && paragraphs.length > 0 && (
-          <div className="space-y-4 text-haven-cream/75 text-sm sm:text-base leading-relaxed font-light mb-8 text-center max-w-2xl mx-auto">
+          <div className="space-y-4 text-[#4A5568] text-sm sm:text-base leading-relaxed font-light mb-8 text-center max-w-2xl mx-auto">
             {paragraphs.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
@@ -46,7 +46,7 @@ export function ProseBlock({
             {items.map((item, i) => (
               <li
                 key={i}
-                className="text-sm sm:text-base text-haven-cream/80 font-light flex items-start gap-3"
+                className="text-sm sm:text-base text-[#4A5568] font-light flex items-start gap-3"
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-haven-gold mt-2 shrink-0" />
                 <span>{item}</span>

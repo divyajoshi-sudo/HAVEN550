@@ -23,20 +23,14 @@ export function ExtendedCruisingSection({
 
   return (
     <section
-      className={`min-h-screen flex flex-col justify-center py-20 md:py-28 relative overflow-hidden transition-colors duration-300 ${isLight
-          ? "bg-[#EFECE5] text-[#111A22] border-t border-b border-[#D8D2C6]"
-          : "bg-[#101C29] text-white border-t border-b border-white/10"
-        }`}
+      className="min-h-screen lg:h-screen flex flex-col justify-center py-10 lg:py-6 relative overflow-hidden transition-colors duration-300 bg-white text-[#101C29] border-t border-b border-[#EAE6DF]"
     >
-      {!isLight && (
-        <div className="absolute inset-0 ambient-glow-navy pointer-events-none" />
-      )}
       <Container size="default">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
           {/* Text Column */}
           <div className="lg:col-span-7">
             <ScrollReveal direction="left" duration={0.85}>
-              <div className="flex items-center gap-3 mb-3">
+              <div className="flex items-center gap-3 mb-2.5">
                 <span className="w-8 h-[1px] bg-[#B9A078]" />
                 <p
                   className={`text-xs sm:text-sm tracking-[0.35em] uppercase font-light ${isLight ? "text-[#9E8357]" : "text-[#B9A078]"
@@ -47,14 +41,14 @@ export function ExtendedCruisingSection({
               </div>
 
               <h2
-                className={`font-serif text-3xl sm:text-4xl md:text-5xl font-light tracking-tight mb-8 ${isLight ? "text-[#111A22]" : "text-white"
+                className={`font-serif text-3xl sm:text-4xl md:text-5xl font-light tracking-tight mb-4 ${isLight ? "text-[#101C29]" : "text-white"
                   }`}
               >
                 {content.headline}
               </h2>
 
               <div
-                className={`space-y-4 text-base sm:text-lg font-light leading-relaxed mb-10 max-w-xl text-left ${isLight ? "text-[#4F5862]" : "text-white/80"
+                className={`space-y-3 text-sm sm:text-base md:text-lg font-light leading-relaxed mb-6 max-w-xl text-left ${isLight ? "text-[#101C29]/80" : "text-white/80"
                   }`}
               >
                 {content.paragraphs.map((p, idx) => (
@@ -64,10 +58,10 @@ export function ExtendedCruisingSection({
 
               <Link
                 href={content.cta.href}
-                className="inline-flex items-center gap-2 px-8 py-4 bg-[#B9A078] text-[#0B141D] text-[0.7rem] tracking-[0.25em] uppercase font-medium hover:bg-[#D4AF37] transition-all duration-300 shadow-xl group cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 w-full sm:w-[180px] h-[50px] px-3 bg-[#101C29] hover:bg-[#182A3E] text-white text-[11px] sm:text-[12px] tracking-[0.16em] uppercase font-medium transition-all duration-300 shadow-xl group cursor-pointer rounded-[1px] whitespace-nowrap"
               >
                 <span>{content.cta.label}</span>
-                <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
+                <span className="text-[13px] font-light leading-none group-hover:translate-x-0.5 transition-transform">›</span>
               </Link>
             </ScrollReveal>
           </div>

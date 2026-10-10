@@ -27,28 +27,42 @@ export function Section({
 
   const isLight = background === "ivory" || background === "softWhite";
 
+  const bgHexColors: Record<string, string> = {
+    navy: "#101C29",
+    navyLight: "#182A3E",
+    deep: "#101C29",
+    transparent: "transparent",
+    ivory: "#F7F5F0",
+    softWhite: "#F8F8F6",
+  };
+
   const backgroundStyles = {
-    navy: "bg-[#101C29] text-[#F7F5F0]",
-    navyLight: "bg-[#162738]/50 text-[#F7F5F0]",
-    deep: "bg-[#0B141D] text-[#F7F5F0]",
-    transparent: "bg-transparent text-[#F7F5F0]",
-    ivory: "bg-[#EFECE5] text-[#08182B]",
-    softWhite: "bg-[#FAF8F5] text-[#08182B]",
+    navy: "bg-[#101C29] text-[#F8F8F6]",
+    navyLight: "bg-[#182A3E] text-[#F8F8F6]",
+    deep: "#101C29 text-[#F8F8F6]",
+    transparent: "bg-transparent text-inherit",
+    ivory: "bg-[#F7F5F0] text-[#101C29]",
+    softWhite: "bg-[#F8F8F6] text-[#101C29]",
   };
 
   const borderStyles = {
     none: "",
-    top: isLight ? "border-t border-[#D8D2C6]" : "border-t border-white/10",
-    bottom: isLight ? "border-b border-[#D8D2C6]" : "border-b border-white/10",
-    both: isLight ? "border-y border-[#D8D2C6]" : "border-y border-white/10",
+    top: "border-t border-[#EAE6DF]",
+    bottom: "border-b border-[#EAE6DF]",
+    both: "border-y border-[#EAE6DF]",
   };
 
   return (
     <section
+      style={{
+        backgroundColor: bgHexColors[background] || (isLight ? "#F7F5F0" : "#101C29"),
+        color: isLight ? "#101C29" : "#F8F8F6",
+        ...props.style,
+      }}
       className={cn(
         "relative w-full overflow-hidden flex flex-col justify-center",
-        fullHeight ? "min-h-screen" : "",
-        spacingStyles[spacing],
+        fullHeight ? "min-h-screen lg:h-screen flex flex-col justify-center" : "",
+        fullHeight && spacing !== "none" ? "py-10 md:py-14 lg:py-8" : spacingStyles[spacing],
         backgroundStyles[background],
         borderStyles[border],
         className

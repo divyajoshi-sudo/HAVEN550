@@ -116,17 +116,18 @@ export function AmenityGrid({
   const isLight = background === "ivory" || background === "softWhite";
 
   return (
-    <Section background={background} border="bottom">
+    <Section background={background} border="bottom" fullHeight={true} className="min-h-screen lg:h-screen flex flex-col justify-center py-10 lg:py-6 overflow-hidden">
       <Container size="default">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10 lg:mb-8">
           <Eyebrow className="mb-3 text-[#9E8357] tracking-[0.35em]">
             {content.eyebrow}
           </Eyebrow>
 
           <Heading
             level={2}
-            className={`mb-4 ${isLight ? "text-[#08182B]" : "text-[#F7F5F0]"}`}
+            style={{ color: isLight ? "#101C29" : "#F8F8F6" }}
+            className={`mb-4 ${isLight ? "text-[#101C29]" : "text-[#F8F8F6]"}`}
           >
             {content.headline}
           </Heading>
@@ -135,8 +136,9 @@ export function AmenityGrid({
 
           {content.subheadline && (
             <p
+              style={{ color: isLight ? "#101C29" : "#F8F8F6" }}
               className={`text-sm sm:text-base font-light leading-relaxed ${
-                isLight ? "text-[#0F243A]" : "text-[#EFECE5]/80"
+                isLight ? "text-[#101C29]" : "text-[#F8F8F6]/80"
               }`}
             >
               {content.subheadline}
@@ -151,35 +153,25 @@ export function AmenityGrid({
           {content.items.map((item, index) => (
             <div
               key={index}
-              className={`flex flex-col items-center text-center p-6 sm:p-7 rounded-[2px] transition-all duration-300 border ${
-                isLight
-                  ? "bg-[#FAF8F5] border-[#D8D2C6] hover:border-[#B9A078]/70 shadow-sm"
-                  : "bg-white/[0.02] border-white/10 hover:border-[#B9A078]/50 shadow-sm"
-              }`}
+              className="flex flex-col items-center text-center p-6 sm:p-7 rounded-[2px] transition-all duration-300 border bg-white border-[#EAE6DF] hover:border-[#B9A078] shadow-sm hover:shadow-md"
             >
               {/* Refined Minimalist Icon Framing */}
               <div
-                className={`w-12 h-12 flex items-center justify-center mb-6 text-[#9E8357] border ${
-                  isLight
-                    ? "border-[#B9A078]/40 bg-[#FAF8F5]"
-                    : "border-haven-gold/25 bg-white/[0.02]"
-                }`}
+                className="w-12 h-12 flex items-center justify-center mb-6 text-[#9E8357] border border-[#B9A078]/40 bg-white"
               >
                 <AmenityIcon icon={item.icon} />
               </div>
 
               <h3
-                className={`font-[family-name:var(--font-cormorant)] text-xl lg:text-2xl font-light mb-3 tracking-wide ${
-                  isLight ? "text-[#08182B]" : "text-[#F7F5F0]"
-                }`}
+                style={{ color: "#101C29" }}
+                className="font-[family-name:var(--font-cormorant)] text-xl lg:text-2xl font-light mb-3 tracking-wide text-[#101C29]"
               >
                 {item.title}
               </h3>
 
               <p
-                className={`text-xs sm:text-sm leading-relaxed font-light ${
-                  isLight ? "text-[#0F243A]" : "text-[#EFECE5]/80"
-                }`}
+                style={{ color: "#101C29" }}
+                className="text-xs sm:text-sm leading-relaxed font-light text-[#101C29]"
               >
                 {item.description}
               </p>

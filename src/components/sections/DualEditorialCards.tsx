@@ -64,7 +64,7 @@ export function DualEditorialCards({
               className="flex flex-col items-center text-center group"
             >
               {/* Image Frame: Exact 816 x 459 Dimensions */}
-              <div className="relative w-full aspect-[816/459] overflow-hidden bg-[#EAE8E3] shadow-md group-hover:shadow-xl transition-shadow duration-500">
+              <div className="relative w-full aspect-[816/459] overflow-hidden bg-white shadow-md group-hover:shadow-xl transition-shadow duration-500">
                 <Image
                   src={card.image.src}
                   alt={card.image.alt}
@@ -86,10 +86,10 @@ export function DualEditorialCards({
 
                 <Link
                   href={card.cta.href}
-                  className="min-w-[200px] sm:min-w-[240px] text-center px-8 sm:px-10 py-3.5 sm:py-4 bg-[#071B2A] text-white text-[0.7rem] sm:text-xs tracking-[0.22em] uppercase font-medium hover:bg-[#0d283e] transition-all duration-300 shadow-md hover:shadow-lg inline-flex items-center justify-center gap-2"
+                  className="w-full sm:w-[180px] h-[50px] text-center px-3 bg-[#00204E] text-white text-[11px] sm:text-[12px] tracking-[0.15em] uppercase font-medium hover:bg-[#002D6E] transition-all duration-300 shadow-md hover:shadow-lg inline-flex items-center justify-center gap-2 rounded-[1px] whitespace-nowrap group"
                 >
                   <span>{card.cta.label}</span>
-                  <span className="text-sm">›</span>
+                  <span className="text-[13px] font-light leading-none group-hover:translate-x-0.5 transition-transform">›</span>
                 </Link>
               </div>
             </div>

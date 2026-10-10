@@ -113,6 +113,8 @@ export interface RateItem {
   description: string;
   popular?: boolean;
   inclusions?: string[];
+  eyebrow?: string;
+  image?: { src: string; alt: string };
 }
 
 export interface RatesContent {

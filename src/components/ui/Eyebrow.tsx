@@ -11,7 +11,7 @@ export function Eyebrow({
   children,
   ...props
 }: EyebrowProps) {
-  const textStyles = "text-[11px] sm:text-[12px] tracking-[0.16em] uppercase text-[#B9A078] font-medium";
+  const textStyles = "text-[11px] sm:text-[12.5px] tracking-[0.24em] uppercase text-[#B9A078] font-semibold leading-[1.2]";
 
   if (withLines) {
     return (

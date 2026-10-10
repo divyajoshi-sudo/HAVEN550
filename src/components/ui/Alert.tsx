@@ -15,10 +15,10 @@ export function Alert({
 }: AlertProps) {
   const variantStyles = {
     success:
-      "bg-emerald-950/40 border-emerald-500/40 text-emerald-200 shadow-lg shadow-emerald-950/20",
+      "bg-emerald-50 border-emerald-300 text-emerald-900 shadow-sm",
     error:
-      "bg-red-950/40 border-red-500/40 text-red-200 shadow-lg shadow-red-950/20",
-    info: "bg-haven-deep/90 border-haven-gold/30 text-haven-cream shadow-lg",
+      "bg-red-50 border-red-300 text-red-900 shadow-sm",
+    info: "bg-white border-[#EAE6DF] text-[#08182B] shadow-sm",
   };
 
   return (

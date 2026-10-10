@@ -33,17 +33,14 @@ export const homeContent: HomePageContent = {
     },
     image: {
       src: "/images/haven-running-front.jpeg",
-      alt: "HAVEN 550 privately chartered 57-foot Ferretti yacht cruising in Fort Lauderdale",
+      alt: "HAVEN 550 privately chartered 57-foot Ferretti yacht on the water in Fort Lauderdale",
     },
   },
   introduction: {
     eyebrow: "AN INVITATION TO UNWIND",
     headline: "A Different Kind of Escape.",
     paragraphs: [
-      "Some of life's finest moments happen when you leave the ordinary behind.",
-      "HAVEN 550 offers an intimate luxury-yachting experience designed around privacy, relaxation, and the freedom of the open water.",
-      "Whether celebrating a special occasion, entertaining friends, or simply escaping the everyday, your time aboard is yours to enjoy.",
-      "With a professional captain and dedicated steward attending to the experience, all that's left is to settle in and enjoy the journey.",
+      "Some of life's finest moments happen when you leave the ordinary behind. HAVEN 550 offers an intimate luxury-yachting experience designed around privacy, relaxation, and the freedom of the open water. Whether celebrating a special occasion, entertaining friends, or simply escaping the everyday, your time aboard is yours to enjoy. With a professional captain and dedicated steward attending to the experience, all that's left is to settle in and enjoy the journey.",
     ],
     cta: {
       label: "DISCOVER HAVEN 550",
@@ -167,22 +164,40 @@ export const homeContent: HomePageContent = {
         name: "The Escape",
         duration: "4 Hours",
         price: "$3,000",
-        description: "Perfect for a leisurely morning or afternoon coastal escape.",
+        eyebrow: "01 // 4 HOURS CHARTER",
+        description:
+          "An intimate introduction to private yachting along Fort Lauderdale's scenic waterways. Perfect for an unhurried morning or golden afternoon coastal escape with personalized steward service and crystal barware.",
         popular: false,
+        image: {
+          src: "/images/haven-profile-speed.jpeg",
+          alt: "HAVEN 550 running profile along Fort Lauderdale coast",
+        },
       },
       {
         name: "The Experience",
         duration: "6 Hours",
         price: "$4,000",
-        description: "The ideal blend of relaxation, swimming, and scenic cruising.",
+        eyebrow: "SIGNATURE EXPERIENCE // 6 HOURS CHARTER",
+        description:
+          "Our signature charter blending open-water ocean cruising, secluded sandbar anchorage, and leisurely alfresco dining. Ample time to swim, deploy water toys, and immerse yourself in the private South Florida lifestyle.",
         popular: true,
+        image: {
+          src: "/images/haven-bow-sunpad.jpeg",
+          alt: "Forward bow sun lounge and ocean anchorage on HAVEN 550",
+        },
       },
       {
         name: "The Full Day",
         duration: "8 Hours",
         price: "$5,000",
-        description: "An unhurried complete immersion into luxury South Florida yachting.",
+        eyebrow: "03 // 8 HOURS CHARTER",
+        description:
+          "An unhurried complete immersion into luxury South Florida yachting from morning sunshine through golden hour. Tailor your itinerary with full coastal range to Miami or Boca Raton, anchored coves, and unforgettable sunset views.",
         popular: false,
+        image: {
+          src: "/images/haven-aft-deck.jpeg",
+          alt: "Teak aft deck dining and sunset cruising on HAVEN 550",
+        },
       },
     ],
     inclusionNote:

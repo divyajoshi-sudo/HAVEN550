@@ -5,27 +5,28 @@
    ────────────────────────────────────────────── */
 
 @theme inline {
-  /* Brand Luxury Palette from Specification */
+  /* Brand Luxury Palette from Visual Identity Specification */
   --color-haven-navy:        #101C29;
-  --color-haven-navy-light:  #162738;
-  --color-haven-deep:        #0B141D;
+  --color-haven-navy-light:  #182A3E;
+  --color-haven-deep:        #0B131C;
   --color-haven-gold:        #B9A078;
   --color-haven-gold-light:  #D4AF37;
   --color-haven-champagne:   #B9A078;
   --color-haven-ivory:       #F7F5F0;
   --color-haven-soft-white:  #F8F8F6;
   --color-haven-charcoal:    #262B30;
-  --color-haven-soft-grey:   #8A8A84;
+  --color-haven-soft-grey:   #4A5568;
   --color-haven-cream:       #F7F5F0;
-  --color-haven-slate:       #8A95A5;
+  --color-haven-slate:       #4A5568;
 
   /* Semantic */
-  --color-background:  var(--color-haven-navy);
-  --color-foreground:  var(--color-haven-soft-white);
+  --color-background:  #FFFFFF;
+  --color-foreground:  #262B30;
 
   /* Fonts */
   --font-heading:    var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
   --font-serif:      var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-sans:       var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-body:       var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-subcontent: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
@@ -34,15 +35,33 @@
    Base Styles & Scrollbar
    ────────────────────────────────────────────── */
 
-* {
-  margin: 0;
-  padding: 0;
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-/* Unified Responsive Container Horizontal Padding */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Unified Responsive Container Horizontal Padding & Font Tokens */
 :root {
   --site-px: 1.5rem; /* 24px on compact mobile */
+  --font-cormorant: "Cormorant Garamond", Georgia, serif;
+  --font-inter: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: var(--font-cormorant);
+  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-inter);
+  --font-body: var(--font-inter);
+
+  /* Brand Colors */
+  --primary-navy: #101C29;
+  --secondary-ivory: #F7F5F0;
+  --accent-gold: #B9A078;
+  --body-charcoal: #262B30;
+  --light-text: #F8F8F6;
 }
 
 @media (min-width: 640px) {
@@ -58,12 +77,13 @@
 
 html {
   scroll-behavior: smooth;
+  font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 body {
-  background: var(--color-haven-navy);
-  color: var(--color-haven-cream);
-  font-family: var(--font-body);
+  background: #FFFFFF;
+  color: #262B30;
+  font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -76,48 +96,123 @@ body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0B141D;
+  background: #F8F9FA;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2A3B4C;
+  background: #CBD5E1;
   border-radius: 4px;
-  border: 1px solid rgba(185, 160, 120, 0.2);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #B9A078;
+  background: #94A3B8;
 }
 
-h1, h2, .font-serif, .main-heading {
-  font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+/* Primary Major Headings: Cormorant Garamond */
+h1, h2, h3, h4, .main-heading, .font-serif {
+  font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif !important;
+}
+
+/* Subcontent Headings & Body: Inter */
+p, span, li, a, label, input, select, textarea, button,
+.subcontent, .font-sans {
+  font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+/* ──────────────────────────────────────────────
+   Global Enforcement: Soft White — #F8F8F6 in Blue/Navy Sections
+   ────────────────────────────────────────────── */
+[style*="#101C29"],
+[style*="#081018"],
+[style*="#0B131C"],
+[style*="#182A3E"],
+[style*="rgb(16, 28, 41)"],
+[style*="rgb(8, 16, 24)"],
+[style*="rgb(11, 19, 28)"],
+.bg-\[\#101C29\],
+.bg-\[\#081018\],
+.bg-\[\#0B131C\],
+.bg-\[\#182A3E\] {
+  color: #F8F8F6 !important;
+}
+
+[style*="#101C29"] p,
+[style*="#101C29"] h1,
+[style*="#101C29"] h2,
+[style*="#101C29"] h3,
+[style*="#101C29"] h4,
+[style*="#101C29"] li,
+[style*="#101C29"] blockquote,
+[style*="#081018"] p,
+[style*="#081018"] h1,
+[style*="#081018"] h2,
+[style*="#081018"] h3,
+[style*="#0B131C"] p,
+[style*="#0B131C"] h1,
+[style*="#0B131C"] h2,
+[style*="#0B131C"] h3,
+.bg-\[\#101C29\] p,
+.bg-\[\#101C29\] h1,
+.bg-\[\#101C29\] h2,
+.bg-\[\#101C29\] h3,
+.bg-\[\#101C29\] h4,
+.bg-\[\#101C29\] li {
+  color: #F8F8F6;
+}
+
+:not(footer)[style*="#101C29"] [class~="text-[#B9A078]"],
+:not(footer)[style*="#081018"] [class~="text-[#B9A078]"],
+:not(footer)[style*="#0B131C"] [class~="text-[#B9A078]"],
+:not(footer).bg-\[\#101C29\] [class~="text-[#B9A078]"] {
+  color: #B9A078 !important;
+}
+
+/* ──────────────────────────────────────────────
+   HAVEN 550 — Executive 32+ Typography Scale
+   Optimized for effortless scannability and reading comfort
+   ────────────────────────────────────────────── */
+
+/* Hero Title (H1) */
+h1, .font-hero-fluid {
+  font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif !important;
+  font-size: clamp(2.75rem, 5vw + 1rem, 5.25rem); /* 44px → 84px */
+  line-height: 1.06;
+  letter-spacing: 0.02em;
+}
+
+/* Section Headlines (H2) */
+h2, .font-h2-fluid {
+  font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif !important;
+  font-size: clamp(2rem, 3.5vw + 0.5rem, 3.25rem); /* 32px → 52px */
+  line-height: 1.16;
   letter-spacing: -0.01em;
 }
 
-/* Fluid Typography Clamps (Responsive without layout shifts) */
-.font-hero-fluid {
-  font-size: clamp(2.25rem, 5vw + 1rem, 5rem);
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-}
-
-.font-h2-fluid {
-  font-size: clamp(1.75rem, 3.5vw + 0.5rem, 3rem);
-  line-height: 1.18;
-  letter-spacing: -0.01em;
-}
-
-.font-h3-fluid {
-  font-size: clamp(1.125rem, 1.5vw + 0.5rem, 1.625rem);
-  line-height: 1.3;
+/* Card / Sub-Headings (H3) */
+h3, .font-h3-fluid {
+  font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif !important;
+  font-size: clamp(1.35rem, 1.5vw + 0.5rem, 1.75rem); /* 22px → 28px */
+  line-height: 1.28;
+  letter-spacing: 0.01em;
   font-weight: 500;
 }
 
-.eyebrow-luxury {
-  font-size: clamp(0.6875rem, 0.4vw + 0.55rem, 0.8125rem);
+/* Card / Subsection Headings (H4) */
+h4 {
+  font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif !important;
+  font-size: clamp(1.25rem, 1vw + 0.5rem, 1.5rem); /* 20px → 24px */
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+}
+
+/* Eyebrows / Overlines */
+.eyebrow-luxury,
+.eyebrow {
+  font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: clamp(0.6875rem, 0.1vw + 0.6875rem, 0.78125rem); /* 11px → 12.5px */
   line-height: 1.2;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.24em; /* 0.22em – 0.28em */
   text-transform: uppercase;
   font-weight: 600;
-  color: #D4AF37;
 }
 
 /* Luxury Glassmorphism & Contrast Overlays */
@@ -129,7 +224,13 @@ h1, h2, .font-serif, .main-heading {
 }
 
 .dynamic-scrim {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.8) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(7, 13, 20, 0.75) 0%,
+    rgba(7, 13, 20, 0.48) 30%,
+    rgba(7, 13, 20, 0.58) 65%,
+    rgba(7, 13, 20, 0.88) 100%
+  );
 }
 
 /* Universal WCAG 2.1 AA Interactive Focus States */
@@ -139,89 +240,145 @@ input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
   outline: none !important;
-  box-shadow: 0 0 0 2px #070D14, 0 0 0 4px #D4AF37 !important;
+  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px #00204E !important;
 }
 
-h3, h4, .subheading, .font-subheading {
-  font-family: var(--font-body);
-  font-size: 24px;
-  line-height: 1.35;
-}
-
+/* Editorial Body Copy (<p>) — Critical for 32+: never drops below 16px */
 p, .subcontent {
-  font-family: var(--font-subcontent);
-  font-size: 16px;
-  line-height: 1.65;
+  font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: clamp(1.0rem, 0.4vw + 0.85rem, 1.125rem); /* 16px → 18px */
+  line-height: 1.7; /* 1.65 – 1.75 generous line height */
+  letter-spacing: 0.005em;
   color: inherit;
 }
 
-/* Light / Ivory Background Text High Visibility (Deep Navy Blue) */
-.bg-haven-ivory,
-.bg-haven-soft-white,
-section[class*="bg-[#EFECE5]"],
-section[class*="bg-[#FAF8F5]"],
-section[class*="bg-white"],
-div[class*="bg-[#EFECE5]"],
-div[class*="bg-[#FAF8F5]"] {
-  color: #0F243A;
+/* Card Inclusions & Checklists */
+.card-inclusions,
+.checklist-item,
+ul.specs-list li,
+.inclusions-list li {
+  font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: clamp(0.875rem, 0.2vw + 0.85rem, 0.9375rem); /* 14px – 15px */
+  line-height: 1.55;
+  letter-spacing: 0.01em;
 }
 
-section[class*="bg-[#EFECE5]"] p,
-section[class*="bg-[#FAF8F5]"] p,
-section[class*="bg-white"] p,
-div[class*="bg-[#EFECE5]"] p,
-div[class*="bg-[#FAF8F5]"] p {
-  color: #0F243A;
+/* Primary Buttons / CTAs */
+button,
+.btn-cta,
+a[class*="Button"] {
+  font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  letter-spacing: 0.16em;
 }
 
-section[class*="bg-[#EFECE5]"] h1,
-section[class*="bg-[#EFECE5]"] h2,
-section[class*="bg-[#EFECE5]"] h3,
-section[class*="bg-[#EFECE5]"] h4,
-section[class*="bg-[#FAF8F5]"] h1,
-section[class*="bg-[#FAF8F5]"] h2,
-section[class*="bg-[#FAF8F5]"] h3,
-section[class*="bg-[#FAF8F5]"] h4,
-section[class*="bg-white"] h1,
-section[class*="bg-white"] h2,
-section[class*="bg-white"] h3,
-section[class*="bg-white"] h4 {
-  color: #08182B;
+/* Form Inputs & Labels */
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
+  font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: 16px !important; /* 1rem — Prevents iOS Safari zoom */
+  line-height: 1.4;
+  letter-spacing: 0.02em;
 }
 
-/* Navy / Deep Background Text (Warm Luxury Cream White) */
-section[class*="bg-[#0B141D]"],
-section[class*="bg-[#101C29]"],
-section[class*="bg-[#070D14]"],
-section[class*="bg-[#0C141D]"],
-div[class*="bg-[#0B141D]"],
-div[class*="bg-[#101C29]"],
-div[class*="bg-[#070D14]"] {
-  color: #EFECE5;
+label {
+  font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: 13px; /* 0.8125rem */
+  line-height: 1.4;
+  letter-spacing: 0.08em;
 }
 
-section[class*="bg-[#0B141D]"] p,
-section[class*="bg-[#101C29]"] p,
-section[class*="bg-[#070D14]"] p,
-section[class*="bg-[#0C141D]"] p {
-  color: #EFECE5;
+/* ──────────────────────────────────────────────
+   Typography & Contrast Enforcement
+   1. Ivory Backgrounds (#F7F5F0, #EFECE5): Deep Navy — #101C29
+   2. Dark/Navy Backgrounds (#101C29, #081018, #0B131C): Soft White — #F8F8F6
+   ────────────────────────────────────────────── */
+
+/* Ivory / Cream Sections: Deep Navy — #101C29 */
+[style*="#F7F5F0"],
+[style*="#EFECE5"],
+[style*="rgb(247, 245, 240)"],
+[style*="rgb(239, 236, 229)"],
+.bg-\[\#F7F5F0\],
+.bg-\[\#EFECE5\],
+section[class*="bg-\[\#F7F5F0\]"],
+section[class*="bg-\[\#EFECE5\]"] {
+  color: #101C29 !important;
 }
 
-section[class*="bg-[#0B141D]"] h1,
-section[class*="bg-[#0B141D]"] h2,
-section[class*="bg-[#0B141D]"] h3,
-section[class*="bg-[#101C29]"] h1,
-section[class*="bg-[#101C29]"] h2,
-section[class*="bg-[#101C29]"] h3,
-section[class*="bg-[#070D14]"] h1,
-section[class*="bg-[#070D14]"] h2,
-section[class*="bg-[#070D14]"] h3 {
-  color: #F7F5F0;
+[style*="#F7F5F0"] h1,
+[style*="#F7F5F0"] h2,
+[style*="#F7F5F0"] h3,
+[style*="#F7F5F0"] h4,
+[style*="#F7F5F0"] p,
+[style*="#F7F5F0"] li,
+[style*="#F7F5F0"] span:not([class*="text-\[\#B9A078\]"]):not([class*="text-\[\#D4AF37\]"]):not([class*="text-\[\#9E8357\]"]):not([class*="bg-\[\#B9A078\]"]),
+[style*="#EFECE5"] h1,
+[style*="#EFECE5"] h2,
+[style*="#EFECE5"] h3,
+[style*="#EFECE5"] h4,
+[style*="#EFECE5"] p,
+[style*="#EFECE5"] li,
+[style*="#EFECE5"] span:not([class*="text-\[\#B9A078\]"]):not([class*="text-\[\#D4AF37\]"]):not([class*="text-\[\#9E8357\]"]):not([class*="bg-\[\#B9A078\]"]),
+.bg-\[\#F7F5F0\] h1,
+.bg-\[\#F7F5F0\] h2,
+.bg-\[\#F7F5F0\] h3,
+.bg-\[\#F7F5F0\] h4,
+.bg-\[\#F7F5F0\] p,
+.bg-\[\#EFECE5\] h1,
+.bg-\[\#EFECE5\] h2,
+.bg-\[\#EFECE5\] h3,
+.bg-\[\#EFECE5\] h4,
+.bg-\[\#EFECE5\] p {
+  color: #101C29 !important;
+}
+
+/* Dark/Navy Media Overlays & Backgrounds: Soft White — #F8F8F6 */
+section[class*="bg-\[\#081018\]"],
+section[class*="bg-\[\#101C29\]"],
+section[class*="bg-\[\#0B131C\]"],
+[style*="#081018"],
+[style*="#0B131C"] {
+  color: #F8F8F6;
+}
+
+section[class*="bg-\[\#081018\]"] h1,
+section[class*="bg-\[\#081018\]"] h2,
+section[class*="bg-\[\#081018\]"] h3,
+section[class*="bg-\[\#081018\]"] p,
+section[class*="bg-\[\#101C29\]"] h1,
+section[class*="bg-\[\#101C29\]"] h2,
+section[class*="bg-\[\#101C29\]"] h3,
+section[class*="bg-\[\#101C29\]"] p {
+  color: #F8F8F6;
+}
+
+footer {
+  background-color: #101C29 !important;
+  color: #F8F8F6 !important;
+}
+
+footer,
+footer p,
+footer span,
+footer li,
+footer a,
+footer div {
+  color: #F8F8F6;
+}
+
+footer a {
+  color: #F8F8F6 !important;
+}
+
+footer a:hover,
+footer a:hover * {
+  color: #B9A078 !important;
 }
 
 ::selection {
-  background: var(--color-haven-gold);
-  color: #0B141D;
+  background: #101C29;
+  color: #F8F8F6;
 }
 
 /* ──────────────────────────────────────────────
@@ -373,13 +530,13 @@ section[class*="bg-[#070D14]"] h3 {
   -webkit-text-fill-color: transparent;
 }
 
-/* Subtle Ambient Radial Lighting */
+/* Subtle Ambient Lighting Disabled for Pure Clean White Background */
 .ambient-glow-gold {
-  background: radial-gradient(circle at 50% 30%, rgba(185, 160, 120, 0.12) 0%, transparent 70%);
+  display: none !important;
 }
 
 .ambient-glow-navy {
-  background: radial-gradient(circle at 50% 50%, rgba(22, 39, 56, 0.6) 0%, transparent 80%);
+  display: none !important;
 }
 
 /* Subtle Film Grain Noise Texture on Dark Sections */
@@ -435,15 +592,103 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover {
   pointer-events: none;
 }
 
-/* Accessibility: Respect Reduced Motion Preferences */
+/* Continuous Dual-Row Marquee Animations & Dimensions (1520.8 × 989.85) */
+@keyframes marqueeLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marqueeRight {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.marquee-dual-stage {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .marquee-dual-stage {
+    gap: 20px;
+  }
+}
+
+.animate-marquee-left {
+  display: flex !important;
+  width: max-content !important;
+  animation: marqueeLeft 30s linear infinite !important;
+  animation-play-state: running !important;
+  will-change: transform;
+  gap: 20px;
+}
+
+.animate-marquee-right {
+  display: flex !important;
+  width: max-content !important;
+  animation: marqueeRight 32s linear infinite !important;
+  animation-play-state: running !important;
+  will-change: transform;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .animate-marquee-left,
+  .animate-marquee-right {
+    gap: 32px;
+  }
+}
+
+.marquee-card-item {
+  width: 82vw;
+  max-width: 440px;
+  aspect-ratio: 16 / 9;
+}
+
+@media (min-width: 768px) {
+  .marquee-card-item {
+    width: 480px;
+    height: 270px;
+    aspect-ratio: 16 / 9;
+  }
+}
+
+@media (min-width: 1280px) {
+  .marquee-card-item {
+    width: 520px;
+    height: 290px;
+    aspect-ratio: 16 / 9;
+  }
+}
+
+/* Continuously moving — NEVER pause on hover */
+.animate-marquee-left:hover,
+.animate-marquee-right:hover {
+  animation-play-state: running !important;
+}
+
+/* Ensure marquee continues moving even if system has reduced-motion preference */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  .animate-marquee-left {
+    animation: marqueeLeft 30s linear infinite !important;
+    animation-duration: 30s !important;
+    animation-iteration-count: infinite !important;
+    animation-play-state: running !important;
+  }
+  .animate-marquee-right {
+    animation: marqueeRight 32s linear infinite !important;
+    animation-duration: 32s !important;
+    animation-iteration-count: infinite !important;
+    animation-play-state: running !important;
   }
 }
 
@@ -460,7 +705,7 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover {
 .high-contrast-mode select,
 .high-contrast-mode textarea {
   border-color: rgba(185, 160, 120, 0.8) !important;
-  background-color: #070D14 !important;
+  background-color: #FFFFFF !important;
 }
 
 .larger-text-mode body {
@@ -471,3 +716,97 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover {
   font-size: 1.125rem !important;
   line-height: 1.8 !important;
 }
+
+/* ──────────────────────────────────────────────
+   Standard Luxury Button Specification (180 × 50)
+   Matching Reference: Deep Navy (#00204E) + White Text + Right Chevron
+   ────────────────────────────────────────────── */
+.btn-luxury {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 180px;
+  height: 50px;
+  background-color: #00204E;
+  color: #FFFFFF;
+  font-family: var(--font-graphik), "Graphik", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border-radius: 1px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  text-decoration: none;
+}
+
+@media (min-width: 640px) {
+  .btn-luxury {
+    width: 180px;
+  }
+}
+
+.btn-luxury:hover {
+  background-color: #002D6E;
+  color: #FFFFFF;
+}
+
+.btn-luxury-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 180px;
+  height: 50px;
+  background-color: transparent;
+  color: #00204E;
+  border: 1px solid #00204E;
+  font-family: var(--font-graphik), "Graphik", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border-radius: 1px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+
+.btn-luxury-outline:hover {
+  background-color: #00204E;
+  color: #FFFFFF;
+}
+
+/* ──────────────────────────────────────────────
+   Navbar Layout Architecture & Logo Spacing
+   ────────────────────────────────────────────── */
+.nav-header-container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0 40px !important;
+}
+
+#haven-logo,
+.logo {
+  margin-right: 60px !important;
+  flex-shrink: 0 !important;
+}
+
+@media (min-width: 1024px) {
+  nav.primary-nav {
+    display: flex !important;
+    gap: 32px !important;
+    align-items: center !important;
+  }
+}
+

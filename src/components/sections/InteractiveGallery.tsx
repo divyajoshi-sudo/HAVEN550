@@ -30,30 +30,46 @@ export function InteractiveGallery({
   const gridItems = filteredItems.slice(1, 5);
 
   return (
-    <Section background={background} border="bottom" className="py-24 md:py-32 relative overflow-hidden bg-[#0B141D]">
-      <div className="absolute inset-0 ambient-glow-gold pointer-events-none" />
-      <Container>
-        {/* Section Header */}
-        <ScrollReveal direction="up" duration={0.85}>
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <Eyebrow className="mb-3 text-[#B9A078] tracking-[0.35em]">
-              {content.eyebrow}
-            </Eyebrow>
+    <Section
+      background="deep"
+      border="bottom"
+      fullHeight={true}
+      style={{ backgroundColor: "#101C29", color: "#F8F8F6" }}
+      className="min-h-screen lg:h-screen flex flex-col justify-center py-10 lg:py-6 relative overflow-hidden bg-[#101C29] text-[#F8F8F6]"
+    >
+      <Container size="default">
+        {/* Section Header - Perfectly Centered */}
+        <ScrollReveal direction="up" duration={0.85} className="w-full flex justify-center">
+          <div className="w-full max-w-4xl mx-auto text-center flex flex-col items-center mb-6 sm:mb-8 lg:mb-6">
+            {/* Eyebrow with flanking gold lines */}
+            <div className="flex items-center justify-center gap-3 mb-3.5">
+              <span className="w-8 sm:w-12 h-[1.5px] bg-[#B9A078]" />
+              <p className="text-xs sm:text-[13px] tracking-[0.3em] text-[#B9A078] uppercase font-sans font-medium">
+                {content.eyebrow}
+              </p>
+              <span className="w-8 sm:w-12 h-[1.5px] bg-[#B9A078]" />
+            </div>
 
-            <Heading level={2} className="mb-4 font-serif font-light text-white text-3xl sm:text-4xl md:text-5xl">
+            {/* Headline */}
+            <h2
+              style={{ color: "#F8F8F6" }}
+              className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[52px] text-[#F8F8F6] font-normal tracking-tight leading-[1.14] mb-6 text-center mx-auto w-full"
+            >
               {content.headline}
-            </Heading>
+            </h2>
 
-            <div className="w-16 h-[1.5px] bg-[#B9A078]/70 mx-auto my-6" />
-
-            {/* Interactive Category Filter Tabs */}
-            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-6 mt-8">
+            {/* Interactive Category Filter Tabs - Centered */}
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 md:gap-6">
               <button
                 onClick={() => setActiveCategory("ALL")}
-                className={`px-4 py-2 text-[0.68rem] tracking-[0.25em] uppercase font-medium transition-all duration-300 cursor-pointer ${
+                style={{
+                  color: activeCategory === "ALL" ? "#B9A078" : "#F8F8F6",
+                  borderColor: activeCategory === "ALL" ? "#B9A078" : "transparent",
+                }}
+                className={`px-3 sm:px-4 py-2 text-[11px] sm:text-xs tracking-[0.22em] uppercase font-sans font-medium transition-all duration-300 cursor-pointer ${
                   activeCategory === "ALL"
-                    ? "text-[#B9A078] border-b-2 border-[#B9A078]"
-                    : "text-white/60 hover:text-white"
+                    ? "border-b-2 font-semibold"
+                    : "opacity-80 hover:opacity-100 hover:text-[#B9A078]"
                 }`}
               >
                 ALL
@@ -62,10 +78,14 @@ export function InteractiveGallery({
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-4 py-2 text-[0.68rem] tracking-[0.25em] uppercase font-medium transition-all duration-300 cursor-pointer ${
+                  style={{
+                    color: activeCategory === cat ? "#B9A078" : "#F8F8F6",
+                    borderColor: activeCategory === cat ? "#B9A078" : "transparent",
+                  }}
+                  className={`px-3 sm:px-4 py-2 text-[11px] sm:text-xs tracking-[0.22em] uppercase font-sans font-medium transition-all duration-300 cursor-pointer ${
                     activeCategory === cat
-                      ? "text-[#B9A078] border-b-2 border-[#B9A078]"
-                      : "text-white/60 hover:text-white"
+                      ? "border-b-2 font-semibold"
+                      : "opacity-80 hover:opacity-100 hover:text-[#B9A078]"
                   }`}
                 >
                   {cat}

@@ -7,6 +7,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   size?: "sm" | "md" | "lg";
   href?: string;
   isExternal?: boolean;
+  withChevron?: boolean;
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -19,28 +20,29 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       isExternal,
       children,
       disabled,
+      withChevron = true,
       ...props
     },
     ref
   ) => {
     const baseStyles =
-      "inline-flex items-center justify-center font-medium tracking-[0.12em] uppercase transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed rounded-[2px] select-none group";
+      "inline-flex items-center justify-center font-medium tracking-[0.16em] uppercase transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed rounded-[1px] select-none group whitespace-nowrap gap-2";
 
     const variantStyles = {
       primary:
-        "bg-[#B9A078] text-[#0C141D] hover:bg-[#A88D60] active:bg-[#967C52]",
+        "bg-[#101C29] text-[#F8F8F6] hover:bg-[#182A3E] active:bg-[#0B131C] shadow-md hover:shadow-lg",
       secondary:
-        "bg-transparent text-white border border-white/40 hover:bg-white hover:text-[#0C141D] hover:border-white",
+        "bg-[#B9A078] text-[#101C29] hover:bg-[#C8B08A] active:bg-[#A88F66] shadow-md hover:shadow-lg",
       outline:
-        "bg-transparent text-[#B9A078] border border-[#B9A078]/60 hover:bg-[#B9A078] hover:text-[#0C141D]",
+        "bg-transparent text-[#101C29] border border-[#101C29] hover:bg-[#101C29] hover:text-[#F8F8F6]",
       text:
-        "bg-transparent text-[#B9A078] hover:text-white p-0 h-auto tracking-[0.16em]",
+        "bg-transparent text-[#101C29] hover:text-[#B9A078] p-0 h-auto tracking-[0.16em] gap-1",
     };
 
     const sizeStyles = {
-      sm: "h-[42px] px-5 text-[12px]",
-      md: "h-[48px] sm:h-[50px] px-6 sm:px-8 text-[13px]",
-      lg: "h-[52px] sm:h-[54px] px-8 sm:px-10 text-[14px]",
+      sm: "w-full sm:w-[180px] min-h-[48px] h-[50px] px-4 text-[12px]",
+      md: "w-full sm:w-[180px] min-h-[48px] h-[50px] px-4 text-[12px] sm:text-[12.5px]",
+      lg: "w-full sm:w-[180px] min-h-[48px] h-[52px] px-5 text-[13px]",
     };
 
     const appliedSizeStyle = variant === "text" ? "" : sizeStyles[size];
@@ -52,6 +54,17 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       className
     );
 
+    const innerContent = (
+      <>
+        <span>{children}</span>
+        {withChevron && variant !== "text" && (
+          <span className="text-[13px] font-light leading-none group-hover:translate-x-0.5 transition-transform">
+            ›
+          </span>
+        )}
+      </>
+    );
+
     if (href) {
       if (isExternal) {
         return (
@@ -61,13 +74,13 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             rel="noopener noreferrer"
             className={combinedClassName}
           >
-            {children}
+            {innerContent}
           </a>
         );
       }
       return (
         <Link href={href} className={combinedClassName}>
-          {children}
+          {innerContent}
         </Link>
       );
     }
@@ -79,7 +92,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         className={combinedClassName}
         {...props}
       >
-        {children}
+        {innerContent}
       </button>
     );
   }

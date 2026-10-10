@@ -18,10 +18,10 @@ export function Heading({
   const Component = as || (`h${level}` as const);
 
   const levelStyles = {
-    1: "text-4xl sm:text-5xl md:text-6xl lg:text-[72px] font-light tracking-[-0.01em] leading-[1.02] text-white",
-    2: "text-3xl sm:text-4xl md:text-5xl font-light tracking-[-0.01em] leading-[1.12] text-white",
-    3: "text-2xl sm:text-[32px] font-light leading-[1.22] text-white",
-    4: "text-xl sm:text-2xl font-light leading-[1.25] text-white",
+    1: "text-4xl sm:text-5xl md:text-6xl lg:text-[72px] font-light tracking-[-0.01em] leading-[1.02]",
+    2: "text-3xl sm:text-4xl md:text-5xl font-light tracking-[-0.01em] leading-[1.12]",
+    3: "text-2xl sm:text-[32px] font-light leading-[1.22]",
+    4: "text-xl sm:text-2xl font-light leading-[1.25]",
   };
 
   return (

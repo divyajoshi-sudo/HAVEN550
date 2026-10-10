@@ -26,7 +26,7 @@ export function GalleryGrid({
   return (
     <section
       id="vessel-gallery"
-      className="relative w-full h-screen min-h-screen bg-[#071B2A] overflow-hidden flex flex-col justify-between"
+      className="relative w-full h-screen min-h-screen bg-white overflow-hidden flex flex-col justify-between"
     >
       {/* 01 — Full-Screen Background Image Layer with Crossfade */}
       <div className="absolute inset-0 z-0">
@@ -112,9 +112,10 @@ export function GalleryGrid({
                 >
                   <Link
                     href={meta.href}
-                    className="inline-block px-7 py-3 text-[0.68rem] tracking-[0.25em] uppercase font-medium border border-white/80 text-white bg-black/30 backdrop-blur-sm hover:bg-white hover:text-[#071B2A] transition-all duration-300 shadow-2xl"
+                    className="inline-flex items-center justify-center gap-2 w-full sm:w-[180px] h-[50px] px-3 bg-[#00204E] hover:bg-[#002D6E] text-white text-[11px] sm:text-[12px] tracking-[0.15em] uppercase font-medium transition-all duration-300 shadow-2xl rounded-[1px] whitespace-nowrap group"
                   >
-                    {meta.cta}
+                    <span>{meta.cta}</span>
+                    <span className="text-[13px] font-light leading-none group-hover:translate-x-0.5 transition-transform">›</span>
                   </Link>
                 </div>
               </div>

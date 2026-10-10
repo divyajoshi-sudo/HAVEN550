@@ -20,14 +20,14 @@ export default function ErrorBoundary({
   }, [error]);
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center py-32 bg-haven-navy text-center">
+    <div className="min-h-[80vh] flex items-center justify-center py-32 bg-white text-[#08182B] text-center">
       <Container size="narrow">
         <Eyebrow className="mb-3">UNEXPECTED ERROR</Eyebrow>
         <Divider variant="short" centered />
-        <Heading level={2} className="mb-6">
+        <Heading level={2} className="mb-6 text-[#08182B]">
           Something Went Astray.
         </Heading>
-        <p className="text-base text-haven-cream/75 font-light leading-relaxed max-w-md mx-auto mb-10">
+        <p className="text-base text-[#4A5568] font-light leading-relaxed max-w-md mx-auto mb-10">
           We encountered an unexpected issue while loading this page. Please try refreshing or return to the main deck.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

@@ -233,35 +233,27 @@ export function EditorialExperiences({
 
   return (
     <section
-      className={`w-full min-h-screen flex flex-col justify-center py-20 md:py-28 relative overflow-hidden transition-colors duration-300 ${
-        isLight
-          ? "bg-[#EFECE5] text-[#08182B] border-t border-b border-[#D8D2C6]"
-          : "bg-[#070D14] text-[#F7F5F0] border-t border-b border-white/10"
-      }`}
+      style={{
+        backgroundColor: isLight ? "#F7F5F0" : "#101C29",
+        color: isLight ? "#101C29" : "#F8F8F6",
+      }}
+      className={`w-full min-h-screen lg:h-screen flex flex-col justify-center py-10 lg:py-6 relative overflow-hidden transition-colors duration-300 ${
+        isLight ? "bg-[#F7F5F0] text-[#101C29]" : "bg-[#101C29] text-[#F8F8F6]"
+      } border-t border-b border-[#EAE6DF]`}
     >
-      {!isLight && (
-        <div className="absolute inset-0 ambient-glow-gold pointer-events-none opacity-30" />
-      )}
-
       {/* Top Header - Truly Centered in Section */}
-      <div className="w-full site-padding-x flex flex-col items-center justify-center text-center mb-12 sm:mb-16 relative z-10">
+      <div className="w-full site-padding-x flex flex-col items-center justify-center text-center pt-2 mb-6 sm:mb-8 lg:mb-6 relative z-10 shrink-0">
         <ScrollReveal direction="up" duration={0.85} className="w-full max-w-4xl mx-auto flex flex-col items-center justify-center text-center">
-          <div className="flex items-center justify-center gap-3 mb-3 mx-auto text-center">
+          <div className="flex items-center justify-center gap-3 mb-2.5 mx-auto text-center">
             <span className="w-8 h-[1.5px] bg-[#B9A078]" />
-            <p
-              className={`text-xs sm:text-[13px] tracking-[0.26em] uppercase font-medium text-center ${
-                isLight ? "text-[#9E8357]" : "text-[#B9A078]"
-              }`}
-            >
+            <p className="text-xs sm:text-[13px] tracking-[0.26em] uppercase font-semibold text-center text-[#9E8357]">
               {eyebrow}
             </p>
             <span className="w-8 h-[1.5px] bg-[#B9A078]" />
           </div>
-          <h2
-            className={`font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-normal tracking-tight leading-[1.12] text-center mx-auto w-full ${
-              isLight ? "text-[#08182B]" : "text-[#F7F5F0]"
-            }`}
-          >
+          <h2 className={`font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-normal tracking-tight leading-[1.12] text-center mx-auto w-full ${
+            isLight ? "text-[#101C29]" : "text-[#F8F8F6]"
+          }`}>
             {headline}
           </h2>
         </ScrollReveal>
@@ -275,7 +267,7 @@ export function EditorialExperiences({
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
           onPointerLeave={handlePointerUp}
-          className="flex gap-5 sm:gap-6 overflow-x-auto scrollbar-none site-padding-x pb-4 select-none cursor-grab active:cursor-grabbing"
+          className="flex gap-5 sm:gap-6 overflow-x-auto scrollbar-none site-padding-x pb-2 select-none cursor-grab active:cursor-grabbing"
           style={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",
@@ -284,10 +276,10 @@ export function EditorialExperiences({
           {displayItems.map((item, idx) => (
             <div
               key={idx}
-              className="w-[88vw] sm:w-[460px] md:w-[500px] lg:w-[540px] flex-shrink-0"
+              className="w-[88vw] sm:w-[440px] md:w-[480px] lg:w-[500px] flex-shrink-0"
             >
               <div
-                className={`relative h-[500px] sm:h-[540px] md:h-[580px] rounded-[3px] overflow-hidden group shadow-2xl bg-black border ${isLight ? "border-black/15" : "border-white/15"
+                className={`relative h-[400px] sm:h-[440px] md:h-[460px] lg:h-[480px] rounded-[3px] overflow-hidden group shadow-2xl bg-black border ${isLight ? "border-black/15" : "border-white/15"
                   }`}
               >
                 {/* 100% Full-bleed Image */}
@@ -299,23 +291,23 @@ export function EditorialExperiences({
                   className="object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-105"
                 />
 
-                {/* Subtle Gradient Overlay — shows vibrant image colors */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent pointer-events-none" />
+                {/* Refined Bottom-Only Gradient Scrim: Image is 100% bright & clear across the top/middle, gently shaded only behind the text */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 via-35% to-transparent pointer-events-none" />
 
-                {/* Editorial Content Overlay Aligned to Bottom (No collision, No orange clash) */}
+                {/* Editorial Content Overlay Aligned to Bottom */}
                 <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8 md:p-10 z-10 text-left">
                   {/* Micro Eyebrow */}
-                  <span className="text-[11px] sm:text-xs font-semibold tracking-[0.28em] text-[#B9A078] uppercase font-sans mb-2">
+                  <span className="text-[11px] sm:text-xs font-semibold tracking-[0.28em] text-[#D4AF37] uppercase font-sans mb-2 drop-shadow-[0_1px_3px_rgba(0,0,0,0.95)]">
                     {item.eyebrow}
                   </span>
 
-                  {/* Elegant White/Gold Serif Headline */}
-                  <h3 className="font-serif text-2xl sm:text-3xl md:text-[34px] tracking-normal text-[#F7F5F0] font-normal leading-tight mb-3">
-                    {item.title}
+                  {/* Elegant Pure White Serif Headline */}
+                  <h3 className="font-serif text-2xl sm:text-3xl md:text-[34px] tracking-normal !text-white text-white font-normal leading-tight mb-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+                    {item.headline || item.title}
                   </h3>
 
-                  {/* Description */}
-                  <p className="text-xs sm:text-sm md:text-[15px] text-[#EFECE5]/90 font-light leading-relaxed mb-6 max-w-lg line-clamp-3">
+                  {/* Description in Crisp White with Graphik font */}
+                  <p className="text-xs sm:text-sm md:text-[15px] font-sans !text-white/95 text-white/95 font-light leading-relaxed mb-6 max-w-lg line-clamp-3 drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">
                     {item.description}
                   </p>
 
@@ -323,10 +315,10 @@ export function EditorialExperiences({
                   <div>
                     <Link
                       href={item.href || "/experiences"}
-                      className="inline-flex items-center justify-center gap-2 h-[46px] px-7 bg-[#B9A078] hover:bg-[#A88D60] text-[#0C141D] text-[11px] sm:text-xs tracking-[0.16em] uppercase font-medium transition-all duration-300 rounded-[2px] shadow-lg group-hover:shadow-xl"
+                      className="inline-flex items-center justify-center gap-2 w-full sm:w-[180px] h-[50px] px-3 bg-[#00204E] hover:bg-[#002D6E] text-white text-[11px] sm:text-[12px] tracking-[0.15em] uppercase font-medium transition-all duration-300 rounded-[1px] shadow-lg group-hover:shadow-xl cursor-pointer whitespace-nowrap"
                     >
                       <span>{item.ctaText}</span>
-                      <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                      <span className="text-[13px] font-light leading-none group-hover:translate-x-0.5 transition-transform">›</span>
                     </Link>
                   </div>
                 </div>

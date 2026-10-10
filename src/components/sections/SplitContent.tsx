@@ -23,13 +23,12 @@ export function SplitContent({
 
   if (variant === "boxed") {
     return (
-      <Section background={background} border={border} className="py-20 md:py-28 relative overflow-hidden">
-        <div className="absolute inset-0 ambient-glow-gold pointer-events-none" />
+      <Section background={background} border={border} fullHeight={true} className="min-h-screen lg:h-screen flex flex-col justify-center py-10 lg:py-16 relative overflow-hidden bg-white text-[#101C29]">
         <Container size="default">
           <ScrollReveal direction="up" duration={0.9}>
-            <div className="grid grid-cols-1 lg:grid-cols-12 border border-white/10 hover:border-[#B9A078]/40 bg-[#0B141D]/80 backdrop-blur-md rounded-none overflow-hidden shadow-2xl transition-all duration-500 group">
+            <div className="grid grid-cols-1 lg:grid-cols-12 border border-[#EAE6DF] hover:border-[#00204E]/40 bg-white rounded-none overflow-hidden shadow-md hover:shadow-lg transition-all duration-500 group">
               {/* Image Column */}
-              <div className="lg:col-span-4 relative min-h-[320px] lg:min-h-[420px] overflow-hidden bg-[#0B141D] img-editorial">
+              <div className="lg:col-span-4 relative min-h-[320px] lg:min-h-[420px] overflow-hidden bg-white">
                 <Image
                   src={content.image.src}
                   alt={content.image.alt}
@@ -37,35 +36,38 @@ export function SplitContent({
                   sizes="(max-width: 1024px) 100vw, 35vw"
                   className="object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0B141D]/60 via-transparent to-transparent pointer-events-none" />
               </div>
 
               {/* Text Content Column */}
               <div className="lg:col-span-8 p-8 sm:p-12 lg:p-16 flex flex-col justify-center text-left">
                 {content.eyebrow && (
-                  <p className="text-xs sm:text-sm tracking-[0.35em] text-[#B9A078] uppercase font-light mb-4">
+                  <p className="text-xs sm:text-sm tracking-[0.35em] text-[#9E8357] uppercase font-light mb-4">
                     {content.eyebrow}
                   </p>
                 )}
 
-                <Heading level={2} className="text-3xl sm:text-4xl md:text-5xl mb-6 font-serif font-light text-[#F7F5F0]">
+                <Heading
+                  level={2}
+                  style={{ color: "#101C29" }}
+                  className="text-3xl sm:text-4xl md:text-5xl mb-6 font-serif font-light text-[#101C29]"
+                >
                   {content.headline}
                 </Heading>
 
-                <div className="space-y-4 text-[#EFECE5]/90 text-sm sm:text-base leading-relaxed font-light mb-6 text-left">
+                <div className="space-y-4 text-[#101C29] text-sm sm:text-base leading-relaxed font-light mb-6 text-left">
                   {content.paragraphs.map((paragraph, index) => (
-                    <p key={index}>{paragraph}</p>
+                    <p key={index} style={{ color: "#101C29" }}>{paragraph}</p>
                   ))}
                 </div>
 
-                {/* Gold horizontal underline accent */}
                 <div className="w-16 h-[1.5px] bg-[#B9A078]/80 mb-8" />
 
                 {content.cta && (
                   <div>
                     <Link
                       href={content.cta.href}
-                      className="inline-block text-xs tracking-[0.3em] uppercase font-medium text-[#B9A078] hover:text-white transition-colors border-b border-[#B9A078]/50 hover:border-white pb-1"
+                      style={{ color: "#101C29", borderColor: "#101C29" }}
+                      className="inline-block text-xs tracking-[0.3em] uppercase font-medium text-[#101C29] hover:text-[#B9A078] transition-colors border-b border-[#101C29]/50 hover:border-[#B9A078] pb-1"
                     >
                       {content.cta.label}
                     </Link>
@@ -79,100 +81,110 @@ export function SplitContent({
     );
   }
 
-  const isLight = background === "ivory" || background === "softWhite";
+  const isIvory = background === "ivory" || background === "softWhite";
 
   return (
-    <Section background={background} border={border} className="py-20 md:py-28 relative overflow-hidden">
-      {!isLight && (
-        <div className="absolute inset-0 ambient-glow-navy pointer-events-none" />
-      )}
-      <Container size="wide">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          {/* Text Column */}
-          <div
-            className={`lg:col-span-6 ${isImageRight ? "order-1" : "order-1 lg:order-2"
-              }`}
-          >
-            <ScrollReveal direction={isImageRight ? "right" : "left"} duration={0.85}>
-              {content.eyebrow && (
-                <div className="flex items-center gap-3 mb-3">
-                  <span className={`w-6 h-[1px] ${isLight ? "bg-[#B9A078]" : "bg-[#B9A078]"}`} />
-                  <p
-                    className={`text-xs sm:text-sm tracking-[0.35em] uppercase font-medium ${
-                      isLight ? "text-[#9E8357]" : "text-[#B9A078]"
-                    }`}
-                  >
-                    {content.eyebrow}
-                  </p>
-                </div>
-              )}
-
-              <h2
-                className={`font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[2.5rem] xl:text-[3rem] font-light tracking-tight mb-6 leading-[1.15] max-w-xl ${
-                  isLight ? "text-[#08182B]" : "text-[#F7F5F0]"
-                }`}
-              >
-                {content.headline}
-              </h2>
-
-              <div
-                className={`space-y-5 text-sm sm:text-base leading-relaxed font-light text-left ${
-                  isLight ? "text-[#0F243A]" : "text-[#EFECE5]/90"
-                }`}
-              >
-                {content.paragraphs.map((paragraph, index) => (
-                  <p
-                    key={index}
-                    className={`text-sm sm:text-base leading-relaxed ${
-                      isLight ? "!text-[#0F243A]" : "!text-[#EFECE5]/90"
-                    }`}
-                  >
-                    {paragraph}
-                  </p>
-                ))}
+    <Section
+      background={background}
+      border={border}
+      fullHeight={true}
+      spacing="none"
+      style={{
+        backgroundColor: isIvory ? "#F7F5F0" : "#101C29",
+      }}
+      className={`w-full min-h-screen lg:h-screen flex flex-col justify-center py-12 lg:py-8 px-4 sm:px-8 lg:px-12 relative overflow-hidden transition-colors duration-300 ${
+        isIvory ? "bg-[#F7F5F0] text-[#101C29]" : "bg-[#101C29] text-[#F8F8F6]"
+      }`}
+    >
+      <Container size="wide" className="w-full">
+        {/* =========================================================================
+            HEADINGS: Generously padded header
+        ========================================================================= */}
+        <ScrollReveal direction="up" duration={0.8} className="w-full flex justify-center shrink-0">
+          <div className="w-full max-w-4xl mx-auto flex flex-col items-center justify-center text-center mb-8 sm:mb-12 lg:mb-14">
+            {content.eyebrow && (
+              <div className="flex items-center justify-center gap-3.5 mb-4 sm:mb-5 mx-auto">
+                <span className="w-8 sm:w-14 h-[1px] bg-[#B9A078]" />
+                <p className="text-xs sm:text-[13px] tracking-[0.32em] uppercase font-sans font-semibold text-[#B9A078]">
+                  {content.eyebrow}
+                </p>
+                <span className="w-8 sm:w-14 h-[1px] bg-[#B9A078]" />
               </div>
+            )}
 
-              {/* Gold horizontal underline accent at bottom */}
-              <div className="w-16 h-[1.5px] bg-[#B9A078]/80 my-6" />
-
-              {content.cta && (
-                <div>
-                  <Link
-                    href={content.cta.href}
-                    className={`inline-flex items-center gap-2 px-8 py-3.5 text-xs tracking-[0.22em] uppercase font-bold transition-all duration-300 shadow-xl group cursor-pointer ${
-                      isLight
-                        ? "bg-[#08182B] text-[#F7F5F0] hover:bg-[#B9A078] hover:text-[#08182B]"
-                        : "bg-[#B9A078] text-[#0B141D] hover:bg-[#D4AF37]"
-                    }`}
-                  >
-                    <span>{content.cta.label}</span>
-                    <span className="transition-transform duration-300 group-hover:translate-x-1.5">
-                      →
-                    </span>
-                  </Link>
-                </div>
-              )}
-            </ScrollReveal>
+            <h2 className={`font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-normal tracking-tight leading-[1.12] text-center w-full mx-auto ${
+              isIvory ? "text-[#101C29]" : "text-[#F8F8F6]"
+            }`}>
+              {content.headline}
+            </h2>
           </div>
+        </ScrollReveal>
 
-          {/* Image Column */}
-          <div
-            className={`lg:col-span-6 flex items-center justify-center lg:justify-end ${isImageRight ? "order-2" : "order-2 lg:order-1"
+        {/* =========================================================================
+            TWO COLUMNS GRID: Fills remaining height gracefully
+        ========================================================================= */}
+        <div className="w-full flex-1 flex items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 xl:gap-16 items-center w-full">
+            {/* Subcontent Column (Left side) */}
+            <div
+              className={`lg:col-span-6 flex flex-col items-center lg:items-start justify-center ${
+                isImageRight ? "order-1" : "order-1 lg:order-2"
               }`}
-          >
-            <ScrollReveal direction={isImageRight ? "left" : "right"} duration={0.85} delay={150}>
-              <div className="relative w-full max-w-[816px] aspect-[816/459] overflow-hidden shadow-2xl border border-white/10 group img-editorial">
-                <Image
-                  src={content.image.src}
-                  alt={content.image.alt}
-                  width={816}
-                  height={459}
-                  priority
-                  className="w-full h-full object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
-              </div>
-            </ScrollReveal>
+            >
+              <ScrollReveal direction={isImageRight ? "right" : "left"} duration={0.85} className="w-full flex flex-col items-center lg:items-start">
+                <div className="max-w-[540px] w-full text-left">
+                  <p className={`text-[15px] sm:text-[16px] md:text-[17px] lg:text-[17.5px] leading-[1.85] font-normal text-left font-sans ${
+                    isIvory ? "text-[#101C29]" : "text-[#F8F8F6]"
+                  }`}>
+                    {Array.isArray(content.paragraphs)
+                      ? content.paragraphs.join(" ")
+                      : content.paragraphs}
+                  </p>
+
+                  {/* Left-aligned Button below paragraph */}
+                  {content.cta && (
+                    <div className="flex justify-start items-center w-full mt-8 sm:mt-10 lg:mt-12">
+                      <Link
+                        href={content.cta.href}
+                        className={`inline-flex items-center justify-center gap-2 w-full sm:w-[190px] h-[50px] px-4 text-[11px] sm:text-[12px] tracking-[0.16em] uppercase font-medium transition-all duration-300 shadow-md hover:shadow-lg group cursor-pointer rounded-[1px] whitespace-nowrap ${
+                          isIvory
+                            ? "bg-[#101C29] hover:bg-[#182A3E] text-[#F8F8F6]"
+                            : "bg-[#B9A078] hover:bg-[#C8B08A] text-[#101C29]"
+                        }`}
+                      >
+                        <span>{content.cta.label}</span>
+                        <span className="text-[13px] font-light leading-none group-hover:translate-x-0.5 transition-transform">
+                          ›
+                        </span>
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              </ScrollReveal>
+            </div>
+
+            {/* Image Column (Right side) */}
+            <div
+              className={`lg:col-span-6 flex items-center justify-center lg:justify-end ${
+                isImageRight ? "order-2" : "order-2 lg:order-1"
+              }`}
+            >
+              <ScrollReveal direction={isImageRight ? "left" : "right"} duration={0.85} delay={150} className="w-full flex justify-center lg:justify-end">
+                <div
+                  style={{ maxWidth: "636px", aspectRatio: "636 / 357.75" }}
+                  className="relative w-full max-w-[636px] aspect-[636/357.75] lg:w-[636px] lg:h-[357.75px] overflow-hidden rounded-[2px] shadow-[0_25px_60px_rgba(0,0,0,0.18)] border border-[#EAE6DF]/60 group bg-white"
+                >
+                  <Image
+                    src={content.image.src}
+                    alt={content.image.alt}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 636px"
+                    priority
+                    className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                  />
+                </div>
+              </ScrollReveal>
+            </div>
           </div>
         </div>
       </Container>

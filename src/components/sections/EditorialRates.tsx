@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { Container } from "../layout/Container";
 import { ScrollReveal } from "../ui/ScrollReveal";
 
 export interface RateTier {
@@ -12,6 +12,8 @@ export interface RateTier {
   description?: string;
   popular?: boolean;
   inclusions?: string[];
+  image?: { src: string; alt: string };
+  eyebrow?: string;
 }
 
 export interface EditorialRatesProps {
@@ -28,41 +30,59 @@ export interface EditorialRatesProps {
 const DEFAULT_RATES: RateTier[] = [
   {
     name: "The Escape",
-    duration: "4 Hours",
+    duration: "4 HOURS",
     price: "$3,000",
-    description: "An intimate introduction to private yachting along Fort Lauderdale's scenic waterways.",
+    eyebrow: "01 // 4 HOURS CHARTER",
+    description:
+      "An intimate introduction to private yachting along Fort Lauderdale's scenic waterways. Perfect for an unhurried morning or golden afternoon coastal escape with personalized steward service and crystal barware.",
     popular: false,
+    image: {
+      src: "/images/haven-profile-speed.jpeg",
+      alt: "HAVEN 550 running profile along Fort Lauderdale coast",
+    },
     inclusions: [
       "Licensed USCG Captain & Dedicated Steward",
       "Fort Lauderdale coastal & intracoastal cruising",
-      "Local fuel, soft drinks, ice & crystal barware",
-      "Teak swim platform & premium water mats",
+      "Local cruising fuel, soft drinks, ice & crystal barware",
+      "Teak swim platform access & premium water mats",
     ],
   },
   {
     name: "The Experience",
-    duration: "6 Hours",
+    duration: "6 HOURS",
     price: "$4,000",
-    description: "Our signature cruise blending coastal cruising, sandbar anchorage, and leisurely dining.",
+    eyebrow: "SIGNATURE EXPERIENCE // 6 HOURS CHARTER",
+    description:
+      "Our signature charter blending open-water ocean cruising, secluded sandbar anchorage, and leisurely alfresco dining. Ample time to swim, deploy water toys, and immerse yourself in the private South Florida lifestyle.",
     popular: true,
+    image: {
+      src: "/images/haven-bow-sunpad.jpeg",
+      alt: "Forward bow sunpad and ocean anchorage on HAVEN 550",
+    },
     inclusions: [
       "Licensed USCG Captain & Dedicated Steward",
-      "Extended coastal cruising & sandbar anchor time",
-      "Ample time for catered dining & swimming",
-      "Local fuel, premium amenities & water toys",
+      "Extended coastal cruising & secluded sandbar anchor time",
+      "Ample time for catered dining, swimming & relaxation",
+      "Local cruising fuel, premium amenities & water toys",
     ],
   },
   {
     name: "The Full Day",
-    duration: "8 Hours",
+    duration: "8 HOURS",
     price: "$5,000",
-    description: "An unhurried complete immersion into luxury yachting from morning sun to golden hour.",
+    eyebrow: "03 // 8 HOURS CHARTER",
+    description:
+      "An unhurried complete immersion into luxury South Florida yachting from morning sunshine through golden hour. Tailor your itinerary with full coastal range to Miami or Boca Raton, anchored coves, and unforgettable sunset views.",
     popular: false,
+    image: {
+      src: "/images/haven-aft-deck.jpeg",
+      alt: "Teak aft deck dining and sunset cruising on HAVEN 550",
+    },
     inclusions: [
       "Licensed USCG Captain & Dedicated Steward",
-      "Full coastal range (Miami or Boca options)",
-      "Unhurried itinerary with sunset finale",
-      "Complete vessel access & customized routing",
+      "Full coastal range (Fort Lauderdale, Miami, or Boca Raton)",
+      "Bespoke unhurried itinerary with golden-hour sunset finale",
+      "Complete vessel access, customized routing & full service",
     ],
   },
 ];
@@ -70,198 +90,222 @@ const DEFAULT_RATES: RateTier[] = [
 export function EditorialRates({
   eyebrow = "THE PRIVILEGE OF PRIVACY",
   headline = "Your Private Charter Awaits.",
-  subheadline = "Choose the journey that suits your schedule. Transparent pricing, no hidden extras.",
+  subheadline = "Choose the experience that suits your day.",
   rates = DEFAULT_RATES,
-  inclusionNote = "Every charter includes a licensed USCG captain, private steward, local cruising fuel, soft drinks, and onboard amenities.",
+  inclusionNote = "Every charter includes a professional captain, steward, local cruising fuel, and selected onboard amenities.",
   gratuityNote = "Customary crew gratuity of 20% is not included and is given directly to the crew.",
   ctaButton = {
-    label: "VIEW ALL CHARTER RATES & POLICIES",
+    label: "VIEW ALL CHARTER RATES",
     href: "/charter-rates",
   },
-  background = "navy",
+  background = "ivory",
 }: EditorialRatesProps) {
+  const displayRates = rates.map((rate, idx) => {
+    const defaultFallback = DEFAULT_RATES[idx % DEFAULT_RATES.length];
+    return {
+      ...defaultFallback,
+      ...rate,
+      image: rate.image || defaultFallback.image,
+      eyebrow: rate.eyebrow || defaultFallback.eyebrow,
+      inclusions:
+        rate.inclusions && rate.inclusions.length > 0
+          ? rate.inclusions
+          : defaultFallback.inclusions,
+      description: rate.description || defaultFallback.description,
+    };
+  });
+
   const isNavy = background === "navy" || background === "deep";
 
   return (
     <section
-      className={`min-h-screen flex flex-col justify-center py-20 md:py-28 relative overflow-hidden transition-colors duration-300 ${
+      className={`relative w-full border-t transition-colors duration-300 min-h-screen flex flex-col justify-center py-12 sm:py-16 lg:py-20 px-6 sm:px-10 lg:px-14 xl:px-18 ${
         isNavy
-          ? "bg-[#0B141D] text-[#F7F5F0] border-t border-b border-white/10"
-          : "bg-[#EFECE5] text-[#08182B] border-t border-b border-[#D8D2C6]"
+          ? "bg-[#101C29] text-[#F8F8F6] border-white/10"
+          : "bg-[#F7F5F0] text-[#101C29] border-[#EAE6DF]"
       }`}
+      style={{
+        backgroundColor: isNavy ? "#101C29" : "#F7F5F0",
+      }}
     >
-      {isNavy && (
-        <div className="absolute inset-0 ambient-glow-gold pointer-events-none opacity-30" />
-      )}
-
-      <Container size="default">
-        {/* Header with proper vertical spacing */}
-        <ScrollReveal direction="up" duration={0.85} className="w-full flex justify-center">
-          <div
-            className={`w-full max-w-4xl mx-auto text-center mb-14 pb-8 flex flex-col items-center ${
-              isNavy ? "border-b border-white/10" : "border-b border-[#D8D2C6]"
-            }`}
-          >
-            <div className="flex items-center justify-center gap-3 mb-3">
-              <span className="w-8 sm:w-10 h-[1.5px] bg-[#B9A078]" />
-              <p className="text-xs sm:text-[13px] tracking-[0.28em] text-[#B9A078] uppercase font-medium">
+      <div className="max-w-[1440px] mx-auto w-full flex flex-col justify-center gap-8 sm:gap-10 lg:gap-12 my-auto">
+        {/* =========================================================================
+            1. MAIN HEADER (Eyebrow with gold accent lines, Title, Subtitle, Specs Badge)
+        ========================================================================= */}
+        <ScrollReveal direction="up" duration={0.85} className="w-full shrink-0">
+          <div className="w-full max-w-3xl mx-auto text-center flex flex-col items-center">
+            {/* Eyebrow with centered thin horizontal accent lines */}
+            <div className="flex items-center justify-center gap-3 mb-2 mx-auto">
+              <span className="w-8 sm:w-12 h-[1px] bg-[#B9A078]" />
+              <p className="text-xs sm:text-[12.5px] tracking-[0.24em] uppercase font-sans font-semibold text-[#B9A078]">
                 {eyebrow}
               </p>
-              <span className="w-8 sm:w-10 h-[1.5px] bg-[#B9A078]" />
+              <span className="w-8 sm:w-12 h-[1px] bg-[#B9A078]" />
             </div>
 
+            {/* Title: Cormorant Garamond serif */}
             <h2
-              className={`font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-normal tracking-tight leading-[1.1] mb-3 text-center mx-auto w-full ${
-                isNavy ? "text-[#F7F5F0]" : "text-[#08182B]"
+              className={`font-serif text-3xl sm:text-4xl lg:text-[42px] font-normal tracking-tight leading-[1.12] mb-2 ${
+                isNavy ? "text-[#F8F8F6]" : "text-[#101C29]"
               }`}
             >
               {headline}
             </h2>
 
+            {/* Sub-header */}
             {subheadline && (
               <p
-                className={`text-sm sm:text-base font-light max-w-xl mx-auto text-center mb-6 ${
-                  isNavy ? "text-[#EFECE5]/80" : "text-[#0F243A]"
+                style={{ color: isNavy ? "#F8F8F6" : "#101C29" }}
+                className={`text-sm sm:text-base font-normal leading-relaxed mb-2 max-w-xl mx-auto ${
+                  isNavy ? "text-[#F8F8F6]" : "text-[#101C29]"
                 }`}
               >
                 {subheadline}
               </p>
             )}
 
-            {/* Vessel Specs Pill */}
-            <div
-              className={`inline-flex items-center px-4 py-2 rounded-full text-[11px] sm:text-xs tracking-[0.2em] uppercase font-medium whitespace-nowrap sm:whitespace-normal ${
-                isNavy
-                  ? "bg-white/5 border border-white/15 text-[#EFECE5]/90"
-                  : "bg-[#FAF8F5] border border-[#D8D2C6] text-[#08182B]"
+            {/* Badge Text */}
+            <p
+              style={{ color: isNavy ? "#B9A078" : "#101C29" }}
+              className={`text-[10px] sm:text-[11px] tracking-[0.24em] uppercase font-sans font-semibold ${
+                isNavy ? "text-[#B9A078]" : "text-[#101C29]"
               }`}
             >
-              <span>FERRETTI 550 &bull; UP TO 8 GUESTS &bull; FORT LAUDERDALE</span>
-            </div>
+              FERRETTI 550 &bull; UP TO 8 GUESTS &bull; FORT LAUDERDALE
+            </p>
           </div>
         </ScrollReveal>
 
-        {/* 3 Staggered Pricing Cards with Inclusions Checklist */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch pt-2 mb-12">
-          {rates.map((rate, index) => {
-            const inclusions =
-              rate.inclusions ||
-              DEFAULT_RATES[index % DEFAULT_RATES.length]?.inclusions ||
-              [];
-
+        {/* =========================================================================
+            2. CARDS GRID: Generously spaced cards across the section
+        ========================================================================= */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-6 xl:gap-8 items-stretch w-full">
+          {displayRates.map((tier, index) => {
             return (
               <ScrollReveal
-                key={index}
+                key={tier.name}
                 direction="up"
-                duration={0.8}
-                delay={index * 140}
-                className="h-full"
+                duration={0.85}
+                delay={index * 120}
+                className="w-full flex"
               >
                 <div
-                  className={`relative p-8 sm:p-9 flex flex-col justify-between h-full rounded-[3px] transition-all duration-500 group ${
-                    rate.popular
-                      ? isNavy
-                        ? "bg-[#101C29] border-2 border-[#B9A078] shadow-2xl hover:shadow-[0_20px_50px_rgba(185,160,120,0.15)] md:-translate-y-2 z-10"
-                        : "bg-[#FAF8F5] border-2 border-[#B9A078] shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.12)] md:-translate-y-2 z-10"
-                      : isNavy
-                      ? "bg-[#0E1722] border border-white/10 hover:border-[#B9A078]/60 hover:-translate-y-1.5 hover:shadow-xl"
-                      : "bg-[#FAF8F5] border border-[#D8D2C6] hover:border-[#B9A078]/60 hover:-translate-y-1.5 hover:shadow-xl"
+                  className={`flex flex-col h-full w-full rounded-[2px] border transition-all duration-300 overflow-hidden group ${
+                    isNavy
+                      ? "border-white/10 bg-[#0B131C] shadow-xl hover:border-[#B9A078]/50"
+                      : "border-[#EAE6DF] bg-white shadow-md hover:shadow-xl hover:border-[#101C29]/30"
                   }`}
                 >
-                  {/* Popular Signature Badge with subtle shimmer */}
-                  {rate.popular && (
-                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 bg-[#B9A078] text-[#0B141D] text-[10px] sm:text-[11px] tracking-[0.24em] uppercase font-semibold rounded-[2px] shadow-md whitespace-nowrap animate-badge-shimmer">
-                      SIGNATURE EXPERIENCE
-                    </div>
-                  )}
-
-                  <div>
-                    {/* Top Row: Name and Duration */}
-                    <div className="flex items-center justify-between gap-2 mb-2 pt-1">
-                      <h3
-                        className={`font-serif text-2xl sm:text-[26px] font-normal ${
-                          isNavy ? "text-[#F7F5F0]" : "text-[#08182B]"
-                        }`}
-                      >
-                        {rate.name}
-                      </h3>
-                      <span
-                        className={`px-3 py-1 text-[11px] tracking-[0.16em] uppercase font-medium rounded-[2px] shrink-0 ${
-                          isNavy
-                            ? "bg-white/10 border border-white/15 text-[#EFECE5]"
-                            : "bg-[#EFECE5] border border-[#D8D2C6] text-[#08182B]"
-                        }`}
-                      >
-                        {rate.duration}
-                      </span>
-                    </div>
-
-                    {/* Rate Label */}
-                    <span
-                      className={`text-[10px] sm:text-[11px] tracking-[0.24em] uppercase font-light block mb-2 ${
-                        isNavy ? "text-[#B9A078]" : "text-[#88837A]"
-                      }`}
-                    >
-                      CHARTER RATE
-                    </span>
-
-                    {/* Price */}
-                    <div
-                      className={`font-serif text-4xl sm:text-[44px] font-normal tracking-tight mb-4 ${
-                        isNavy ? "text-[#F7F5F0]" : "text-[#08182B]"
-                      }`}
-                    >
-                      {rate.price}
-                    </div>
-
-                    {/* Short Description */}
-                    {rate.description && (
-                      <p
-                        className={`text-sm font-light leading-relaxed mb-6 ${
-                          isNavy ? "text-[#EFECE5]/85" : "text-[#0F243A]"
-                        }`}
-                      >
-                        {rate.description}
-                      </p>
+                  {/* ── UPPER IMAGE ── */}
+                  <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] lg:h-[180px] xl:h-[200px] overflow-hidden bg-[#F4F1EA] shrink-0 border-b border-[#EAE6DF]/40">
+                    {tier.image && (
+                      <Image
+                        src={tier.image.src}
+                        alt={tier.image.alt}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                      />
                     )}
 
-                    {/* Checklist of Inclusions */}
-                    <div className="space-y-2.5 mb-8 pt-4 border-t border-white/10">
-                      <span
-                        className={`text-[10px] tracking-[0.2em] uppercase font-medium block mb-2 ${
-                          isNavy ? "text-white/50" : "text-[#6E6A62]"
-                        }`}
-                      >
-                        WHAT&apos;S INCLUDED:
-                      </span>
-                      {inclusions.map((item, idx) => (
-                        <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-[13px] leading-relaxed font-light">
-                          <span className="text-[#B9A078] shrink-0 mt-0.5">✓</span>
-                          <span className={isNavy ? "text-[#EFECE5]/90" : "text-[#08182B]"}>
-                            {item}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
+                    {/* Signature Experience Ribbon / Badge */}
+                    {tier.popular && (
+                      <div className="absolute top-3 left-3 z-10 px-2.5 py-1 bg-[#B9A078] text-[#101C29] text-[9.5px] tracking-[0.20em] uppercase font-semibold rounded-[1px] shadow-md">
+                        SIGNATURE EXPERIENCE
+                      </div>
+                    )}
                   </div>
 
-                  {/* Real Padded Button with clear hierarchy */}
-                  <div className="pt-2">
-                    <Link
-                      href="/contact"
-                      className={`w-full h-[48px] px-6 text-[11px] sm:text-xs tracking-[0.18em] uppercase font-medium transition-all duration-300 rounded-[2px] inline-flex items-center justify-center gap-2 group cursor-pointer shadow-md ${
-                        rate.popular
-                          ? "bg-[#B9A078] hover:bg-[#A88D60] text-[#0B141D]"
-                          : isNavy
-                          ? "border border-white/25 hover:border-[#B9A078] hover:bg-[#B9A078] hover:text-[#0B141D] text-[#F7F5F0]"
-                          : "border border-[#D8D2C6] hover:border-[#B9A078] hover:bg-[#B9A078] hover:text-[#0B141D] text-[#08182B]"
-                      }`}
-                    >
-                      <span>REQUEST THIS CHARTER</span>
-                      <span className="transition-transform duration-300 group-hover:translate-x-1.5">
-                        →
-                      </span>
-                    </Link>
+                  {/* ── CONTENT UNDERNEATH ── */}
+                  <div className="p-5 sm:p-6 lg:p-6 flex-1 flex flex-col justify-between text-left">
+                    <div>
+                      {/* Eyebrow Tag */}
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <span className="w-4 h-[1.5px] bg-[#B9A078]" />
+                        <span className="text-[10.5px] font-semibold tracking-[0.22em] uppercase font-sans text-[#B9A078]">
+                          {tier.eyebrow}
+                        </span>
+                      </div>
+
+                      {/* Package Name */}
+                      <h3
+                        className={`font-serif text-2xl lg:text-[26px] font-normal tracking-tight leading-[1.15] mb-1.5 ${
+                          isNavy ? "text-[#F8F8F6]" : "text-[#101C29]"
+                        }`}
+                      >
+                        {tier.name}
+                      </h3>
+
+                      {/* Price Display */}
+                      <div className="flex items-baseline gap-2 mb-3">
+                        <span
+                          className={`font-serif text-3xl lg:text-[36px] font-bold tracking-tight leading-none ${
+                            isNavy ? "text-[#F8F8F6]" : "text-[#101C29]"
+                          }`}
+                        >
+                          {tier.price}
+                        </span>
+                        <span className="text-[10.5px] tracking-[0.16em] uppercase font-sans font-medium text-[#B9A078]">
+                          / {tier.duration} CHARTER
+                        </span>
+                      </div>
+
+                      {/* Body Description */}
+                      <p
+                        style={{ color: isNavy ? "#F8F8F6" : "#101C29" }}
+                        className={`text-xs sm:text-[13px] font-normal leading-[1.6] mb-3.5 ${
+                          isNavy ? "text-[#F8F8F6]" : "text-[#101C29]"
+                        }`}
+                      >
+                        {tier.description}
+                      </p>
+
+                      {/* Checklist Section */}
+                      {tier.inclusions && tier.inclusions.length > 0 && (
+                        <div
+                          className={`pt-3 pb-3 border-t mb-4 ${
+                            isNavy ? "border-white/10" : "border-[#EAE6DF]"
+                          }`}
+                        >
+                          <span className="text-[9.5px] tracking-[0.20em] uppercase font-semibold text-[#B9A078] block mb-2">
+                            WHAT&apos;S INCLUDED:
+                          </span>
+                          <div className="space-y-1.5">
+                            {tier.inclusions.map((item, idx) => (
+                              <div
+                                key={idx}
+                                style={{ color: isNavy ? "#F8F8F6" : "#101C29" }}
+                                className={`flex items-start gap-2 text-[11.5px] sm:text-[12px] font-normal leading-snug ${
+                                  isNavy ? "text-[#F8F8F6]" : "text-[#101C29]"
+                                }`}
+                              >
+                                <span className="text-[#B9A078] font-bold shrink-0 text-[11px] mt-0.5">
+                                  ✓
+                                </span>
+                                <span>{item}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* CTA Button */}
+                    <div className="pt-2 mt-auto">
+                      <Link
+                        href="/contact"
+                        className={`inline-flex items-center justify-center gap-2 w-full h-[46px] px-4 text-[11.5px] sm:text-[12px] tracking-[0.16em] uppercase font-semibold transition-all duration-300 rounded-[1px] shadow-sm hover:shadow-md group whitespace-nowrap ${
+                          isNavy
+                            ? "bg-[#B9A078] hover:bg-[#C8B08A] text-[#101C29]"
+                            : "bg-[#101C29] hover:bg-[#182A3E] text-[#F8F8F6]"
+                        }`}
+                      >
+                        <span>REQUEST THIS CHARTER</span>
+                        <span className="text-[13px] font-bold leading-none group-hover:translate-x-1 transition-transform">
+                          &gt;
+                        </span>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </ScrollReveal>
@@ -269,47 +313,43 @@ export function EditorialRates({
           })}
         </div>
 
-        {/* Inclusions & Gratuity Note Bar + Prominent View All Rates Link */}
-        <ScrollReveal direction="up" duration={0.8} delay={200}>
-          <div
-            className={`p-7 sm:p-9 rounded-[3px] flex flex-col md:flex-row items-center justify-between gap-6 relative shadow-lg ${
-              isNavy
-                ? "bg-[#101C29] border border-white/15"
-                : "bg-[#FAF8F5] border border-[#D8D2C6]"
+        {/* =========================================================================
+            BOTTOM INCLUSIONS & GRATUITY NOTE BAR
+        ========================================================================= */}
+        <div
+          className={`pt-4 border-t flex flex-col lg:flex-row items-center justify-between gap-4 shrink-0 ${
+            isNavy ? "border-white/10" : "border-[#EAE6DF]"
+          }`}
+        >
+          <p
+            className={`text-xs sm:text-[13px] font-sans font-normal leading-relaxed text-center lg:text-left flex-1 ${
+              isNavy ? "text-[#F8F8F6]" : "text-[#101C29]"
             }`}
           >
-            <div className="text-center md:text-left space-y-1.5 max-w-2xl">
-              <p
-                className={`text-sm sm:text-[15px] font-medium leading-relaxed ${
-                  isNavy ? "text-[#F7F5F0]" : "text-[#08182B]"
-                }`}
-              >
-                {inclusionNote}
-              </p>
-              <p
-                className={`text-xs sm:text-sm font-light ${
-                  isNavy ? "text-[#EFECE5]/80" : "text-[#0F243A]"
-                }`}
-              >
-                <span className="text-[#B9A078] font-medium">Note: </span>
-                {gratuityNote}
-              </p>
-            </div>
+            <span>{inclusionNote}</span>{" "}
+            <span className="text-[#B9A078] font-semibold">Note: </span>
+            <span className={isNavy ? "text-[#F8F8F6]/80" : "text-[#101C29]/80"}>
+              {gratuityNote}
+            </span>
+          </p>
 
-            {ctaButton && (
-              <Link
-                href={ctaButton.href}
-                className="whitespace-nowrap h-[48px] px-8 bg-transparent border border-[#B9A078] text-[#B9A078] hover:bg-[#B9A078] hover:text-[#0B141D] text-[11px] sm:text-xs tracking-[0.18em] uppercase font-medium transition-all duration-300 rounded-[2px] inline-flex items-center justify-center gap-2 group cursor-pointer shrink-0 shadow-md"
-              >
-                <span>{ctaButton.label}</span>
-                <span className="transition-transform duration-300 group-hover:translate-x-1.5">
-                  →
-                </span>
-              </Link>
-            )}
-          </div>
-        </ScrollReveal>
-      </Container>
+          {ctaButton && (
+            <Link
+              href={ctaButton.href}
+              className={`inline-flex items-center justify-center gap-2 px-6 h-[44px] text-[11px] sm:text-[12px] tracking-[0.16em] uppercase font-semibold transition-all duration-300 rounded-[2px] shadow-md shrink-0 whitespace-nowrap group ${
+                isNavy
+                  ? "bg-[#B9A078] hover:bg-[#C8B08A] text-[#101C29]"
+                  : "bg-[#101C29] hover:bg-[#182A3E] text-[#F8F8F6]"
+              }`}
+            >
+              <span>{ctaButton.label}</span>
+              <span className="text-[13px] font-bold leading-none group-hover:translate-x-1 transition-transform">
+                &gt;
+              </span>
+            </Link>
+          )}
+        </div>
+      </div>
     </section>
   );
 }

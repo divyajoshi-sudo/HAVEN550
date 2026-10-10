@@ -26,20 +26,13 @@ export function ReservationStepsSection({
 
   return (
     <section
-      className={`min-h-screen flex flex-col justify-center py-20 md:py-28 relative overflow-hidden transition-colors duration-300 ${
-        isLight
-          ? "bg-[#EFECE5] text-[#111A22] border-t border-b border-[#D8D2C6]"
-          : "bg-[#101C29] text-white border-t border-b border-white/10"
-      }`}
+      className="min-h-screen lg:h-screen flex flex-col justify-center py-10 lg:py-6 relative overflow-hidden transition-colors duration-300 bg-white text-[#101C29] border-t border-b border-[#EAE6DF]"
     >
-      {!isLight && (
-        <div className="absolute inset-0 ambient-glow-navy pointer-events-none" />
-      )}
       <Container size="default">
         {/* Section Header */}
         <ScrollReveal direction="up" duration={0.85} className="w-full flex justify-center">
-          <div className="w-full max-w-3xl mx-auto text-center flex flex-col items-center mb-16">
-            <div className="flex items-center justify-center gap-3 mb-3">
+          <div className="w-full max-w-3xl mx-auto text-center flex flex-col items-center mb-8 sm:mb-10 lg:mb-8">
+            <div className="flex items-center justify-center gap-3 mb-2.5">
               <span className="w-8 h-[1px] bg-[#B9A078]" />
               <p
                 className={`text-xs sm:text-sm tracking-[0.35em] uppercase font-light ${
@@ -53,7 +46,7 @@ export function ReservationStepsSection({
 
             <h2
               className={`font-serif text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-center mx-auto w-full ${
-                isLight ? "text-[#111A22]" : "text-white"
+                isLight ? "text-[#101C29]" : "text-white"
               }`}
             >
               {content.headline}
@@ -62,7 +55,7 @@ export function ReservationStepsSection({
         </ScrollReveal>
 
         {/* 4 Steps Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-8 sm:mb-10 lg:mb-8">
           {content.steps.map((step, idx) => (
             <ScrollReveal
               key={idx}
@@ -72,30 +65,18 @@ export function ReservationStepsSection({
               className="h-full"
             >
               <div
-                className={`p-8 relative flex flex-col justify-between group transition-all duration-500 shadow-xl luxury-card h-full ${
-                  isLight
-                    ? "bg-[#FAF8F5] border border-[#D8D2C6] hover:border-[#B9A078]"
-                    : "bg-[#0B141D]/75 border border-white/10 hover:border-[#B9A078]/50"
-                }`}
+                className="p-6 sm:p-7 relative flex flex-col justify-between group transition-all duration-300 shadow-sm hover:shadow-md h-full bg-white border border-[#EAE6DF] hover:border-[#B9A078] rounded-[2px]"
               >
                 <div>
-                  <span className="font-serif text-3xl sm:text-4xl text-[#9E8357] font-light block mb-4">
+                  <span className="font-serif text-3xl sm:text-4xl text-[#9E8357] font-light block mb-3">
                     {step.number}
                   </span>
 
-                  <h3
-                    className={`font-serif text-xl sm:text-2xl font-light mb-3 ${
-                      isLight ? "text-[#111A22]" : "text-white"
-                    }`}
-                  >
+                  <h3 className="font-serif text-xl sm:text-2xl font-light mb-2 text-[#101C29]">
                     {step.title}
                   </h3>
 
-                  <p
-                    className={`text-sm font-light leading-relaxed ${
-                      isLight ? "text-[#4F5862]" : "text-white/75"
-                    }`}
-                  >
+                  <p className="text-sm font-light leading-relaxed text-[#101C29]/80">
                     {step.description}
                   </p>
                 </div>
@@ -106,18 +87,8 @@ export function ReservationStepsSection({
 
         {/* Payment Note */}
         <ScrollReveal direction="up" duration={0.8} delay={200}>
-          <div
-            className={`p-5 text-center max-w-2xl mx-auto ${
-              isLight
-                ? "bg-[#FAF8F5] border border-[#D8D2C6]"
-                : "bg-white/5 border border-white/10"
-            }`}
-          >
-            <p
-              className={`text-xs sm:text-sm font-light leading-relaxed ${
-                isLight ? "text-[#4F5862]" : "text-white/80"
-              }`}
-            >
+          <div className="p-4 text-center max-w-2xl mx-auto bg-white border border-[#EAE6DF] rounded-[2px]">
+            <p className="text-xs sm:text-sm font-light leading-relaxed text-[#101C29]/80">
               {content.paymentNote}
             </p>
           </div>

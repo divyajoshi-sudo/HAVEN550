@@ -1,92 +1,142 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import type { HeroContent } from "@/types/content";
-import { Container } from "../layout/Container";
 
 export interface HeroProps {
-  content: HeroContent;
+  content?: HeroContent;
 }
 
-import { TextReveal } from "../motion/TextReveal";
-
 export function Hero({ content }: HeroProps) {
+  const eyebrow = content?.eyebrow || "FORT LAUDERDALE · SOUTH FLORIDA";
+  const headline = content?.headline || "THE ART OF BEING AWAY.";
+  const subheadline = content?.subheadline || "Welcome Aboard HAVEN 550.";
+  const paragraphs = content?.paragraphs || [
+    "Experience South Florida from an entirely different perspective aboard HAVEN 550, a privately chartered 57-foot Ferretti yacht.",
+    "Where the coastline becomes your backdrop, the ocean sets the pace, and every moment belongs to you.",
+  ];
+  const primaryCta = content?.primaryCta || {
+    label: "EXPLORE THE YACHT",
+    href: "/the-yacht",
+  };
+  const secondaryCta = content?.secondaryCta || {
+    label: "REQUEST A CHARTER",
+    href: "/contact",
+  };
+  const imageSrc = content?.image?.src || "/images/haven-running-front.jpeg";
+  const imageAlt =
+    content?.image?.alt || "HAVEN 550 privately chartered 57-foot Ferretti yacht on the water";
+
   return (
     <section
       id="hero"
-      className="relative min-h-screen lg:h-screen w-full flex items-center justify-center overflow-hidden bg-[#0C141D]"
+      style={{ backgroundColor: "#081018", color: "#F8F8F6" }}
+      className="relative w-full min-h-[calc(100vh-76px)] lg:h-[calc(100vh-76px)] flex items-center justify-center bg-[#081018] text-[#F8F8F6] overflow-hidden"
     >
-      {/* 01 — Full-Screen Yacht Background Image with Cinematic 16:9 / 21:9 Framing */}
-      <div className="absolute inset-0 z-0" data-cursor="explore">
+      {/* =========================================================================
+          FULL-SCREEN PHOTOGRAPH OF THE YACHT ON THE WATER
+      ========================================================================= */}
+      <div className="absolute inset-0 z-0">
         <Image
-          src={content.image.src}
-          alt={content.image.alt}
+          src={imageSrc}
+          alt={imageAlt}
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center animate-ken-burns"
+          className="object-cover object-center"
         />
-        {/* Dynamic Scrim Gradient — Guarantees 7:1 contrast while preserving rich ocean imagery */}
-        <div className="absolute inset-0 dynamic-scrim pointer-events-none" />
+        {/* Subtle dark gradient overlay for optimal readability while showing photography */}
+        <div className="absolute inset-0 bg-[#081018]/45" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#081018]/65 via-[#081018]/25 to-[#081018]/75" />
       </div>
 
-      {/* 02 — Minimal Editorial Text Composition */}
-      <Container size="default" className="relative z-10 pt-28 pb-16 md:pt-36 md:pb-24 text-center flex flex-col items-center">
-        {/* Small Editorial Label */}
-        <div className="flex items-center gap-3 mb-4 animate-fade-in">
-          <span className="w-6 sm:w-10 h-[1.5px] bg-[#D4AF37]/80" />
-          <p className="eyebrow-luxury">
-            {content.eyebrow}
+      {/* =========================================================================
+          HERO EDITORIAL CONTENT: Minimal text overlay, elegant typography
+      ========================================================================= */}
+      <div
+        style={{ color: "#F8F8F6" }}
+        className="relative z-10 w-full max-w-5xl mx-auto px-6 py-16 sm:py-20 md:py-24 flex flex-col items-center text-center"
+      >
+        {/* 1. Eyebrow: FORT LAUDERDALE · SOUTH FLORIDA */}
+        <div className="flex items-center justify-center gap-3.5 sm:gap-5 mb-4 sm:mb-5">
+          <span className="w-8 sm:w-14 h-[1px] bg-[#B9A078]" />
+          <p
+            style={{ color: "#F8F8F6" }}
+            className="text-xs sm:text-[13px] tracking-[0.3em] uppercase font-sans font-medium text-[#F8F8F6]"
+          >
+            {eyebrow}
           </p>
-          <span className="w-6 sm:w-10 h-[1.5px] bg-[#D4AF37]/80" />
+          <span className="w-8 sm:w-14 h-[1px] bg-[#B9A078]" />
         </div>
 
-        {/* Primary Headline — Fluid clamp scaling without layout shifts */}
-        <TextReveal
-          as="h1"
-          className="font-serif font-hero-fluid font-light text-[#F7F5F0] leading-tight mb-4 w-full max-w-6xl mx-auto drop-shadow-sm sm:whitespace-nowrap"
+        {/* 2. Main Title: THE ART OF BEING AWAY. (Cormorant Garamond) */}
+        <h1
+          style={{
+            color: "#F8F8F6",
+            textShadow: "0 2px 14px rgba(0,0,0,0.85), 0 1px 4px rgba(0,0,0,0.95)",
+          }}
+          className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-[76px] xl:text-[84px] font-normal uppercase tracking-[0.02em] leading-[1.08] sm:leading-[1.03] text-[#F8F8F6] mb-3 sm:mb-4"
         >
-          {content.headline}
-        </TextReveal>
+          {headline}
+        </h1>
 
-        {/* Welcome Aboard Line — Expanded */}
-        <p className="font-serif italic text-xl sm:text-2xl md:text-3xl text-[#F7F5F0] font-light mb-6 tracking-wide drop-shadow-sm animate-fade-in-up delay-100 max-w-5xl mx-auto w-full">
-          {content.subheadline}
+        {/* 3. Subheadline: Welcome Aboard HAVEN 550. */}
+        <p
+          style={{
+            color: "#B9A078",
+            textShadow: "0 1px 8px rgba(0,0,0,0.85)",
+          }}
+          className="font-serif italic text-lg sm:text-xl lg:text-2xl text-[#B9A078] font-light mb-6 tracking-wide"
+        >
+          {subheadline}
         </p>
 
-        {/* Descriptive Body Copy — Expanded Full Screen Justified Content */}
-        <div className="w-full max-w-5xl lg:max-w-6xl mx-auto space-y-4 mb-10 text-[#EFECE5] text-base sm:text-lg md:text-[19px] lg:text-[20px] font-light leading-[1.75] drop-shadow-sm animate-fade-in-up delay-200 text-justify">
-          {content.paragraphs.map((p, idx) => (
-            <p key={idx} className="text-justify">{p}</p>
+        {/* 4. Narrative Paragraphs in Soft White (#F8F8F6) */}
+        <div className="max-w-[720px] mx-auto text-center space-y-2 mb-8 sm:mb-10">
+          {paragraphs.map((paragraph, idx) => (
+            <p
+              key={idx}
+              style={{
+                color: "#F8F8F6",
+                textShadow: "0 1px 8px rgba(0,0,0,0.85)",
+              }}
+              className="font-sans text-sm sm:text-base md:text-[16.5px] text-[#F8F8F6] font-light leading-[1.7]"
+            >
+              {paragraph}
+            </p>
           ))}
         </div>
 
-        {/* Action Buttons — Unified 50px Squared Luxury Buttons with WCAG Focus States */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full max-w-xl mx-auto animate-fade-in-up delay-300">
+        {/* 5. Minimal Rectangular Buttons with subtle hover effects */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full sm:w-auto">
+          {/* Button 1: EXPLORE THE YACHT */}
           <Link
-            href={content.primaryCta.href}
-            data-cursor="charter"
-            className="w-full sm:w-auto min-w-[210px] h-[50px] px-8 bg-[#B9A078] hover:bg-[#D4AF37] text-[#0C141D] text-[13px] tracking-[0.14em] uppercase font-semibold transition-all duration-300 rounded-[2px] inline-flex items-center justify-center gap-2 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
+            href={primaryCta.href}
+            className="w-full sm:w-[210px] h-[48px] inline-flex items-center justify-center gap-2 px-6 border border-white/30 hover:border-[#B9A078] bg-[#101C29]/65 hover:bg-[#101C29] text-[#F8F8F6] text-[11.5px] sm:text-[12px] tracking-[0.18em] uppercase font-sans font-medium rounded-[2px] transition-all duration-300 shadow-md backdrop-blur-xs group"
           >
-            <span>{content.primaryCta.label}</span>
-            <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
+            <span>{primaryCta.label}</span>
+            <span className="text-[13px] font-light leading-none group-hover:translate-x-0.5 transition-transform">
+              ›
+            </span>
           </Link>
+
+          {/* Button 2: REQUEST A CHARTER */}
           <Link
-            href={content.secondaryCta.href}
-            data-cursor="view"
-            className="w-full sm:w-auto min-w-[210px] h-[50px] px-8 bg-transparent border border-white/40 text-white text-[13px] tracking-[0.14em] uppercase font-semibold hover:bg-white hover:text-[#0C141D] hover:border-white transition-all duration-300 rounded-[2px] backdrop-blur-sm inline-flex items-center justify-center gap-2 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
+            href={secondaryCta.href}
+            className="w-full sm:w-[210px] h-[48px] inline-flex items-center justify-center gap-2 px-6 bg-[#B9A078] hover:bg-[#C8B08A] text-[#101C29] text-[11.5px] sm:text-[12px] tracking-[0.18em] uppercase font-sans font-semibold rounded-[2px] transition-all duration-300 shadow-lg group"
           >
-            <span>{content.secondaryCta.label}</span>
-            <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
+            <span>{secondaryCta.label}</span>
+            <span className="text-[13px] font-bold leading-none group-hover:translate-x-0.5 transition-transform">
+              ›
+            </span>
           </Link>
         </div>
-      </Container>
+      </div>
 
-      {/* Subtle Editorial Scroll Indicator */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 hidden sm:flex flex-col items-center gap-2 pointer-events-none opacity-70 animate-float">
-        <span className="text-[10px] tracking-[0.24em] uppercase text-white/70 font-light">
-          SCROLL
-        </span>
-        <div className="w-[1px] h-6 bg-gradient-to-b from-[#B9A078] via-[#B9A078]/50 to-transparent" />
+      {/* Subtle bottom scroll indicator line */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 hidden sm:flex flex-col items-center pointer-events-none opacity-60">
+        <div className="w-[1px] h-5 bg-white/40" />
       </div>
     </section>
   );
